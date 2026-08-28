@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <div class="page-header">
+        <div>
+            <h1>Edit Task</h1>
+            <p>Update the task information.</p>
+        </div>
+    </div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div class="error">
+                {{ form.errors }}
+            </div>
+        {% endif %}
+
+
+        <!-- Task Title -->
+
+        <div class="form-group">
+
+            <label for="{{ form.title.id_for_label }}">
+                Task Title
+            </label>
+
+            {{ form.title }}
+
+            {% if form.title.errors %}
+                <div class="error">
+                    {{ form.title.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- Description -->
+
+        <div class="form-group">
+
+            <label for="{{ form.description.id_for_label }}">
+                Description
+            </label>
+
+            {{ form.description }}
+
+            {% if form.description.errors %}
+                <div class="error">
+                    {{ form.description.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- Project -->
+
+        <div class="form-group">
+
+            <label for="{{ form.project.id_for_label }}">
+                Project
+            </label>
+
+            {{ form.project }}
+
+            {% if form.project.errors %}
+                <div class="error">
+                    {{ form.project.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- SDLC Phase -->
+
+        <div class="form-group">
+
+            <label for="{{ form.phase.id_for_label }}">
+                SDLC Phase
+            </label>
+
+            {{ form.phase }}
+
+            {% if form.phase.errors %}
+                <div class="error">
+                    {{ form.phase.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- Assign Employee -->
+
+        <div class="form-group">
+
+            <label for="{{ form.assigned_to.id_for_label }}">
+                Assign Employee
+            </label>
+
+            {{ form.assigned_to }}
+
+            {% if form.assigned_to.errors %}
+                <div class="error">
+                    {{ form.assigned_to.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- Deadline -->
+
+        <div class="form-group">
+
+            <label for="{{ form.deadline.id_for_label }}">
+                Deadline
+            </label>
+
+            {{ form.deadline }}
+
+            {% if form.deadline.errors %}
+                <div class="error">
+                    {{ form.deadline.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- Priority -->
+
+        <div class="form-group">
+
+            <label for="{{ form.priority.id_for_label }}">
+                Priority
+            </label>
+
+            {{ form.priority }}
+
+            {% if form.priority.errors %}
+                <div class="error">
+                    {{ form.priority.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Update Task
+            </button>
+
+
+            <a
+                href="{% url 'task_detail' task.id %}"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

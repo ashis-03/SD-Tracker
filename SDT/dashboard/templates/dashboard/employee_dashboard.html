@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Welcome to the Employee Dashboard, {{ request.user.username }}</h2>
+
+<p>Email: {{ request.user.email }}</p>
+<p>Role: {{ request.user.profile.role }}</p>
+
+<h3>Employee Panel</h3>
+
+<ul>
+    <li>View My Tasks</li>
+    <li>Update Task Status</li>
+    <li>View Assigned Projects</li>
+    <li>Track My Progress</li>
+    <li>View Notifications</li>
+</ul>
+
+{% endblock %}

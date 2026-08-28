@@ -1,0 +1,984 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7ff;
+    color: #111827;
+}
+
+
+/* ================================
+   PAGE
+================================ */
+
+.auth-page {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+
+    background:
+        radial-gradient(
+            circle at bottom left,
+            #e9edff,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at top right,
+            #eef2ff,
+            transparent 35%
+        ),
+        #f7f8fc;
+}
+
+
+/* ================================
+   CARD
+================================ */
+
+.auth-card {
+
+    width: 100%;
+    max-width: 520px;
+
+    background: white;
+
+    padding: 45px 50px;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 15px 50px rgba(30, 50, 100, 0.10);
+}
+
+
+/* ================================
+   LOGO
+================================ */
+
+.auth-logo {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 45px;
+}
+
+.auth-logo-icon {
+
+    width: 58px;
+    height: 58px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        135deg,
+        #6366f1,
+        #3b82f6
+    );
+
+    color: white;
+
+    font-size: 27px;
+
+    box-shadow:
+        0 8px 20px rgba(79, 70, 229, 0.25);
+}
+
+.auth-logo h1 {
+
+    font-size: 25px;
+    color: #0f172a;
+
+    margin-bottom: 3px;
+}
+
+.auth-logo p {
+
+    color: #64748b;
+    font-size: 14px;
+}
+
+
+/* ================================
+   HEADING
+================================ */
+
+.auth-heading {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.auth-heading h2 {
+
+    font-size: 28px;
+
+    color: #0f172a;
+
+    margin-bottom: 10px;
+}
+
+.auth-heading p {
+
+    color: #64748b;
+
+    font-size: 15px;
+}
+
+
+/* ================================
+   FORM
+================================ */
+
+.form-group {
+
+    margin-bottom: 22px;
+}
+
+.form-group label {
+
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    margin-bottom: 8px;
+
+    color: #172554;
+}
+
+.input-box {
+
+    height: 50px;
+
+    border: 1px solid #dbe1ea;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 14px;
+
+    background: white;
+
+    transition: 0.2s;
+}
+
+.input-box:focus-within {
+
+    border-color: #4f6df5;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 109, 245, 0.10);
+}
+
+.input-box > i:first-child {
+
+    color: #64748b;
+
+    margin-right: 12px;
+}
+
+.input-box input {
+
+    border: none;
+
+    outline: none;
+
+    width: 100%;
+
+    font-size: 14px;
+
+    color: #111827;
+}
+
+.input-box input::placeholder {
+
+    color: #94a3b8;
+}
+
+.password-toggle {
+
+    cursor: pointer;
+
+    color: #64748b;
+}
+
+
+/* ================================
+   OPTIONS
+================================ */
+
+.login-options {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin: 5px 0 25px;
+
+    font-size: 13px;
+}
+
+.remember {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.remember input {
+
+    accent-color: #4169e1;
+}
+
+.login-options a {
+
+    color: #2563eb;
+
+    text-decoration: none;
+}
+
+
+/* ================================
+   LOGIN BUTTON
+================================ */
+
+.auth-button {
+
+    width: 100%;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: linear-gradient(
+        90deg,
+        #4f46e5,
+        #3b82f6
+    );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.auth-button:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 18px rgba(59, 130, 246, 0.25);
+}
+
+
+/* ================================
+   DIVIDER
+================================ */
+
+.divider {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin: 25px 0;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background: #e2e8f0;
+}
+
+
+/* ================================
+   GOOGLE BUTTON
+================================ */
+
+.google-button {
+
+    width: 100%;
+
+    height: 48px;
+
+    border: 1px solid #dbe1ea;
+
+    background: white;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+
+    color: #1e293b;
+
+    cursor: pointer;
+}
+
+.google-button i {
+
+    margin-right: 8px;
+
+    color: #4285f4;
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+.auth-footer {
+
+    text-align: center;
+
+    margin-top: 28px;
+
+    font-size: 14px;
+
+    color: #64748b;
+}
+
+.auth-footer a {
+
+    color: #2563eb;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+/* ================================
+   MESSAGE
+================================ */
+
+.message {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    padding: 10px 12px;
+
+    border-radius: 6px;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+    .auth-card {
+
+        padding: 35px 25px;
+    }
+
+    .auth-heading h2 {
+
+        font-size: 24px;
+    }
+
+}
+
+
+/* =========================================================
+   REGISTRATION PAGE
+========================================================= */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    padding: 0;
+    background: #f7f8fc;
+}
+
+
+/* =========================================================
+   LEFT BRAND SECTION
+========================================================= */
+
+.auth-brand {
+    width: 42%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            #e0e7ff,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            #eef2ff,
+            transparent 35%
+        ),
+        #f5f7ff;
+}
+
+.brand-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.brand-logo {
+    width: 90px;
+    height: 90px;
+
+    margin: 0 auto 22px;
+
+    border-radius: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        135deg,
+        #6366f1,
+        #3b82f6
+    );
+
+    color: white;
+
+    font-size: 40px;
+
+    box-shadow:
+        0 12px 30px rgba(79, 70, 229, 0.25);
+}
+
+.brand-content h1 {
+    font-size: 40px;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.brand-content p {
+    color: #64748b;
+    font-size: 17px;
+}
+
+.brand-decoration {
+    position: absolute;
+
+    bottom: 70px;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+
+    gap: 70px;
+
+    color: #a5b4fc;
+
+    font-size: 28px;
+
+    opacity: 0.6;
+}
+
+
+/* =========================================================
+   RIGHT FORM SECTION
+========================================================= */
+
+.auth-form-section {
+    width: 58%;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px;
+}
+
+
+/* =========================================================
+   REGISTRATION CARD
+========================================================= */
+
+.register-card {
+    width: 100%;
+    max-width: 650px;
+
+    padding: 35px 45px;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 15px 50px rgba(30, 50, 100, 0.10);
+}
+
+
+/* =========================================================
+   FORM BRAND
+========================================================= */
+
+.form-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-bottom: 28px;
+}
+
+.form-logo {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        135deg,
+        #6366f1,
+        #3b82f6
+    );
+
+    color: white;
+
+    font-size: 23px;
+}
+
+.form-brand h2 {
+    font-size: 25px;
+    color: #0f172a;
+}
+
+.form-brand p {
+    color: #64748b;
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   REGISTRATION HEADING
+========================================================= */
+
+.form-heading {
+    text-align: center;
+
+    margin-bottom: 28px;
+}
+
+.form-heading h1 {
+    font-size: 28px;
+
+    color: #0f172a;
+
+    margin-bottom: 8px;
+}
+
+.form-heading p {
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   TWO COLUMN FORM
+========================================================= */
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   REGISTRATION INPUTS
+========================================================= */
+
+.register-card .form-group {
+    margin-bottom: 18px;
+}
+
+.register-card .form-group label {
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #172554;
+
+    margin-bottom: 7px;
+}
+
+.register-card .input-box {
+    height: 48px;
+
+    border: 1px solid #dbe1ea;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 13px;
+
+    background: white;
+
+    transition: 0.2s;
+}
+
+.register-card .input-box:focus-within {
+    border-color: #4f6df5;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 109, 245, 0.10);
+}
+
+.register-card .input-box > i:first-child {
+    color: #64748b;
+
+    margin-right: 10px;
+}
+
+.register-card .input-box input {
+    border: none;
+
+    outline: none;
+
+    width: 100%;
+
+    font-size: 14px;
+
+    color: #111827;
+}
+
+.register-card .input-box input::placeholder {
+    color: #94a3b8;
+}
+
+
+/* =========================================================
+   REGISTRATION ERRORS
+========================================================= */
+
+.register-card .error {
+    display: block;
+
+    color: #dc2626;
+
+    font-size: 12px;
+
+    margin-top: 5px;
+}
+
+.error-box {
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+
+    padding: 10px 12px;
+
+    border-radius: 7px;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TERMS
+========================================================= */
+
+.terms {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    margin: 5px 0 22px;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+.terms input {
+    margin-top: 2px;
+
+    width: 16px;
+    height: 16px;
+
+    accent-color: #4f46e5;
+}
+
+.terms a {
+    color: #2563eb;
+
+    text-decoration: none;
+}
+
+.terms a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   CREATE ACCOUNT BUTTON
+========================================================= */
+
+.create-account-btn {
+    width: 100%;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: linear-gradient(
+        90deg,
+        #4f46e5,
+        #3b82f6
+    );
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.create-account-btn i {
+    margin-right: 7px;
+}
+
+.create-account-btn:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 18px rgba(59, 130, 246, 0.25);
+}
+
+
+/* =========================================================
+   LOGIN LINK
+========================================================= */
+
+.login-link {
+    text-align: center;
+
+    margin-top: 23px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #2563eb;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    margin-left: 4px;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   REGISTRATION MESSAGE
+========================================================= */
+
+.register-card .message {
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+
+    padding: 10px 12px;
+
+    border-radius: 7px;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   REGISTRATION FOOTER
+========================================================= */
+
+footer {
+    text-align: center;
+
+    padding: 15px;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    background: #f7f8fc;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .auth-brand {
+        width: 35%;
+    }
+
+    .auth-form-section {
+        width: 65%;
+
+        padding: 25px;
+    }
+
+    .register-card {
+        padding: 30px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .auth-page {
+        display: block;
+    }
+
+    .auth-brand {
+        width: 100%;
+
+        min-height: 220px;
+    }
+
+    .auth-form-section {
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 25px 15px;
+    }
+
+    .register-card {
+        max-width: 600px;
+
+        padding: 25px 20px;
+
+        box-shadow: none;
+    }
+
+    .brand-decoration {
+        display: none;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+    .brand-content h1 {
+        font-size: 30px;
+    }
+
+    .form-heading h1 {
+        font-size: 24px;
+    }
+
+    .register-card {
+        padding: 20px 15px;
+    }
+
+}

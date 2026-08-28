@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+
+{% block title %}
+Project Details | SD Tracker
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>{{ project.name }}</h1>
+
+        <p>
+            View complete project information and progress.
+        </p>
+    </div>
+
+    <div class="page-actions">
+
+        <a href="{% url 'project_edit' project.id %}"
+           class="btn btn-primary">
+            <i class="fa-solid fa-pen"></i>
+            Edit Project
+        </a>
+
+        <a href="{% url 'project_list' %}"
+           class="btn btn-secondary">
+            Back
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     PROJECT SUMMARY
+========================= -->
+
+<div class="project-detail-grid">
+
+    <div class="detail-card">
+
+        <h3>Project Information</h3>
+
+        <div class="detail-item">
+            <span>Project Name</span>
+            <strong>{{ project.name }}</strong>
+        </div>
+
+        <div class="detail-item">
+            <span>Client Name</span>
+            <strong>{{ project.client_name }}</strong>
+        </div>
+
+        <div class="detail-item">
+            <span>Manager</span>
+
+            {% if project.manager %}
+                <strong>
+                    {{ project.manager.user.get_full_name }}
+                </strong>
+            {% else %}
+                <strong>Not Assigned</strong>
+            {% endif %}
+        </div>
+
+        <div class="detail-item">
+            <span>Start Date</span>
+            <strong>{{ project.start_date }}</strong>
+        </div>
+
+        <div class="detail-item">
+            <span>Deadline</span>
+            <strong>{{ project.deadline }}</strong>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PROJECT STATUS
+    ========================= -->
+
+    <div class="detail-card">
+
+        <h3>Project Status</h3>
+
+        <div class="detail-item">
+
+            <span>Status</span>
+
+            <strong class="status {{ project.status }}">
+                {{ project.get_status_display }}
+            </strong>
+
+        </div>
+
+
+        <div class="progress-section">
+
+            <div class="progress-header">
+
+                <span>Overall Progress</span>
+
+                <strong>
+                    {{ project.progress }}%
+                </strong>
+
+            </div>
+
+
+            <div class="progress-container">
+
+                <div
+                    class="progress-bar"
+                    style="width: {{ project.progress }}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     DESCRIPTION
+========================= -->
+
+<div class="detail-card description-card">
+
+    <h3>Project Description</h3>
+
+    <p>
+        {{ project.description|default:"No description provided." }}
+    </p>
+
+</div>
+
+
+<!-- =========================
+     SDLC PHASES
+========================= -->
+
+<div class="detail-card">
+
+    <div class="section-header">
+
+        <h3>SDLC Phases</h3>
+
+    </div>
+
+
+    {% if project.phases.all %}
+
+    <table class="project-table">
+
+        <thead>
+
+            <tr>
+                <th>Phase</th>
+                <th>Start Date</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Progress</th>
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            {% for phase in project.phases.all %}
+
+            <tr>
+
+                <td>
+                    {{ phase.phase_name }}
+                </td>
+
+                <td>
+                    {{ phase.start_date }}
+                </td>
+
+                <td>
+                    {{ phase.deadline }}
+                </td>
+
+                <td>
+                    {{ phase.get_status_display }}
+                </td>
+
+                <td>
+
+                    <div class="table-progress">
+
+                        <div class="progress-container">
+
+                            <div
+                                class="progress-bar"
+                                style="width: {{ phase.progress }}%;">
+                            </div>
+
+                        </div>
+
+                        <span>
+                            {{ phase.progress }}%
+                        </span>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+        <p class="empty-message">
+            No SDLC phases have been added yet.
+        </p>
+
+    {% endif %}
+
+</div>
+
+
+<!-- =========================
+     DELETE
+========================= -->
+
+<div class="danger-zone">
+
+    <h3>Danger Zone</h3>
+
+    <p>
+        Permanently delete this project.
+    </p>
+
+    <a
+        href="{% url 'project_delete' project.id %}"
+        class="btn btn-danger">
+
+        <i class="fa-solid fa-trash"></i>
+
+        Delete Project
+
+    </a>
+
+</div>
+
+
+{% endblock %}

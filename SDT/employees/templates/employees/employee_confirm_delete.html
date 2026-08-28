@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="delete-container">
+
+    <div class="delete-card">
+
+        <div class="delete-icon">
+            !
+        </div>
+
+
+        <h1>Delete Employee?</h1>
+
+
+        <p>
+
+            Are you sure you want to delete
+
+            <strong>
+                {{ employee.user.get_full_name }}
+            </strong>
+
+            from the employee list?
+
+        </p>
+
+
+        <div class="employee-delete-info">
+
+            <p>
+
+                <strong>Employee ID:</strong>
+
+                {{ employee.employee_id }}
+
+            </p>
+
+
+            <p>
+
+                <strong>Designation:</strong>
+
+                {{ employee.designation }}
+
+            </p>
+
+
+            <p>
+
+                <strong>Department:</strong>
+
+                {{ employee.department }}
+
+            </p>
+
+        </div>
+
+
+        <div class="warning-message">
+
+            This action cannot be undone.
+
+        </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <a href="{% url 'employee_list' %}"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+
+            <button type="submit"
+                    class="btn btn-danger">
+
+                Yes, Delete Employee
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

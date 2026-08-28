@@ -1,0 +1,920 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Demo</title>
+</head>
+<body>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if user.is_authenticated %}
+    Logged in as {{user.username}} | <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+    <hr>
+    {% block content %}{% endblock  %}
+</body>
+</html> {% endcomment %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}SD Tracker{% endblock %}</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP NAVBAR
+========================================================= -->
+
+<header class="top-navbar">
+
+    <!-- LEFT -->
+    <div class="navbar-left">
+
+        <!-- Sidebar Toggle -->
+        <button
+            type="button"
+            class="sidebar-toggle"
+            id="sidebarToggle"
+        >
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+
+        <!-- Logo -->
+        <a href="#" class="logo-section">
+
+            <div class="logo">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+
+            <div class="logo-text">
+
+                <h2>SD Tracker</h2>
+
+                <span>
+                    Agentic AI Powered
+                </span>
+
+            </div>
+
+        </a>
+
+    </div>
+
+
+    <!-- SEARCH -->
+    <div class="navbar-search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            type="text"
+            placeholder="Search projects, tasks, employees..."
+        >
+
+    </div>
+
+
+    <!-- RIGHT -->
+    <div class="navbar-right">
+
+        <!-- Notifications -->
+        <a href="#" class="notification-icon">
+
+            <i class="fa-regular fa-bell"></i>
+
+            {% comment %} {% if unread_notifications %}
+
+                <span class="notification-badge">
+                    {{ unread_notifications }}
+                </span>
+
+            {% endif %} {% endcomment %}
+
+        </a>
+
+
+        <!-- Dark Mode -->
+        <button
+            type="button"
+            class="theme-button"
+            id="themeToggle"
+        >
+
+            <i class="fa-regular fa-moon"></i>
+
+        </button>
+
+
+        <!-- User -->
+        <div class="user-menu">
+
+            <div class="user-avatar">
+
+                {% if request.user.is_authenticated %}
+
+                    {% if request.user.profile.image %}
+
+                        <img
+                            src="{{ request.user.profile.image.url }}"
+                            alt="Profile"
+                        >
+
+                    {% else %}
+
+                        <i class="fa-solid fa-user"></i>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <i class="fa-solid fa-user"></i>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="user-details">
+
+                {% if request.user.is_authenticated %}
+
+                    <strong>
+                        {{ request.user.get_full_name|default:request.user.username }}
+                    </strong>
+
+                    <span>
+                        {{ request.user.profile.get_role_display|default:"User" }}
+                    </span>
+
+                {% else %}
+
+                    <strong>
+                        Guest
+                    </strong>
+
+                    <span>
+                        User
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <i class="fa-solid fa-chevron-down user-arrow"></i>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN APP LAYOUT
+========================================================= -->
+
+<div class="app-layout">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="sidebar-link active"
+        >
+
+            <i class="fa-solid fa-house"></i>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+
+        <!-- =================================================
+             ADMIN SIDEBAR
+        ================================================== -->
+
+        {% if request.user.is_authenticated and request.user.profile.role == "admin" %}
+
+
+            <div class="sidebar-heading">
+                MANAGEMENT
+            </div>
+
+
+            <!-- Projects -->
+            <a href="{% url 'project_list' %}" class="sidebar-link">
+
+                <i class="fa-regular fa-folder"></i>
+
+                <span>
+                    Projects
+                </span>
+
+            </a>
+
+
+            <!-- SDLC -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <span>
+                    SDLC Phases
+                </span>
+
+            </a>
+
+
+            <!-- Tasks -->
+            <a href="{% url 'task_list' %}" class="sidebar-link">
+
+                <i class="fa-regular fa-square-check"></i>
+
+                <span>
+                    Tasks
+                </span>
+
+            </a>
+
+
+            <!-- Employees -->
+            <a href="{% url 'employee_list' %}" class="sidebar-link">
+
+                <i class="fa-solid fa-users"></i>
+
+                <span>
+                    Employees
+                </span>
+
+            </a>
+
+
+            <!-- Teams -->
+            <a href="{% url 'team_list' %}" class="sidebar-link">
+
+                <i class="fa-solid fa-user-group"></i>
+
+                <span>
+                    Teams
+                </span>
+
+            </a>
+
+
+
+            <!-- AI & AUTOMATION -->
+
+            <div class="sidebar-heading">
+                AI & AUTOMATION
+            </div>
+
+
+            <!-- AI Agents -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-robot"></i>
+
+                <span>
+                    AI Agents
+                </span>
+
+            </a>
+
+
+            <!-- Workflows -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-share-nodes"></i>
+
+                <span>
+                    Workflows (n8n)
+                </span>
+
+            </a>
+
+
+            <!-- Automation Logs -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-clipboard"></i>
+
+                <span>
+                    Automation Logs
+                </span>
+
+            </a>
+
+
+
+            <!-- REPORTS -->
+
+            <div class="sidebar-heading">
+                REPORTS & ANALYTICS
+            </div>
+
+
+            <!-- Reports -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                <span>
+                    Reports
+                </span>
+
+            </a>
+
+
+            <!-- Analytics -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-chart-pie"></i>
+
+                <span>
+                    Analytics
+                </span>
+
+            </a>
+
+
+
+            <!-- SYSTEM -->
+
+            <div class="sidebar-heading">
+                SYSTEM
+            </div>
+
+
+            <!-- Notifications -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-bell"></i>
+
+                <span>
+                    Notifications
+                </span>
+
+
+                {% comment %} {% if unread_notifications %}
+
+                    <span class="sidebar-badge">
+                        {{ unread_notifications }}
+                    </span>
+
+                {% endif %} {% endcomment %}
+
+            </a>
+
+
+            <!-- Settings -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-gear"></i>
+
+                <span>
+                    Settings
+                </span>
+
+            </a>
+
+
+        {% endif %}
+
+
+
+        <!-- =================================================
+             PROJECT MANAGER SIDEBAR
+        ================================================== -->
+
+        {% if request.user.is_authenticated and request.user.profile.role == "manager" %}
+
+
+            <div class="sidebar-heading">
+                PROJECT MANAGEMENT
+            </div>
+
+
+            <!-- My Projects -->
+            <a href="{% url 'project_list' %}" class="sidebar-link">
+
+                <i class="fa-regular fa-folder"></i>
+
+                <span>
+                    My Projects
+                </span>
+
+            </a>
+
+
+            <!-- SDLC -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <span>
+                    SDLC Phases
+                </span>
+
+            </a>
+
+
+            <!-- Tasks -->
+            <a href="{% url 'task_list' %}" class="sidebar-link">
+
+                <i class="fa-regular fa-square-check"></i>
+
+                <span>
+                    Tasks
+                </span>
+
+            </a>
+
+
+            <!-- Team Members -->
+            <a href="{% url 'team_list' %}" class="sidebar-link">
+
+                <i class="fa-solid fa-user-group"></i>
+
+                <span>
+                    Team Members
+                </span>
+
+            </a>
+
+
+
+            <!-- PROJECT MONITORING -->
+
+            <div class="sidebar-heading">
+                PROJECT MONITORING
+            </div>
+
+
+            <!-- Approvals -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-circle-check"></i>
+
+                <span>
+                    Approvals
+                </span>
+
+            </a>
+
+
+            <!-- Deadlines -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-clock"></i>
+
+                <span>
+                    Deadlines
+                </span>
+
+            </a>
+
+
+            <!-- Reports -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                <span>
+                    Reports
+                </span>
+
+            </a>
+
+
+
+            <!-- AI & AUTOMATION -->
+
+            <div class="sidebar-heading">
+                AI & AUTOMATION
+            </div>
+
+
+            <!-- AI Insights -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-robot"></i>
+
+                <span>
+                    AI Insights
+                </span>
+
+            </a>
+
+
+            <!-- Workflows -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-share-nodes"></i>
+
+                <span>
+                    Workflows (n8n)
+                </span>
+
+            </a>
+
+
+            <!-- Automation Logs -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-clipboard"></i>
+
+                <span>
+                    Automation Logs
+                </span>
+
+            </a>
+
+
+
+            <!-- COMMUNICATION -->
+
+            <div class="sidebar-heading">
+                COMMUNICATION
+            </div>
+
+
+            <!-- Notifications -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-bell"></i>
+
+                <span>
+                    Notifications
+                </span>
+
+
+                {% comment %} {% if unread_notifications %}
+
+                    <span class="sidebar-badge">
+                        {{ unread_notifications }}
+                    </span>
+
+                {% endif %} {% endcomment %}
+
+            </a>
+
+
+            <!-- Announcements -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-bullhorn"></i>
+
+                <span>
+                    Announcements
+                </span>
+
+            </a>
+
+
+
+            <!-- ACCOUNT -->
+
+            <div class="sidebar-heading">
+                ACCOUNT
+            </div>
+
+
+            <!-- Profile -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-user"></i>
+
+                <span>
+                    Profile
+                </span>
+
+            </a>
+
+
+            <!-- Settings -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-gear"></i>
+
+                <span>
+                    Settings
+                </span>
+
+            </a>
+
+
+        {% endif %}
+
+
+
+        <!-- =================================================
+             EMPLOYEE SIDEBAR
+        ================================================== -->
+
+        {% if request.user.is_authenticated and request.user.profile.role == "employee" %}
+
+
+            <div class="sidebar-heading">
+                MY WORK
+            </div>
+
+
+            <!-- My Tasks -->
+            <a href="{% url 'my_tasks' %}" class="sidebar-link">
+
+                <i class="fa-regular fa-square-check"></i>
+
+                <span>
+                    My Tasks
+                </span>
+
+            </a>
+
+
+            <!-- My Projects -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-folder"></i>
+
+                <span>
+                    My Projects
+                </span>
+
+            </a>
+
+
+            <!-- SDLC -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <span>
+                    SDLC Phases
+                </span>
+
+            </a>
+
+
+            <!-- My Submissions -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-file-lines"></i>
+
+                <span>
+                    My Submissions
+                </span>
+
+            </a>
+
+
+
+            <!-- COMMUNICATION -->
+
+            <div class="sidebar-heading">
+                COMMUNICATION
+            </div>
+
+
+            <!-- Notifications -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-bell"></i>
+
+                <span>
+                    Notifications
+                </span>
+
+
+                {% comment %} {% if unread_notifications %}
+
+                    <span class="sidebar-badge">
+                        {{ unread_notifications }}
+                    </span>
+
+                {% endif %} {% endcomment %}
+
+            </a>
+
+
+            <!-- Announcements -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-bullhorn"></i>
+
+                <span>
+                    Announcements
+                </span>
+
+            </a>
+
+
+
+            <!-- AI -->
+
+            <div class="sidebar-heading">
+                AI & ASSISTANCE
+            </div>
+
+
+            <!-- AI Assistant -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-robot"></i>
+
+                <span>
+                    AI Assistant
+                </span>
+
+            </a>
+
+
+
+            <!-- RESOURCES -->
+
+            <div class="sidebar-heading">
+                RESOURCES
+            </div>
+
+
+            <!-- Documents -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-file"></i>
+
+                <span>
+                    Documents
+                </span>
+
+            </a>
+
+
+            <!-- Guidelines -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-book-open"></i>
+
+                <span>
+                    Guidelines
+                </span>
+
+            </a>
+
+
+
+            <!-- ACCOUNT -->
+
+            <div class="sidebar-heading">
+                ACCOUNT
+            </div>
+
+
+            <!-- Profile -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-regular fa-user"></i>
+
+                <span>
+                    Profile
+                </span>
+
+            </a>
+
+
+            <!-- Settings -->
+            <a href="#" class="sidebar-link">
+
+                <i class="fa-solid fa-gear"></i>
+
+                <span>
+                    Settings
+                </span>
+
+            </a>
+
+
+        {% endif %}
+
+
+
+        <!-- =================================================
+             LOGOUT
+        ================================================== -->
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="{% url 'logout' %}"
+                class="sidebar-link logout-link"
+            >
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>
+                    Logout
+                </span>
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+        {% block content %}
+
+        <!-- Page-specific content goes here -->
+
+        {% endblock %}
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <p>
+        © {% now "Y" %} SD Tracker. All rights reserved.
+    </p>
+
+    <span>
+        Version 1.0.0
+    </span>
+
+</footer>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="{% static 'js/script.js' %}"></script>
+
+{% block extra_js %}{% endblock %}
+
+
+</body>
+
+</html>

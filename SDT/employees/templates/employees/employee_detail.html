@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Employee Details</h1>
+        <p>View employee information and work details.</p>
+    </div>
+
+    <div class="header-actions">
+        <a href="{% url 'employee_update' employee.pk %}"
+           class="btn btn-primary">
+            Edit Employee
+        </a>
+
+        <a href="{% url 'employee_list' %}"
+           class="btn btn-secondary">
+            Back
+        </a>
+    </div>
+</div>
+
+
+<div class="detail-grid">
+
+    <!-- Employee Profile -->
+    <div class="detail-card employee-profile">
+
+        <div class="profile-avatar">
+            {{ employee.user.username|slice:":1"|upper }}
+        </div>
+
+        <h2>
+            {{ employee.user.get_full_name }}
+        </h2>
+
+        <p class="designation">
+            {{ employee.designation }}
+        </p>
+
+        <p class="department">
+            {{ employee.department }} Department
+        </p>
+
+        <div class="status-badge status-{{ employee.status }}">
+            {{ employee.get_status_display }}
+        </div>
+
+    </div>
+
+
+    <!-- Personal Information -->
+    <div class="detail-card">
+
+        <h2>Personal Information</h2>
+
+        <div class="info-list">
+
+            <div class="info-item">
+                <span>Username</span>
+                <strong>{{ employee.user.username }}</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Full Name</span>
+                <strong>
+                    {{ employee.user.get_full_name }}
+                </strong>
+            </div>
+
+            <div class="info-item">
+                <span>Email</span>
+                <strong>
+                    {{ employee.user.email }}
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Employment Information -->
+    <div class="detail-card">
+
+        <h2>Employment Information</h2>
+
+        <div class="info-list">
+
+            <div class="info-item">
+                <span>Employee ID</span>
+                <strong>
+                    {{ employee.employee_id }}
+                </strong>
+            </div>
+
+            <div class="info-item">
+                <span>Designation</span>
+                <strong>
+                    {{ employee.designation }}
+                </strong>
+            </div>
+
+            <div class="info-item">
+                <span>Department</span>
+                <strong>
+                    {{ employee.department }}
+                </strong>
+            </div>
+
+            <div class="info-item">
+                <span>Role</span>
+
+                <strong>
+                    {{ employee.user.profile.get_role_display }}
+                </strong>
+            </div>
+
+            <div class="info-item">
+                <span>Joining Date</span>
+
+                <strong>
+                    {{ employee.joining_date }}
+                </strong>
+            </div>
+
+            <div class="info-item">
+                <span>Status</span>
+
+                <strong>
+                    {{ employee.get_status_display }}
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Skills -->
+    <div class="detail-card full-width">
+
+        <h2>Skills</h2>
+
+        {% if employee.skills %}
+
+            <p>
+                {{ employee.skills }}
+            </p>
+
+        {% else %}
+
+            <p class="empty-text">
+                No skills added yet.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Teams -->
+    <div class="detail-card full-width">
+
+        <h2>Teams</h2>
+
+        {% if employee.teams.all %}
+
+            <div class="team-list">
+
+                {% for team in employee.teams.all %}
+
+                    <div class="team-item">
+
+                        <strong>
+                            {{ team.name }}
+                        </strong>
+
+                        {% if team.manager == employee %}
+
+                            <span class="role-badge">
+                                Team Manager
+                            </span>
+
+                        {% else %}
+
+                            <span class="role-badge employee">
+                                Member
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="empty-text">
+                This employee is not assigned to any team.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>My Tasks</h1>
+        <p>View and manage tasks assigned to you.</p>
+    </div>
+
+</div>
+
+
+<div class="summary-cards">
+
+    <div class="summary-card">
+        <h3>Total Tasks</h3>
+        <h2>{{ tasks.count }}</h2>
+    </div>
+
+    <div class="summary-card">
+        <h3>To Do</h3>
+        <h2>{{ tasks|length }}</h2>
+    </div>
+
+</div>
+
+
+<div class="table-container">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Task</th>
+
+                <th>Project</th>
+
+                <th>Phase</th>
+
+                <th>Priority</th>
+
+                <th>Status</th>
+
+                <th>Deadline</th>
+
+                <th>Progress</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            {% for task in tasks %}
+
+            <tr>
+
+                <!-- Task -->
+
+                <td>
+
+                    <strong>
+                        {{ task.title }}
+                    </strong>
+
+                    <br>
+
+                    <small>
+                        {{ task.description|truncatewords:10 }}
+                    </small>
+
+                </td>
+
+
+                <!-- Project -->
+
+                <td>
+
+                    {{ task.project.name }}
+
+                </td>
+
+
+                <!-- Phase -->
+
+                <td>
+
+                    {% if task.phase %}
+
+                        {{ task.phase.get_phase_name_display }}
+
+                    {% else %}
+
+                        No Phase
+
+                    {% endif %}
+
+                </td>
+
+
+                <!-- Priority -->
+
+                <td>
+
+                    <span class="priority {{ task.priority }}">
+
+                        {{ task.get_priority_display }}
+
+                    </span>
+
+                </td>
+
+
+                <!-- Status -->
+
+                <td>
+
+                    <span class="status {{ task.status }}">
+
+                        {{ task.get_status_display }}
+
+                    </span>
+
+                </td>
+
+
+                <!-- Deadline -->
+
+                <td>
+
+                    {{ task.deadline|date:"d M Y" }}
+
+                </td>
+
+
+                <!-- Progress -->
+
+                <td>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width: {{ task.progress }}%"
+                        >
+                        </div>
+
+                    </div>
+
+                    {{ task.progress }}%
+
+                </td>
+
+
+                <!-- Actions -->
+
+                <td>
+
+                    <a
+                        href="{% url 'task_detail' task.id %}"
+                        class="btn btn-sm"
+                    >
+                        View
+                    </a>
+
+
+                    {% if task.status != "in_review" and task.status != "completed" %}
+
+                    <a
+                        href="{% url 'task_progress' task.id %}"
+                        class="btn btn-sm btn-primary"
+                    >
+                        Update
+                    </a>
+
+                    {% endif %}
+
+
+                    {% if task.status == "in_progress" %}
+
+                    <a
+                        href="{% url 'submit_task' task.id %}"
+                        class="btn btn-sm btn-success"
+                    >
+                        Submit
+                    </a>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="8">
+
+                    No tasks have been assigned to you.
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

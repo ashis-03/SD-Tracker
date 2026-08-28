@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>Update Task Progress</h1>
+
+        <p>
+            Update the progress of your assigned task.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="form-container">
+
+    <div class="task-info">
+
+        <h2>{{ task.title }}</h2>
+
+        <p>
+
+            <strong>Project:</strong>
+
+            {{ task.project.name }}
+
+        </p>
+
+
+        {% if task.phase %}
+
+        <p>
+
+            <strong>SDLC Phase:</strong>
+
+            {{ task.phase.get_phase_name_display }}
+
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        {% if form.errors %}
+
+            <div class="error">
+
+                {{ form.errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- Status -->
+
+        <div class="form-group">
+
+            <label for="{{ form.status.id_for_label }}">
+
+                Task Status
+
+            </label>
+
+            {{ form.status }}
+
+            {% if form.status.errors %}
+
+                <div class="error">
+
+                    {{ form.status.errors }}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Progress -->
+
+        <div class="form-group">
+
+            <label for="{{ form.progress.id_for_label }}">
+
+                Progress (%)
+
+            </label>
+
+            {{ form.progress }}
+
+            {% if form.progress.errors %}
+
+                <div class="error">
+
+                    {{ form.progress.errors }}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Current Progress -->
+
+        <div class="progress-section">
+
+            <h3>Current Progress: {{ task.progress }}%</h3>
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    style="width: {{ task.progress }}%"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+
+                Update Progress
+
+            </button>
+
+
+            <a
+                href="{% url 'task_detail' task.id %}"
+                class="btn btn-secondary"
+            >
+
+                Cancel
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

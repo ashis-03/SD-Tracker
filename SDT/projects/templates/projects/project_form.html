@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+{% if project %}
+Edit Project | SD Tracker
+{% else %}
+Create Project | SD Tracker
+{% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        {% if project %}
+
+            <h1>Edit Project</h1>
+
+            <p>
+                Update the project information.
+            </p>
+
+        {% else %}
+
+            <h1>Create New Project</h1>
+
+            <p>
+                Add a new project to the system.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<div class="form-card">
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        <!-- =========================
+             PROJECT NAME
+        ========================= -->
+
+        <div class="form-group">
+
+            <label for="{{ form.name.id_for_label }}">
+                Project Name
+            </label>
+
+            {{ form.name }}
+
+            {% if form.name.errors %}
+
+                <div class="form-error">
+                    {{ form.name.errors }}
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =========================
+             DESCRIPTION
+        ========================= -->
+
+        <div class="form-group">
+
+            <label for="{{ form.description.id_for_label }}">
+                Description
+            </label>
+
+            {{ form.description }}
+
+            {% if form.description.errors %}
+
+                <div class="form-error">
+                    {{ form.description.errors }}
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =========================
+             CLIENT NAME
+        ========================= -->
+
+        <div class="form-group">
+
+            <label for="{{ form.client_name.id_for_label }}">
+                Client Name
+            </label>
+
+            {{ form.client_name }}
+
+        </div>
+
+
+        <!-- =========================
+             DATES
+        ========================= -->
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label for="{{ form.start_date.id_for_label }}">
+                    Start Date
+                </label>
+
+                {{ form.start_date }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="{{ form.deadline.id_for_label }}">
+                    Deadline
+                </label>
+
+                {{ form.deadline }}
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             STATUS + MANAGER
+        ========================= -->
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label for="{{ form.status.id_for_label }}">
+                    Project Status
+                </label>
+
+                {{ form.status }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="{{ form.manager.id_for_label }}">
+                    Assign Manager
+                </label>
+
+                {{ form.manager }}
+
+            </div>
+
+        </div>
+
+        <!-- =========================
+             TEAM
+        ========================= -->   
+
+        <div class="form-group">
+
+            <label>Assign Teams</label>
+
+            <div class="team-dropdown">
+
+                <button
+                    type="button"
+                    class="team-dropdown-btn"
+                    onclick="toggleTeams()"
+                >
+                    <span id="selectedTeamsText">
+                        Select Teams
+                    </span>
+
+                    <span>⌄</span>
+                </button>
+
+
+                <div
+                    class="team-dropdown-content"
+                    id="teamDropdown"
+                >
+
+                    {% for checkbox in form.teams %}
+
+                        <label class="team-option">
+
+                            {{ checkbox.tag }}
+
+                            <span>
+                                {{ checkbox.choice_label }}
+                            </span>
+
+                        </label>
+
+                    {% empty %}
+
+                        <p>No teams available</p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             FORM ERRORS
+        ========================= -->
+
+        {% if form.non_field_errors %}
+
+            <div class="form-error">
+
+                {{ form.non_field_errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =========================
+             BUTTONS
+        ========================= -->
+
+        <div class="form-actions">
+
+            <a
+                href="{% url 'project_list' %}"
+                class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                {% if project %}
+
+                    Update Project
+
+                {% else %}
+
+                    Create Project
+
+                {% endif %}
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

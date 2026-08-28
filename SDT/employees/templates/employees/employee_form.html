@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        {% if employee %}
+
+            <h1>Edit Employee</h1>
+            <p>Update employee information.</p>
+
+        {% else %}
+
+            <h1>Add Employee</h1>
+            <p>Add a new employee to the organization.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<div class="form-card">
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        {% if form.non_field_errors %}
+
+            <div class="form-errors">
+
+                {{ form.non_field_errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- User -->
+
+        <div class="form-group">
+
+            <label for="{{ form.user.id_for_label }}">
+                User
+            </label>
+
+            {{ form.user }}
+
+            {% if form.user.errors %}
+
+                <small class="error">
+
+                    {{ form.user.errors }}
+
+                </small>
+
+            {% endif %}
+
+        </div>
+
+        <!-- Role -->
+        <div class="form-group">
+
+            <label>Role</label>
+
+            {{ form.role }}
+
+            {% if form.role.errors %}
+
+                <div class="error">
+
+                    {{ form.role.errors }}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <!-- Employee ID -->
+
+        <div class="form-group">
+
+            <label for="{{ form.employee_id.id_for_label }}">
+                Employee ID
+            </label>
+
+            {{ form.employee_id }}
+
+            {% if form.employee_id.errors %}
+
+                <small class="error">
+
+                    {{ form.employee_id.errors }}
+
+                </small>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="form-row">
+
+            <!-- Designation -->
+
+            <div class="form-group">
+
+                <label for="{{ form.designation.id_for_label }}">
+                    Designation
+                </label>
+
+                {{ form.designation }}
+
+                {% if form.designation.errors %}
+
+                    <small class="error">
+
+                        {{ form.designation.errors }}
+
+                    </small>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Department -->
+
+            <div class="form-group">
+
+                <label for="{{ form.department.id_for_label }}">
+                    Department
+                </label>
+
+                {{ form.department }}
+
+                {% if form.department.errors %}
+
+                    <small class="error">
+
+                        {{ form.department.errors }}
+
+                    </small>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- Skills -->
+
+        <div class="form-group">
+
+            <label for="{{ form.skills.id_for_label }}">
+                Skills
+            </label>
+
+            {{ form.skills }}
+
+            {% if form.skills.errors %}
+
+                <small class="error">
+
+                    {{ form.skills.errors }}
+
+                </small>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="form-row">
+
+            <!-- Joining Date -->
+
+            <div class="form-group">
+
+                <label for="{{ form.joining_date.id_for_label }}">
+                    Joining Date
+                </label>
+
+                {{ form.joining_date }}
+
+                {% if form.joining_date.errors %}
+
+                    <small class="error">
+
+                        {{ form.joining_date.errors }}
+
+                    </small>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Status -->
+
+            <div class="form-group">
+
+                <label for="{{ form.status.id_for_label }}">
+                    Status
+                </label>
+
+                {{ form.status }}
+
+                {% if form.status.errors %}
+
+                    <small class="error">
+
+                        {{ form.status.errors }}
+
+                    </small>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="form-actions">
+
+            <a href="{% url 'employee_list' %}"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                {% if employee %}
+
+                    Update Employee
+
+                {% else %}
+
+                    Add Employee
+
+                {% endif %}
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

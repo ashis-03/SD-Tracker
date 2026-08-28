@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Welcome to the Admin Dashboard, {{ request.user.username }}</h2>
+
+<p>Email: {{ request.user.email }}</p>
+<p>Role: {{ request.user.profile.role }}</p>
+
+<h3>Admin Panel</h3>
+
+<ul>
+    <li>Manage Users</li>
+    <li>Manage Projects</li>
+    <li>Manage Tasks</li>
+    <li>View Reports</li>
+</ul>
+
+{% endblock %}
+
+ 

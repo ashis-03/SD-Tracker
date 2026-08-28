@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>Submit Task</h1>
+
+        <p>
+            Upload your work and submit it for manager review.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="form-container">
+
+
+    <!-- Task Information -->
+
+    <div class="task-info">
+
+        <h2>{{ task.title }}</h2>
+
+
+        <p>
+
+            <strong>Project:</strong>
+
+            {{ task.project.name }}
+
+        </p>
+
+
+        {% if task.phase %}
+
+        <p>
+
+            <strong>Phase:</strong>
+
+            {{ task.phase.get_phase_name_display }}
+
+        </p>
+
+        {% endif %}
+
+
+        <p>
+
+            <strong>Current Progress:</strong>
+
+            {{ task.progress }}%
+
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        {% csrf_token %}
+
+
+        {% if form.errors %}
+
+            <div class="error">
+
+                {{ form.errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- Work File -->
+
+        <div class="form-group">
+
+            <label for="{{ form.work_file.id_for_label }}">
+
+                Upload Your Work
+
+            </label>
+
+            {{ form.work_file }}
+
+
+            {% if form.work_file.errors %}
+
+                <div class="error">
+
+                    {{ form.work_file.errors }}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="submit-warning">
+
+            <p>
+
+                Once submitted, this task will be sent to the manager for review.
+
+            </p>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+
+                Submit for Review
+
+            </button>
+
+
+            <a
+                href="{% url 'task_detail' task.id %}"
+                class="btn btn-secondary"
+            >
+
+                Cancel
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

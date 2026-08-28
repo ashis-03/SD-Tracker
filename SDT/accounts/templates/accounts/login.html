@@ -1,0 +1,237 @@
+{% comment %} {% extends "base.html" %}
+{% block content %}
+<h2>Login</h2>
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <p>Username: <input type="text" name="username"></p>
+    <p>Password: <input type="password" name="password"></p>
+    <button type="submit">Login</button>
+</form>
+{% endblock  %} {% endcomment %}
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login - SD Tracker</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/auth.css' %}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="auth-page">
+
+    <div class="auth-card">
+
+        <!-- Logo -->
+
+        <div class="auth-logo">
+
+            <div class="auth-logo-icon">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+
+            <div>
+                <h1>SD Tracker</h1>
+                <p>Agentic AI Powered</p>
+            </div>
+
+        </div>
+
+
+        <!-- Heading -->
+
+        <div class="auth-heading">
+
+            <h2>Welcome Back 👋</h2>
+
+            <p>
+                Login to your account to continue
+            </p>
+
+        </div>
+
+
+        <!-- Messages -->
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="message">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <!-- Login Form -->
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <!-- Username -->
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fa-regular fa-user"></i>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                    <i class="fa-regular fa-eye password-toggle"
+                       onclick="togglePassword()">
+                    </i>
+
+                </div>
+
+            </div>
+
+
+            <!-- Remember -->
+
+            <div class="login-options">
+
+                <label class="remember">
+
+                    <input type="checkbox">
+
+                    <span>Remember me</span>
+
+                </label>
+
+                <a href="#">
+                    Forgot password?
+                </a>
+
+            </div>
+
+
+            <!-- Login -->
+
+            <button type="submit"
+                    class="auth-button">
+
+                Login
+
+            </button>
+
+        </form>
+
+
+        <!-- Divider -->
+
+        <div class="divider">
+
+            <span>or</span>
+
+        </div>
+
+
+        <!-- Google -->
+
+        <button class="google-button"
+                type="button">
+
+            <i class="fa-brands fa-google"></i>
+
+            Login with Google
+
+        </button>
+
+
+        <!-- Register -->
+
+        <p class="auth-footer">
+
+            Don't have an account?
+
+            <a href="{% url 'register' %}">
+                Sign up
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function togglePassword() {
+
+    const password =
+        document.getElementById("password");
+
+    if (password.type === "password") {
+
+        password.type = "text";
+
+    } else {
+
+        password.type = "password";
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

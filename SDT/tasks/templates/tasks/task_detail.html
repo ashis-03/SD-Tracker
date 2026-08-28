@@ -1,0 +1,432 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Page Header -->
+
+<div class="page-header">
+
+    <div>
+
+        <h1>{{ task.title }}</h1>
+
+        <p>
+            Task details and progress information.
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <a href="{% url back_url %}" class="btn btn-secondary">
+            {{ back_text }}
+        </a>
+
+        {% if user.is_superuser or user.profile.role == "manager" or user.profile.role == "admin" %}
+
+            <a
+                href="{% url 'task_edit' task.id %}"
+                class="btn btn-primary"
+            >
+                Edit Task
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- Task Information -->
+
+<div class="detail-container">
+
+    <div class="detail-card">
+
+        <h2>Task Information</h2>
+
+
+        <div class="detail-row">
+
+            <strong>Task Title:</strong>
+
+            <span>
+                {{ task.title }}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>Description:</strong>
+
+            <span>
+                {% if task.description %}
+                    {{ task.description }}
+                {% else %}
+                    No description provided.
+                {% endif %}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>Project:</strong>
+
+            <span>
+                {{ task.project.name }}
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>SDLC Phase:</strong>
+
+            <span>
+
+                {% if task.phase %}
+
+                    {{ task.phase.get_phase_name_display }}
+
+                {% else %}
+
+                    No phase assigned
+
+                {% endif %}
+
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>Assigned To:</strong>
+
+            <span>
+
+                {% if task.assigned_to %}
+
+                    {{ task.assigned_to }}
+
+                {% else %}
+
+                    Unassigned
+
+                {% endif %}
+
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Task Status -->
+
+    <div class="detail-card">
+
+        <h2>Status & Priority</h2>
+
+
+        <div class="detail-row">
+
+            <strong>Status:</strong>
+
+            <span class="status {{ task.status }}">
+
+                {{ task.get_status_display }}
+
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>Priority:</strong>
+
+            <span class="priority {{ task.priority }}">
+
+                {{ task.get_priority_display }}
+
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>Deadline:</strong>
+
+            <span>
+
+                {{ task.deadline }}
+
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>Created At:</strong>
+
+            <span>
+
+                {{ task.created_at|date:"d M Y, h:i A" }}
+
+            </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <strong>Last Updated:</strong>
+
+            <span>
+
+                {{ task.updated_at|date:"d M Y, h:i A" }}
+
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Progress Section -->
+
+<div class="detail-card progress-section">
+
+    <h2>Task Progress</h2>
+
+    <div class="progress-bar large">
+
+        <div
+            class="progress-fill"
+            style="width: {{ task.progress }}%"
+        >
+        </div>
+
+    </div>
+
+    <h3>
+        {{ task.progress }}%
+    </h3>
+
+
+    <!-- Only assigned employee can update progress -->
+
+    {% if user.profile.role == "employee" and task.assigned_to == user.employee %}
+
+        {% if task.status != "completed" and task.status != "in_review" %}
+
+            <a
+                href="{% url 'task_progress' task.id %}"
+                class="btn btn-primary"
+            >
+                Update Progress
+            </a>
+
+        {% endif %}
+
+    {% endif %}
+
+</div>
+
+
+<!-- Submitted Work -->
+
+<div class="detail-card">
+
+    <h2>Submitted Work</h2>
+
+
+    {% if task.work_file %}
+
+        <p>
+
+            <strong>Uploaded File:</strong>
+
+            <a
+                href="{{ task.work_file.url }}"
+                target="_blank"
+            >
+                View Submitted Work
+            </a>
+
+        </p>
+
+
+        {% if task.submitted_at %}
+
+            <p>
+
+                Submitted on:
+
+                {{ task.submitted_at|date:"d M Y, h:i A" }}
+
+            </p>
+
+        {% endif %}
+
+
+    {% else %}
+
+        <p>
+            No work has been submitted yet.
+        </p>
+
+    {% endif %}
+
+
+    <!-- Only assigned employee can submit work -->
+
+    {% if user.profile.role == "employee" and task.assigned_to == user.employee %}
+
+        {% if task.status == "in_progress" or task.status == "todo" %}
+
+            <a
+                href="{% url 'submit_task' task.id %}"
+                class="btn btn-primary"
+            >
+                Upload & Submit Work
+            </a>
+
+        {% endif %}
+
+    {% endif %}
+
+</div>
+
+<!-- Review Section -->
+
+<div class="detail-card">
+
+    <h2>Review Status</h2>
+
+
+    <div class="detail-row">
+
+        <strong>Review:</strong>
+
+        <span class="review-status {{ task.review_status }}">
+
+            {{ task.get_review_status_display }}
+
+        </span>
+
+    </div>
+
+
+    <!-- Task waiting for review -->
+
+    {% if task.status == "in_review" %}
+
+        <p>
+            This task has been submitted and is waiting for review.
+        </p>
+
+
+        <!-- Only Manager/Admin can review -->
+
+        {% if user.is_superuser or user.profile.role == "manager" or user.profile.role == "admin" %}
+
+            <div class="review-actions">
+
+                <h3>Review Submitted Task</h3>
+
+
+                <form
+                    method="POST"
+                    action="{% url 'review_task' task.id %}"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- Approve -->
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="approve"
+                        class="btn btn-success"
+                    >
+                        Approve
+                    </button>
+
+
+                    <!-- Request Changes -->
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="changes"
+                        class="btn btn-warning"
+                    >
+                        Request Changes
+                    </button>
+
+
+                    <!-- Reject -->
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="reject"
+                        class="btn btn-danger"
+                    >
+                        Reject
+                    </button>
+
+                </form>
+
+            </div>
+
+        {% endif %}
+
+
+    {% elif task.review_status == "approved" %}
+
+        <p>
+            This task has been approved and completed.
+        </p>
+
+
+    {% elif task.review_status == "changes_requested" %}
+
+        <p>
+            Changes have been requested. The assigned employee should update the work and submit it again.
+        </p>
+
+
+    {% elif task.review_status == "rejected" %}
+
+        <p>
+            This task has been rejected.
+        </p>
+
+
+    {% else %}
+
+        <p>
+            This task has not been submitted for review yet.
+        </p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
