@@ -1,6 +1,6 @@
 from django import forms
 from .models import Task
-
+from employees.models import Employee
 
 # Create Task
 class TaskForm(forms.ModelForm):
@@ -60,6 +60,15 @@ class TaskForm(forms.ModelForm):
             ),
         }
 
+    def __init__(self, *args, **kwargs):
+    
+        super().__init__(*args, **kwargs)
+
+        # Only Project Managers can be selected
+        self.fields["assigned_to"].queryset = Employee.objects.filter(
+            user__profile__role="employee"
+        )
+
 
 # Edit Task - Admin / Manager
 class TaskEditForm(forms.ModelForm):
@@ -109,6 +118,15 @@ class TaskEditForm(forms.ModelForm):
                 attrs={"class": "form-control"}
             ),
         }
+
+    def __init__(self, *args, **kwargs):
+        
+            super().__init__(*args, **kwargs)
+    
+            # Only Project Managers can be selected
+            self.fields["assigned_to"].queryset = Employee.objects.filter(
+                user__profile__role="employee"
+            )
 
 
 # Employee updates progress
