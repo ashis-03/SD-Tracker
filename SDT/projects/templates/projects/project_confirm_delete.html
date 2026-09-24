@@ -1,7 +1,18 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 Delete Project | SD Tracker
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/projects/project_delete.css' %}"
+>
+
 {% endblock %}
 
 
@@ -22,22 +33,13 @@ Delete Project | SD Tracker
 
 
         <p>
-
             Are you sure you want to delete
-
-            <strong>
-                "{{ project.name }}"
-            </strong>
-
-            ?
-
+            <strong>"{{ project.name }}"</strong>?
         </p>
 
 
         <p class="delete-warning">
-
             This action cannot be undone.
-
         </p>
 
 
@@ -45,21 +47,20 @@ Delete Project | SD Tracker
 
             {% csrf_token %}
 
-
             <div class="delete-actions">
 
                 <a
                     href="{% url 'project_detail' project.id %}"
-                    class="btn btn-secondary">
-
+                    class="btn btn-secondary"
+                >
                     Cancel
-
                 </a>
 
 
                 <button
                     type="submit"
-                    class="btn btn-danger">
+                    class="btn btn-danger"
+                >
 
                     <i class="fa-solid fa-trash"></i>
 

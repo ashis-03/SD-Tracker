@@ -1,0 +1,541 @@
+/* =========================================================
+   SD TRACKER - PROJECT DETAIL
+   ========================================================= */
+
+.project-detail-page {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.project-detail-page .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 28px;
+    gap: 20px;
+}
+
+.project-detail-page .page-header h1 {
+    margin: 0;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    color: #101828;
+}
+
+.project-detail-page .page-header p {
+    margin: 6px 0 0;
+
+    font-size: 14px;
+    color: #667085;
+}
+
+
+/* =========================================================
+   HEADER BUTTONS
+   ========================================================= */
+
+.project-detail-page .page-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.project-detail-page .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 42px;
+    padding: 0 17px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: all .2s ease;
+}
+
+.project-detail-page .btn-primary {
+    background: #2563eb;
+    color: white;
+
+    border: 1px solid #2563eb;
+
+    box-shadow: 0 2px 5px rgba(37, 99, 235, .18);
+}
+
+.project-detail-page .btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.project-detail-page .btn-secondary {
+    background: white;
+    color: #344054;
+
+    border: 1px solid #d0d5dd;
+}
+
+.project-detail-page .btn-secondary:hover {
+    background: #f9fafb;
+}
+
+
+/* =========================================================
+   COMMON CARD
+   ========================================================= */
+
+.project-detail-page .detail-card {
+    background: #ffffff;
+
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+    box-shadow: 0 2px 8px rgba(16, 24, 40, .035);
+}
+
+.project-detail-page .detail-card:hover {
+    box-shadow: 0 5px 18px rgba(16, 24, 40, .06);
+}
+
+.project-detail-page .detail-card h2 {
+    margin: 0 0 20px;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    color: #101828;
+}
+
+
+/* =========================================================
+   PROJECT INFORMATION
+   ========================================================= */
+
+.project-detail-page .detail-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 22px 35px;
+}
+
+.project-detail-page .detail-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 12px 14px;
+
+    background: #f8fafc;
+
+    border: 1px solid #eef2f6;
+    border-radius: 9px;
+}
+
+.project-detail-page .detail-label {
+    font-size: 11px;
+
+    font-weight: 600;
+
+    color: #667085;
+
+    text-transform: uppercase;
+
+    letter-spacing: .04em;
+}
+
+.project-detail-page .detail-value {
+    font-size: 14px;
+
+    color: #344054;
+
+    line-height: 1.5;
+}
+
+.project-detail-page .detail-value strong {
+    color: #101828;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.project-detail-page .status {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+
+    padding: 6px 13px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.project-detail-page .status.planning {
+    background: #edf4ff;
+    color: #2563eb;
+}
+
+.project-detail-page .status.active,
+.project-detail-page .status.in_progress {
+    background: #eafaf0;
+    color: #16803c;
+}
+
+.project-detail-page .status.completed {
+    background: #e8f8ee;
+    color: #16a34a;
+}
+
+.project-detail-page .status.on_hold {
+    background: #fff5df;
+    color: #b54708;
+}
+
+.project-detail-page .status.cancelled {
+    background: #fff0f0;
+    color: #d92d20;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.project-detail-page .description {
+    margin-top: 24px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #eaecf0;
+}
+
+.project-detail-page .description h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin: 0 0 8px;
+
+    font-size: 16px;
+
+    color: #101828;
+}
+
+.project-detail-page .description p {
+    margin: 0;
+
+    color: #475467;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   PROJECT STATUS CARD
+   ========================================================= */
+
+.project-detail-page .status-card {
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f8fbff 100%
+    );
+}
+
+.project-detail-page .status-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+.project-detail-page .status-header h2 {
+    margin: 0;
+}
+
+.project-detail-page .status-label {
+    font-size: 12px;
+    color: #667085;
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.project-detail-page .progress-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 20px;
+    margin-bottom: 9px;
+}
+
+.project-detail-page .progress-title {
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #475467;
+}
+
+.project-detail-page .progress-percentage {
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #2563eb;
+}
+
+.project-detail-page .progress-bar {
+    width: 100%;
+
+    height: 11px;
+
+    background: #eaecf0;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.project-detail-page .progress-fill {
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        #2563eb,
+        #4f7df3
+    );
+
+    border-radius: 999px;
+
+    transition: width .4s ease;
+}
+
+
+/* =========================================================
+   SDLC PHASES
+   ========================================================= */
+
+.project-detail-page .phase-list {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+.project-detail-page .phase-item {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 17px;
+
+    background: #f8fafc;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 9px;
+
+    transition: all .2s ease;
+}
+
+.project-detail-page .phase-item:hover {
+    background: #f4f8ff;
+
+    border-color: #c7d7fe;
+
+    transform: translateY(-1px);
+}
+
+.project-detail-page .phase-name {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #344054;
+}
+
+.project-detail-page .phase-name i {
+    color: #2563eb;
+}
+
+.project-detail-page .phase-status {
+    font-size: 12px;
+
+    color: #667085;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.project-detail-page .empty-state {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 90px;
+
+    padding: 20px;
+
+    background: #f9fafb;
+
+    border: 1px dashed #d0d5dd;
+
+    border-radius: 9px;
+
+    color: #667085;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   DANGER ZONE
+   ========================================================= */
+
+.project-detail-page .danger-zone {
+    padding: 22px 25px;
+
+    margin-top: 25px;
+
+    background: #fffafa;
+
+    border: 1px solid #fecdca;
+
+    border-radius: 12px;
+}
+
+.project-detail-page .danger-zone h2 {
+    margin: 0 0 5px;
+
+    font-size: 17px;
+
+    color: #b42318;
+}
+
+.project-detail-page .danger-zone p {
+    margin: 0 0 16px;
+
+    font-size: 13px;
+
+    color: #667085;
+}
+
+.project-detail-page .delete-button {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 7px;
+
+    padding: 9px 14px;
+
+    border-radius: 7px;
+
+    border: 1px solid #f04438;
+
+    background: #ffffff;
+
+    color: #d92d20;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: all .2s ease;
+}
+
+.project-detail-page .delete-button:hover {
+    background: #fff0f0;
+
+    border-color: #d92d20;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .project-detail-page .detail-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .project-detail-page .phase-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .project-detail-page .page-header {
+        flex-direction: column;
+    }
+
+    .project-detail-page .page-actions {
+        width: 100%;
+    }
+
+    .project-detail-page .page-actions .btn {
+        flex: 1;
+    }
+
+    .project-detail-page .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-detail-page .detail-card {
+        padding: 19px;
+    }
+}

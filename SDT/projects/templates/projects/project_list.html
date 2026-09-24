@@ -1,306 +1,346 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %}
 Projects | SD Tracker
 {% endblock %}
 
 
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/projects/project_list.css' %}">
+
+{% endblock %}
+
+
 {% block content %}
 
-<div class="page-header">
+<div class="projects-page">
 
-    <div>
 
-        <h1>Projects</h1>
+    <!-- =========================
+         PAGE HEADER
+    ========================= -->
 
-        <p>
-            Manage and monitor all software development projects.
-        </p>
+    <div class="page-header">
+
+        <div>
+
+            <h1>Projects</h1>
+
+            <p>
+                Manage and monitor all software development projects.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'project_create' %}"
+            class="create-button"
+        >
+
+            <i class="fa-solid fa-plus"></i>
+
+            Create Project
+
+        </a>
 
     </div>
 
-    <a
-        href="{% url 'project_create' %}"
-        class="create-button"
+
+
+    <!-- =========================
+         PROJECT STATISTICS
+    ========================= -->
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div>
+
+                <p>Total Projects</p>
+
+                <h2>
+                    {{ total_projects }}
+                </h2>
+
+            </div>
+
+            <i class="fa-regular fa-folder"></i>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div>
+
+                <p>Active</p>
+
+                <h2>
+                    {{ active_projects }}
+                </h2>
+
+            </div>
+
+            <i class="fa-solid fa-spinner"></i>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div>
+
+                <p>Completed</p>
+
+                <h2>
+                    {{ completed_projects }}
+                </h2>
+
+            </div>
+
+            <i class="fa-solid fa-circle-check"></i>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div>
+
+                <p>On Hold</p>
+
+                <h2>
+                    {{ on_hold_projects }}
+                </h2>
+
+            </div>
+
+            <i class="fa-solid fa-pause"></i>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         SEARCH + FILTER
+    ========================= -->
+
+    <form
+        method="GET"
+        class="project-filter"
     >
 
-        <i class="fa-solid fa-plus"></i>
+        <div class="search-box">
 
-        Create Project
+            <i class="fa-solid fa-magnifying-glass"></i>
 
-    </a>
-
-</div>
-
-
-<!-- =========================
-     PROJECT STATISTICS
-========================= -->
-
-<div class="stats-grid">
-
-
-    <div class="stat-card">
-
-        <div>
-
-            <p>Total Projects</p>
-
-            <h2>
-                {{ total_projects }}
-            </h2>
+            <input
+                type="text"
+                name="search"
+                placeholder="Search projects..."
+                value="{{ request.GET.search }}"
+            >
 
         </div>
 
-        <i class="fa-regular fa-folder"></i>
 
-    </div>
 
+        <select name="status">
 
-    <div class="stat-card">
+            <option value="">
+                All Status
+            </option>
 
-        <div>
 
-            <p>Active</p>
+            {% for value, label in status_choices %}
 
-            <h2>
-                {{ active_projects }}
-            </h2>
-
-        </div>
-
-        <i class="fa-solid fa-spinner"></i>
-
-    </div>
-
-
-    <div class="stat-card">
-
-        <div>
-
-            <p>Completed</p>
-
-            <h2>
-                {{ completed_projects }}
-            </h2>
-
-        </div>
-
-        <i class="fa-solid fa-circle-check"></i>
-
-    </div>
-
-
-    <div class="stat-card">
-
-        <div>
-
-            <p>On Hold</p>
-
-            <h2>
-                {{ on_hold_projects }}
-            </h2>
-
-        </div>
-
-        <i class="fa-solid fa-pause"></i>
-
-    </div>
-
-
-</div>
-
-
-<!-- =========================
-     SEARCH + FILTER
-========================= -->
-
-<form method="GET" class="project-filter">
-
-    <div class="search-box">
-
-        <i class="fa-solid fa-magnifying-glass"></i>
-
-        <input
-            type="text"
-            name="search"
-            placeholder="Search projects..."
-            value="{{ request.GET.search }}"
-        >
-
-    </div>
-
-
-    <select name="status">
-
-        <option value="">
-            All Status
-        </option>
-
-        {% for value, label in status_choices %}
-
-        <option
-            value="{{ value }}"
-            {% if request.GET.status == value %}
-                selected
-            {% endif %}
-        >
-
-            {{ label }}
-
-        </option>
-
-        {% endfor %}
-
-    </select>
-
-
-    <button type="submit">
-
-        Filter
-
-    </button>
-
-</form>
-
-
-<!-- =========================
-     PROJECT TABLE
-========================= -->
-
-<div class="table-card">
-
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>Project</th>
-
-                <th>Client</th>
-
-                <th>Manager</th>
-
-                <th>Status</th>
-
-                <th>Deadline</th>
-
-                <th>Actions</th>
-
-            </tr>
-
-        </thead>
-
-
-        <tbody>
-
-            {% for project in projects %}
-
-            <tr>
-
-                <td>
-
-                    <a
-                        href="{% url 'project_detail' project.id %}"
-                    >
-
-                        {{ project.name }}
-
-                    </a>
-
-                </td>
-
-
-                <td>
-
-                    {{ project.client_name }}
-
-                </td>
-
-
-                <td>
-
-                    {% if project.manager %}
-
-                        {{ project.manager }}
-
-                    {% else %}
-
-                        No Manager Assigned
-
+                <option
+                    value="{{ value }}"
+                    {% if request.GET.status == value %}
+                        selected
                     {% endif %}
+                >
 
-                </td>
+                    {{ label }}
 
-
-                <td>
-
-                    <span class="status {{ project.status }}">
-
-                        {{ project.get_status_display }}
-
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    {{ project.deadline }}
-
-                </td>
-
-
-                <td class="action-buttons">
-
-                    <a
-                        href="{% url 'project_detail' project.id %}"
-                    >
-
-                        View
-
-                    </a>
-
-
-                    <a
-                        href="{% url 'project_edit' project.id %}"
-                    >
-
-                        Edit
-
-                    </a>
-
-
-                    <a
-                        href="{% url 'project_delete' project.id %}"
-                    >
-
-                        Delete
-
-                    </a>
-
-                </td>
-
-            </tr>
-
-            {% empty %}
-
-            <tr>
-
-                <td colspan="6">
-
-                    No projects found.
-
-                </td>
-
-            </tr>
+                </option>
 
             {% endfor %}
 
-        </tbody>
+        </select>
 
-    </table>
+
+
+        <button type="submit">
+            Filter
+        </button>
+
+    </form>
+
+
+
+    <!-- =========================
+         PROJECT TABLE
+    ========================= -->
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Project</th>
+
+                    <th>Client</th>
+
+                    <th>Manager</th>
+
+                    <th>Status</th>
+
+                    <th>Deadline</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+
+            <tbody>
+
+
+                {% for project in projects %}
+
+                <tr>
+
+
+                    <td>
+
+                        <a
+                            href="{% url 'project_detail' project.id %}"
+                        >
+
+                            {{ project.name }}
+
+                        </a>
+
+                    </td>
+
+
+
+                    <td>
+
+                        {{ project.client_name }}
+
+                    </td>
+
+
+
+                    <td>
+
+                        {% if project.manager %}
+
+                            {{ project.manager }}
+
+                        {% else %}
+
+                            No Manager Assigned
+
+                        {% endif %}
+
+                    </td>
+
+
+
+                    <td>
+
+                        <span
+                            class="status {{ project.status }}"
+                        >
+
+                            {{ project.get_status_display }}
+
+                        </span>
+
+                    </td>
+
+
+
+                    <td>
+
+                        {{ project.deadline }}
+
+                    </td>
+
+
+
+                    <td class="action-buttons">
+
+
+                        <a
+                            href="{% url 'project_detail' project.id %}"
+                        >
+                            View
+                        </a>
+
+
+                        <a
+                            href="{% url 'project_edit' project.id %}"
+                        >
+                            Edit
+                        </a>
+
+
+                        <a
+                            href="{% url 'project_delete' project.id %}"
+                        >
+                            Delete
+                        </a>
+
+
+                    </td>
+
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="6">
+
+                        No projects found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 
 </div>
 

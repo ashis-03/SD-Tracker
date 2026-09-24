@@ -1,0 +1,212 @@
+/* =========================================================
+   SD TRACKER - DELETE PROJECT PAGE
+   ========================================================= */
+
+.delete-page {
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+}
+
+
+/* =========================================================
+   DELETE CARD
+   ========================================================= */
+
+.delete-card {
+    width: 100%;
+    max-width: 520px;
+
+    padding: 40px;
+
+    background: #ffffff;
+
+    border: 1px solid #eaecf0;
+    border-radius: 16px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 35px rgba(16, 24, 40, 0.08);
+}
+
+
+/* =========================================================
+   DELETE ICON
+   ========================================================= */
+
+.delete-icon {
+    width: 64px;
+    height: 64px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff0f0;
+
+    color: #d92d20;
+
+    font-size: 25px;
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.delete-card h1 {
+    margin: 0 0 12px;
+
+    color: #101828;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.delete-card p {
+    margin: 0;
+
+    color: #475467;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+.delete-card p strong {
+    color: #101828;
+}
+
+
+/* =========================================================
+   WARNING
+   ========================================================= */
+
+.delete-warning {
+    margin-top: 6px !important;
+
+    color: #b42318 !important;
+
+    font-size: 13px !important;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.delete-actions {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 28px;
+}
+
+.delete-actions .btn {
+    min-height: 42px;
+
+    padding: 0 18px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+/* Cancel */
+
+.delete-actions .btn-secondary {
+    background: #ffffff;
+
+    color: #344054;
+
+    border: 1px solid #d0d5dd;
+}
+
+.delete-actions .btn-secondary:hover {
+    background: #f9fafb;
+
+    border-color: #98a2b3;
+}
+
+
+/* Delete */
+
+.delete-actions .btn-danger {
+    background: #d92d20;
+
+    color: #ffffff;
+
+    border: 1px solid #d92d20;
+}
+
+.delete-actions .btn-danger:hover {
+    background: #b42318;
+
+    border-color: #b42318;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 10px rgba(217, 45, 32, 0.2);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .delete-page {
+        padding: 25px 15px;
+    }
+
+    .delete-card {
+        padding: 30px 22px;
+    }
+
+    .delete-card h1 {
+        font-size: 24px;
+    }
+
+    .delete-actions {
+        flex-direction: column;
+    }
+
+    .delete-actions .btn {
+        width: 100%;
+    }
+}
