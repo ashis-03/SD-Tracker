@@ -2,23 +2,32 @@
 {% load static %}
 
 {% block title %}
-    {% if employees %}
-    Edit Employees | SD Tracker
+    {% if employee %}
+        Edit Employee | SD Tracker
     {% else %}
-    Create Employees | SD Tracker
+        Add Employee | SD Tracker
     {% endif %}
 {% endblock %}
 
+
 {% block extra_css %}
 
-<link rel="stylesheet"
-      href="{% static 'css/employees/employee_form.css' %}">
+<link
+    rel="stylesheet"
+    href="{% static 'css/employees/employee_form.css' %}"
+>
 
 {% endblock %}
+
 
 {% block content %}
 
 <div class="employee-form-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
     <div class="page-header">
 
         <div>
@@ -26,12 +35,18 @@
             {% if employee %}
 
                 <h1>Edit Employee</h1>
-                <p>Update employee information.</p>
+
+                <p>
+                    Update employee information.
+                </p>
 
             {% else %}
 
                 <h1>Add Employee</h1>
-                <p>Add a new employee to the organization.</p>
+
+                <p>
+                    Add a new employee to the organization.
+                </p>
 
             {% endif %}
 
@@ -40,203 +55,135 @@
     </div>
 
 
-    <div class="form-card">
+    <!-- =====================================================
+         MAIN FORM CARD
+    ====================================================== -->
+
+    <div class="employee-form-card">
 
         <form method="POST">
 
             {% csrf_token %}
 
 
+            <!-- =================================================
+                 FORM ERRORS
+            ================================================== -->
+
             {% if form.non_field_errors %}
 
                 <div class="form-errors">
 
-                    {{ form.non_field_errors }}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+
+                    <div>
+                        {{ form.non_field_errors }}
+                    </div>
 
                 </div>
 
             {% endif %}
 
 
-            <!-- User -->
 
-            <div class="form-group">
+            <!-- =================================================
+                 SECTION 1: USER INFORMATION
+            ================================================== -->
 
-                <label for="{{ form.user.id_for_label }}">
-                    User
-                </label>
+            <div class="form-section">
 
-                {{ form.user }}
+                <div class="section-header">
 
-                {% if form.user.errors %}
+                    <div class="section-icon blue">
 
-                    <small class="error">
-
-                        {{ form.user.errors }}
-
-                    </small>
-
-                {% endif %}
-
-            </div>
-
-            <!-- Role -->
-            <div class="form-group">
-
-                <label>Role</label>
-
-                {{ form.role }}
-
-                {% if form.role.errors %}
-
-                    <div class="error">
-
-                        {{ form.role.errors }}
+                        <i class="fa-solid fa-user"></i>
 
                     </div>
 
-                {% endif %}
+                    <div>
 
-            </div>
+                        <h2>User Information</h2>
 
-            <!-- Employee ID -->
+                        <p>
+                            Basic account information for the employee.
+                        </p>
 
-            <div class="form-group">
-
-                <label for="{{ form.employee_id.id_for_label }}">
-                    Employee ID
-                </label>
-
-                {{ form.employee_id }}
-
-                {% if form.employee_id.errors %}
-
-                    <small class="error">
-
-                        {{ form.employee_id.errors }}
-
-                    </small>
-
-                {% endif %}
-
-            </div>
-
-
-            <div class="form-row">
-
-                <!-- Designation -->
-
-                <div class="form-group">
-
-                    <label for="{{ form.designation.id_for_label }}">
-                        Designation
-                    </label>
-
-                    {{ form.designation }}
-
-                    {% if form.designation.errors %}
-
-                        <small class="error">
-
-                            {{ form.designation.errors }}
-
-                        </small>
-
-                    {% endif %}
+                    </div>
 
                 </div>
 
 
-                <!-- Department -->
+                <!-- User + Role -->
 
-                <div class="form-group">
+                <div class="form-row">
 
-                    <label for="{{ form.department.id_for_label }}">
-                        Department
-                    </label>
+                    <!-- User -->
 
-                    {{ form.department }}
+                    <div class="form-group">
 
-                    {% if form.department.errors %}
+                        <label for="{{ form.user.id_for_label }}">
 
-                        <small class="error">
+                            User
+                            <span>*</span>
 
-                            {{ form.department.errors }}
+                        </label>
 
-                        </small>
+                        {{ form.user }}
 
-                    {% endif %}
+                        {% if form.user.errors %}
 
-                </div>
+                            <div class="field-error">
+                                {{ form.user.errors }}
+                            </div>
 
-            </div>
+                        {% endif %}
 
-
-            <!-- Skills -->
-
-            <div class="form-group">
-
-                <label for="{{ form.skills.id_for_label }}">
-                    Skills
-                </label>
-
-                {{ form.skills }}
-
-                {% if form.skills.errors %}
-
-                    <small class="error">
-
-                        {{ form.skills.errors }}
-
-                    </small>
-
-                {% endif %}
-
-            </div>
+                    </div>
 
 
-            <div class="form-row">
+                    <!-- Role -->
 
-                <!-- Joining Date -->
+                    <div class="form-group">
 
-                <div class="form-group">
+                        <label for="{{ form.role.id_for_label }}">
 
-                    <label for="{{ form.joining_date.id_for_label }}">
-                        Joining Date
-                    </label>
+                            Role
+                            <span>*</span>
 
-                    {{ form.joining_date }}
+                        </label>
 
-                    {% if form.joining_date.errors %}
+                        {{ form.role }}
 
-                        <small class="error">
+                        {% if form.role.errors %}
 
-                            {{ form.joining_date.errors }}
+                            <div class="field-error">
+                                {{ form.role.errors }}
+                            </div>
 
-                        </small>
+                        {% endif %}
 
-                    {% endif %}
+                    </div>
 
                 </div>
 
 
-                <!-- Status -->
+                <!-- Employee ID -->
 
-                <div class="form-group">
+                <div class="form-group full-width">
 
-                    <label for="{{ form.status.id_for_label }}">
-                        Status
+                    <label for="{{ form.employee_id.id_for_label }}">
+
+                        Employee ID
+
                     </label>
 
-                    {{ form.status }}
+                    {{ form.employee_id }}
 
-                    {% if form.status.errors %}
+                    {% if form.employee_id.errors %}
 
-                        <small class="error">
-
-                            {{ form.status.errors }}
-
-                        </small>
+                        <div class="field-error">
+                            {{ form.employee_id.errors }}
+                        </div>
 
                     {% endif %}
 
@@ -245,27 +192,223 @@
             </div>
 
 
-            <!-- Buttons -->
+
+            <!-- =================================================
+                 SECTION 2: WORK DETAILS
+            ================================================== -->
+
+            <div class="form-section">
+
+                <div class="section-header">
+
+                    <div class="section-icon purple">
+
+                        <i class="fa-solid fa-briefcase"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>Work Details</h2>
+
+                        <p>
+                            Organization details and job information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Designation + Department -->
+
+                <div class="form-row">
+
+                    <!-- Designation -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.designation.id_for_label }}">
+
+                            Designation
+
+                        </label>
+
+                        {{ form.designation }}
+
+                        {% if form.designation.errors %}
+
+                            <div class="field-error">
+                                {{ form.designation.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Department -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.department.id_for_label }}">
+
+                            Department
+
+                        </label>
+
+                        {{ form.department }}
+
+                        {% if form.department.errors %}
+
+                            <div class="field-error">
+                                {{ form.department.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Skills -->
+
+                <div class="form-group full-width">
+
+                    <label for="{{ form.skills.id_for_label }}">
+
+                        Skills
+
+                    </label>
+
+                    {{ form.skills }}
+
+                    {% if form.skills.errors %}
+
+                        <div class="field-error">
+                            {{ form.skills.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SECTION 3: EMPLOYMENT INFORMATION
+            ================================================== -->
+
+            <div class="form-section employment-section">
+
+                <div class="section-header">
+
+                    <div class="section-icon green">
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>Employment Information</h2>
+
+                        <p>
+                            Set joining date and current status.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Joining Date + Status -->
+
+                <div class="form-row">
+
+                    <!-- Joining Date -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.joining_date.id_for_label }}">
+
+                            Joining Date
+
+                        </label>
+
+                        {{ form.joining_date }}
+
+                        {% if form.joining_date.errors %}
+
+                            <div class="field-error">
+                                {{ form.joining_date.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Status -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.status.id_for_label }}">
+
+                            Status
+
+                        </label>
+
+                        {{ form.status }}
+
+                        {% if form.status.errors %}
+
+                            <div class="field-error">
+                                {{ form.status.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ACTION BUTTONS
+            ================================================== -->
 
             <div class="form-actions">
 
-                <a href="{% url 'employee_list' %}"
-                class="btn btn-secondary">
+                <a
+                    href="{% url 'employee_list' %}"
+                    class="btn btn-secondary"
+                >
 
                     Cancel
 
                 </a>
 
 
-                <button type="submit"
-                        class="btn btn-primary">
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
 
                     {% if employee %}
 
+                        <i class="fa-solid fa-floppy-disk"></i>
                         Update Employee
 
                     {% else %}
 
+                        <i class="fa-solid fa-user-plus"></i>
                         Add Employee
 
                     {% endif %}
@@ -277,6 +420,7 @@
         </form>
 
     </div>
+
 </div>
 
 {% endblock %}
