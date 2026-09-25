@@ -1,212 +1,625 @@
 /* =========================================================
-   SD TRACKER - DELETE PROJECT PAGE
-   ========================================================= */
+   DELETE PROJECT PAGE
+========================================================= */
 
 .delete-page {
-    min-height: calc(100vh - 80px);
+    max-width: 1250px;
+    margin: 0 auto;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 34px 28px 50px;
 
-    padding: 40px 20px;
+    color: #13294b;
 }
 
 
 /* =========================================================
-   DELETE CARD
-   ========================================================= */
+   BACK LINK
+========================================================= */
 
-.delete-card {
+.delete-page .back-link {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 32px;
+
+    color: #4263df;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.delete-page .back-link:hover {
+    color: #3454ce;
+
+    transform: translateX(-2px);
+}
+
+.delete-page .back-link i {
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.delete-page .page-header {
+    margin-bottom: 30px;
+}
+
+.delete-page .page-header h1 {
+    margin: 0 0 7px;
+
+    color: #10294d;
+
+    font-size: 34px;
+    line-height: 1.2;
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+.delete-page .page-header p {
+    margin: 0;
+
+    color: #71829d;
+
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MAIN DELETE CARD
+========================================================= */
+
+.delete-page .delete-card {
     width: 100%;
-    max-width: 520px;
+    box-sizing: border-box;
 
-    padding: 40px;
+    padding: 20px;
 
     background: #ffffff;
 
-    border: 1px solid #eaecf0;
-    border-radius: 16px;
+    border: 1px solid #e0e6ee;
 
-    text-align: center;
+    border-radius: 15px;
 
-    box-shadow: 0 10px 35px rgba(16, 24, 40, 0.08);
+    box-shadow:
+        0 5px 18px rgba(28, 48, 78, 0.06);
 }
 
 
 /* =========================================================
-   DELETE ICON
-   ========================================================= */
+   WARNING BOX
+========================================================= */
 
-.delete-icon {
-    width: 64px;
-    height: 64px;
+.delete-page .delete-warning-box {
+    display: flex;
+    align-items: center;
 
-    margin: 0 auto 20px;
+    gap: 34px;
+
+    padding: 38px 38px;
+
+    background: #fff4f4;
+
+    border: 1px solid #f4caca;
+
+    border-radius: 14px;
+}
+
+
+/* =========================================================
+   WARNING ICON
+========================================================= */
+
+.delete-page .warning-icon {
+    width: 82px;
+    height: 82px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    color: #d33b31;
+
+    background: #fde3e3;
+
     border-radius: 50%;
 
-    background: #fff0f0;
+    font-size: 31px;
+}
 
-    color: #d92d20;
-
-    font-size: 25px;
+.delete-page .warning-icon i {
+    line-height: 1;
 }
 
 
 /* =========================================================
-   HEADING
-   ========================================================= */
+   WARNING CONTENT
+========================================================= */
 
-.delete-card h1 {
-    margin: 0 0 12px;
+.delete-page .warning-content {
+    min-width: 0;
+}
 
-    color: #101828;
+.delete-page .warning-content h2 {
+    margin: 0 0 9px;
 
-    font-size: 28px;
+    color: #d13b32;
+
+    font-size: 27px;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+.delete-page .warning-content p {
+    max-width: 900px;
+
+    margin: 0;
+
+    color: #294568;
+
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   PROJECT DETAILS CARD
+========================================================= */
+
+.delete-page .project-details-card {
+    margin-top: 22px;
+
+    padding: 27px 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe6ef;
+
+    border-radius: 14px;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.delete-page .section-header {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    margin-bottom: 22px;
+}
+
+.delete-page .section-header h2 {
+    margin: 0;
+
+    color: #10294d;
+
+    font-size: 23px;
+    line-height: 1.25;
     font-weight: 700;
 }
 
 
 /* =========================================================
-   DESCRIPTION
-   ========================================================= */
+   SECTION ICON
+========================================================= */
 
-.delete-card p {
-    margin: 0;
+.delete-page .section-icon {
+    width: 54px;
+    height: 54px;
 
-    color: #475467;
+    flex-shrink: 0;
 
-    font-size: 15px;
-
-    line-height: 1.6;
-}
-
-.delete-card p strong {
-    color: #101828;
-}
-
-
-/* =========================================================
-   WARNING
-   ========================================================= */
-
-.delete-warning {
-    margin-top: 6px !important;
-
-    color: #b42318 !important;
-
-    font-size: 13px !important;
-
-    font-weight: 500;
-}
-
-
-/* =========================================================
-   ACTION BUTTONS
-   ========================================================= */
-
-.delete-actions {
     display: flex;
-
-    justify-content: center;
-
-    gap: 12px;
-
-    margin-top: 28px;
-}
-
-.delete-actions .btn {
-    min-height: 42px;
-
-    padding: 0 18px;
-
-    display: inline-flex;
-
     align-items: center;
     justify-content: center;
 
-    gap: 7px;
+    color: #4263df;
 
-    border-radius: 8px;
+    background: #edf3ff;
 
-    font-size: 13px;
+    border-radius: 12px;
 
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   DETAILS LIST
+========================================================= */
+
+.delete-page .details-list {
+    padding: 0 20px;
+
+    background: #f7f9fb;
+
+    border-radius: 11px;
+}
+
+
+/* =========================================================
+   DETAIL ROW
+========================================================= */
+
+.delete-page .detail-row {
+    min-height: 71px;
+
+    display: grid;
+
+    grid-template-columns: 38px 220px minmax(0, 1fr);
+
+    align-items: center;
+
+    column-gap: 12px;
+
+    border-bottom: 1px solid #dfe5ec;
+}
+
+.delete-page .detail-row:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   DETAIL ICON
+========================================================= */
+
+.delete-page .detail-icon {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #647b9b;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   DETAIL LABEL
+========================================================= */
+
+.delete-page .detail-label {
+    color: #68809f;
+
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   DETAIL VALUE
+========================================================= */
+
+.delete-page .detail-value {
+    color: #10294d;
+
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ACTION AREA
+========================================================= */
+
+.delete-page .delete-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    margin-top: 25px;
+
+    padding: 26px 22px 8px;
+
+    border-top: 1px solid #e1e6ed;
+}
+
+
+/* =========================================================
+   DELETE FORM
+========================================================= */
+
+.delete-page .delete-actions form {
+    margin: 0;
+}
+
+
+/* =========================================================
+   BUTTON BASE
+========================================================= */
+
+.delete-page .btn {
+    min-height: 48px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 0 25px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-size: 15px;
     font-weight: 600;
 
     text-decoration: none;
 
     cursor: pointer;
 
-    transition: all 0.2s ease;
-}
-
-
-/* Cancel */
-
-.delete-actions .btn-secondary {
-    background: #ffffff;
-
-    color: #344054;
-
-    border: 1px solid #d0d5dd;
-}
-
-.delete-actions .btn-secondary:hover {
-    background: #f9fafb;
-
-    border-color: #98a2b3;
-}
-
-
-/* Delete */
-
-.delete-actions .btn-danger {
-    background: #d92d20;
-
-    color: #ffffff;
-
-    border: 1px solid #d92d20;
-}
-
-.delete-actions .btn-danger:hover {
-    background: #b42318;
-
-    border-color: #b42318;
-
-    transform: translateY(-1px);
-
-    box-shadow: 0 4px 10px rgba(217, 45, 32, 0.2);
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
 
 
 /* =========================================================
-   RESPONSIVE
-   ========================================================= */
+   SECONDARY BUTTON
+========================================================= */
 
-@media (max-width: 600px) {
+.delete-page .btn-secondary {
+    color: #263f61;
+
+    background: #ffffff;
+
+    border: 1px solid #cbd6e4;
+}
+
+.delete-page .btn-secondary:hover {
+    color: #13294b;
+
+    background: #f7f9fc;
+
+    border-color: #b8c5d5;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DANGER BUTTON
+========================================================= */
+
+.delete-page .btn-danger {
+    color: #ffffff;
+
+    background: #e0524b;
+
+    border: 1px solid #e0524b;
+
+    box-shadow:
+        0 4px 10px rgba(224, 82, 75, 0.16);
+}
+
+.delete-page .btn-danger:hover {
+    color: #ffffff;
+
+    background: #cf4039;
+
+    border-color: #cf4039;
+
+    box-shadow:
+        0 6px 14px rgba(224, 82, 75, 0.23);
+
+    transform: translateY(-1px);
+}
+
+.delete-page .btn-danger i {
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+========================================================= */
+
+.delete-page .btn:focus-visible,
+.delete-page .back-link:focus-visible {
+    outline: 3px solid rgba(66, 99, 223, 0.25);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 1000px
+========================================================= */
+
+@media (max-width: 1000px) {
 
     .delete-page {
-        padding: 25px 15px;
+        padding-left: 22px;
+        padding-right: 22px;
     }
 
-    .delete-card {
-        padding: 30px 22px;
+    .delete-page .delete-warning-box {
+        gap: 25px;
+
+        padding: 30px;
     }
 
-    .delete-card h1 {
-        font-size: 24px;
+    .delete-page .detail-row {
+        grid-template-columns: 38px 180px minmax(0, 1fr);
     }
 
-    .delete-actions {
+}
+
+
+/* =========================================================
+   RESPONSIVE - 700px
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .delete-page {
+        padding: 25px 16px 40px;
+    }
+
+    .delete-page .page-header h1 {
+        font-size: 29px;
+    }
+
+    .delete-page .delete-card {
+        padding: 14px;
+    }
+
+    .delete-page .delete-warning-box {
+        align-items: flex-start;
+
+        gap: 20px;
+
+        padding: 25px;
+    }
+
+    .delete-page .warning-icon {
+        width: 65px;
+        height: 65px;
+
+        font-size: 25px;
+    }
+
+    .delete-page .warning-content h2 {
+        font-size: 23px;
+    }
+
+    .delete-page .warning-content p {
+        font-size: 14px;
+    }
+
+    .delete-page .project-details-card {
+        padding: 23px 18px;
+    }
+
+    .delete-page .details-list {
+        padding: 0 14px;
+    }
+
+    .delete-page .detail-row {
+        grid-template-columns: 35px 150px minmax(0, 1fr);
+
+        column-gap: 8px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 550px
+========================================================= */
+
+@media (max-width: 550px) {
+
+    .delete-page .delete-warning-box {
         flex-direction: column;
+
+        align-items: flex-start;
     }
 
-    .delete-actions .btn {
+    .delete-page .warning-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .delete-page .detail-row {
+        min-height: 65px;
+
+        grid-template-columns: 34px 1fr;
+
+        padding: 9px 0;
+    }
+
+    .delete-page .detail-value {
+        grid-column: 2;
+
+        margin-top: -5px;
+    }
+
+    .delete-page .detail-label {
+        grid-column: 2;
+    }
+
+    .delete-page .detail-icon {
+        grid-row: 1 / span 2;
+    }
+
+    .delete-page .delete-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .delete-page .delete-actions form {
         width: 100%;
     }
+
+    .delete-page .btn {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 400px
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .delete-page {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .delete-page .delete-card {
+        padding: 10px;
+    }
+
+    .delete-page .delete-warning-box {
+        padding: 20px;
+    }
+
+    .delete-page .project-details-card {
+        padding: 20px 14px;
+    }
+
+    .delete-page .section-header h2 {
+        font-size: 20px;
+    }
+
+    .delete-page .page-header h1 {
+        font-size: 26px;
+    }
+
 }

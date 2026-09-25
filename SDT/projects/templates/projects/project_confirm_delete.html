@@ -20,42 +20,259 @@ Delete Project | SD Tracker
 
 <div class="delete-page">
 
+
+    <!-- =====================================================
+         BACK LINK
+    ====================================================== -->
+
+    <a
+        href="{% url 'project_detail' project.id %}"
+        class="back-link"
+    >
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to Project
+
+    </a>
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="page-header">
+
+        <h1>
+            Delete Project
+        </h1>
+
+        <p>
+            This action cannot be undone. Please confirm before proceeding.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN DELETE CARD
+    ====================================================== -->
+
     <div class="delete-card">
 
-        <div class="delete-icon">
 
-            <i class="fa-solid fa-trash"></i>
+        <!-- =================================================
+             WARNING
+        ================================================== -->
+
+        <div class="delete-warning-box">
+
+            <div class="warning-icon">
+
+                <i class="fa-solid fa-trash"></i>
+
+            </div>
+
+
+            <div class="warning-content">
+
+                <h2>
+                    Are you sure?
+                </h2>
+
+                <p>
+                    You are about to delete this project.
+                    This action cannot be undone and all associated
+                    information will be permanently removed.
+                </p>
+
+            </div>
 
         </div>
 
 
-        <h1>Delete Project?</h1>
+        <!-- =================================================
+             PROJECT DETAILS
+        ================================================== -->
+
+        <div class="project-details-card">
 
 
-        <p>
-            Are you sure you want to delete
-            <strong>"{{ project.name }}"</strong>?
-        </p>
+            <!-- Section Header -->
+
+            <div class="section-header">
+
+                <div class="section-icon">
+
+                    <i class="fa-solid fa-folder"></i>
+
+                </div>
+
+                <h2>
+                    Project Details
+                </h2>
+
+            </div>
 
 
-        <p class="delete-warning">
-            This action cannot be undone.
-        </p>
+            <!-- Details -->
+
+            <div class="details-list">
 
 
-        <form method="POST">
+                <!-- Project Name -->
 
-            {% csrf_token %}
+                <div class="detail-row">
 
-            <div class="delete-actions">
+                    <div class="detail-icon">
 
-                <a
-                    href="{% url 'project_detail' project.id %}"
-                    class="btn btn-secondary"
-                >
-                    Cancel
-                </a>
+                        <i class="fa-regular fa-file"></i>
 
+                    </div>
+
+                    <span class="detail-label">
+                        Project Name
+                    </span>
+
+                    <span class="detail-value">
+                        {{ project.name }}
+                    </span>
+
+                </div>
+
+
+                <!-- Client -->
+
+                <div class="detail-row">
+
+                    <div class="detail-icon">
+
+                        <i class="fa-solid fa-building"></i>
+
+                    </div>
+
+                    <span class="detail-label">
+                        Client Name
+                    </span>
+
+                    <span class="detail-value">
+
+                        {% if project.client_name %}
+
+                            {{ project.client_name }}
+
+                        {% else %}
+
+                            Not Provided
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <!-- Manager -->
+
+                <div class="detail-row">
+
+                    <div class="detail-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <span class="detail-label">
+                        Manager
+                    </span>
+
+                    <span class="detail-value">
+
+                        {% if project.manager %}
+
+                            {{ project.manager.user.get_full_name }}
+
+                        {% else %}
+
+                            Not Assigned
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="detail-row">
+
+                    <div class="detail-icon">
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                    </div>
+
+                    <span class="detail-label">
+                        Status
+                    </span>
+
+                    <span class="detail-value">
+
+                        {{ project.get_status_display }}
+
+                    </span>
+
+                </div>
+
+
+                <!-- Total Phases -->
+
+                <div class="detail-row">
+
+                    <div class="detail-icon">
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                    </div>
+
+                    <span class="detail-label">
+                        SDLC Phases
+                    </span>
+
+                    <span class="detail-value">
+
+                        {{ project.phases.count }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================== -->
+
+        <div class="delete-actions">
+
+
+            <a
+                href="{% url 'project_detail' project.id %}"
+                class="btn btn-secondary"
+            >
+
+                Cancel
+
+            </a>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
 
                 <button
                     type="submit"
@@ -68,9 +285,10 @@ Delete Project | SD Tracker
 
                 </button>
 
-            </div>
+            </form>
 
-        </form>
+        </div>
+
 
     </div>
 
