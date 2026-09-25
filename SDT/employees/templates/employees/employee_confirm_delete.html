@@ -2,102 +2,246 @@
 {% load static %}
 
 {% block title %}
-Employee Delete | SD Tracker
+    Delete Employee | SD Tracker
 {% endblock %}
 
 {% block extra_css %}
 
-<link rel="stylesheet"
-      href="{% static 'css/employees/employee_confirm_delete.css' %}">
+<link
+    rel="stylesheet"
+    href="{% static 'css/employees/employee_confirm_delete.css' %}"
+>
 
 {% endblock %}
 
+
 {% block content %}
 
-<div class="delete-container">
+<div class="employee-delete-page">
+
+    <!-- =====================================================
+         BACK LINK
+    ====================================================== -->
+
+    <a
+        href="{% url 'employee_list' %}"
+        class="back-link"
+    >
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Employees
+    </a>
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="page-header">
+
+        <h1>Delete Employee</h1>
+
+        <p>
+            This action cannot be undone. Please confirm before proceeding.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         DELETE CARD
+    ====================================================== -->
 
     <div class="delete-card">
 
-        <div class="delete-icon">
-            !
-        </div>
+
+        <!-- =================================================
+             WARNING SECTION
+        ================================================== -->
+
+        <div class="warning-card">
+
+            <div class="warning-icon">
+
+                <i class="fa-solid fa-trash"></i>
+
+            </div>
 
 
-        <h1>Delete Employee?</h1>
+            <div class="warning-content">
 
+                <h2>Are you sure?</h2>
 
-        <p>
+                <p>
+                    You are about to delete this employee.
+                    This action cannot be undone and all associated
+                    information will be permanently removed.
+                </p>
 
-            Are you sure you want to delete
-
-            <strong>
-                {{ employee.user.get_full_name }}
-            </strong>
-
-            from the employee list?
-
-        </p>
-
-
-        <div class="employee-delete-info">
-
-            <p>
-
-                <strong>Employee ID:</strong>
-
-                {{ employee.employee_id }}
-
-            </p>
-
-
-            <p>
-
-                <strong>Designation:</strong>
-
-                {{ employee.designation }}
-
-            </p>
-
-
-            <p>
-
-                <strong>Department:</strong>
-
-                {{ employee.department }}
-
-            </p>
+            </div>
 
         </div>
 
 
-        <div class="warning-message">
+        <!-- =================================================
+             EMPLOYEE DETAILS
+        ================================================== -->
 
-            This action cannot be undone.
+        <div class="details-card">
+
+            <div class="details-header">
+
+                <div class="details-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <h2>Employee Details</h2>
+
+            </div>
+
+
+            <div class="employee-details">
+
+
+                <!-- Employee Name -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        <span>Employee Name</span>
+
+                    </div>
+
+                    <strong>
+                        {{ employee.user.get_full_name }}
+                    </strong>
+
+                </div>
+
+
+                <!-- Employee ID -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+
+                        <i class="fa-solid fa-id-card"></i>
+
+                        <span>Employee ID</span>
+
+                    </div>
+
+                    <span>
+                        {{ employee.employee_id }}
+                    </span>
+
+                </div>
+
+
+                <!-- Designation -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+
+                        <i class="fa-solid fa-briefcase"></i>
+
+                        <span>Designation</span>
+
+                    </div>
+
+                    <span>
+                        {{ employee.designation }}
+                    </span>
+
+                </div>
+
+
+                <!-- Department -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+
+                        <i class="fa-solid fa-building"></i>
+
+                        <span>Department</span>
+
+                    </div>
+
+                    <span>
+                        {{ employee.department }}
+                    </span>
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                        <span>Status</span>
+
+                    </div>
+
+
+                    <span class="status-badge {{ employee.status }}">
+
+                        <span class="status-dot"></span>
+
+                        {{ employee.get_status_display }}
+
+                    </span>
+
+                </div>
+
+            </div>
 
         </div>
 
 
-        <form method="POST">
+        <!-- =================================================
+             ACTIONS
+        ================================================== -->
 
-            {% csrf_token %}
+        <div class="delete-actions">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="btn btn-danger"
+                >
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Yes, Delete Employee
+
+                </button>
+
+            </form>
 
 
-            <a href="{% url 'employee_list' %}"
-               class="btn btn-secondary">
+            <a
+                href="{% url 'employee_list' %}"
+                class="btn btn-secondary"
+            >
 
                 Cancel
 
             </a>
 
-
-            <button type="submit"
-                    class="btn btn-danger">
-
-                Yes, Delete Employee
-
-            </button>
-
-        </form>
+        </div>
 
     </div>
 
