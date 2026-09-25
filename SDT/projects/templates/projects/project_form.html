@@ -3,11 +3,11 @@
 
 {% block title %}
 
-{% if project %}
-Edit Project | SD Tracker
-{% else %}
-Create Project | SD Tracker
-{% endif %}
+    {% if project %}
+        Edit Project | SD Tracker
+    {% else %}
+        Create Project | SD Tracker
+    {% endif %}
 
 {% endblock %}
 
@@ -19,9 +19,15 @@ Create Project | SD Tracker
 
 {% endblock %}
 
+
 {% block content %}
 
 <div class="project-form-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
     <div class="page-header">
 
         <div>
@@ -49,6 +55,10 @@ Create Project | SD Tracker
     </div>
 
 
+    <!-- =====================================================
+         FORM CARD
+    ====================================================== -->
+
     <div class="form-card">
 
         <form method="POST">
@@ -56,186 +66,328 @@ Create Project | SD Tracker
             {% csrf_token %}
 
 
-            <!-- =========================
-                PROJECT NAME
-            ========================= -->
+            <!-- =================================================
+                 PROJECT INFORMATION
+            ================================================== -->
 
-            <div class="form-group">
+            <section class="form-section">
 
-                <label for="{{ form.name.id_for_label }}">
-                    Project Name
-                </label>
+                <div class="section-header">
 
-                {{ form.name }}
-
-                {% if form.name.errors %}
-
-                    <div class="form-error">
-                        {{ form.name.errors }}
+                    <div class="section-icon section-icon-blue">
+                        <i class="fa-solid fa-folder"></i>
                     </div>
 
-                {% endif %}
+                    <div>
 
-            </div>
+                        <h2>Project Information</h2>
 
+                        <p>
+                            Enter the basic details about the project.
+                        </p>
 
-            <!-- =========================
-                DESCRIPTION
-            ========================= -->
-
-            <div class="form-group">
-
-                <label for="{{ form.description.id_for_label }}">
-                    Description
-                </label>
-
-                {{ form.description }}
-
-                {% if form.description.errors %}
-
-                    <div class="form-error">
-                        {{ form.description.errors }}
                     </div>
 
-                {% endif %}
-
-            </div>
+                </div>
 
 
-            <!-- =========================
-                CLIENT NAME
-            ========================= -->
-
-            <div class="form-group">
-
-                <label for="{{ form.client_name.id_for_label }}">
-                    Client Name
-                </label>
-
-                {{ form.client_name }}
-
-            </div>
-
-
-            <!-- =========================
-                DATES
-            ========================= -->
-
-            <div class="form-row">
+                <!-- Project Name -->
 
                 <div class="form-group">
 
-                    <label for="{{ form.start_date.id_for_label }}">
-                        Start Date
+                    <label for="{{ form.name.id_for_label }}">
+                        Project Name
+                        <span class="required">*</span>
                     </label>
 
-                    {{ form.start_date }}
+                    {{ form.name }}
+
+                    {% if form.name.errors %}
+
+                        <div class="form-error">
+                            {{ form.name.errors }}
+                        </div>
+
+                    {% endif %}
 
                 </div>
 
 
-                <div class="form-group">
-
-                    <label for="{{ form.deadline.id_for_label }}">
-                        Deadline
-                    </label>
-
-                    {{ form.deadline }}
-
-                </div>
-
-            </div>
-
-
-            <!-- =========================
-                STATUS + MANAGER
-            ========================= -->
-
-            <div class="form-row">
+                <!-- Description -->
 
                 <div class="form-group">
 
-                    <label for="{{ form.status.id_for_label }}">
-                        Project Status
+                    <label for="{{ form.description.id_for_label }}">
+                        Description
                     </label>
 
-                    {{ form.status }}
+                    {{ form.description }}
+
+                    {% if form.description.errors %}
+
+                        <div class="form-error">
+                            {{ form.description.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 TIMELINE
+            ================================================== -->
+
+            <section class="form-section">
+
+                <div class="section-header">
+
+                    <div class="section-icon section-icon-green">
+                        <i class="fa-regular fa-calendar"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>Timeline</h2>
+
+                        <p>
+                            Set the project start date and deadline.
+                        </p>
+
+                    </div>
 
                 </div>
 
 
-                <div class="form-group">
+                <div class="form-row">
 
-                    <label for="{{ form.manager.id_for_label }}">
-                        Assign Manager
-                    </label>
+                    <!-- Start Date -->
 
-                    {{ form.manager }}
+                    <div class="form-group">
+
+                        <label for="{{ form.start_date.id_for_label }}">
+                            Start Date
+                            <span class="required">*</span>
+                        </label>
+
+                        {{ form.start_date }}
+
+                        {% if form.start_date.errors %}
+
+                            <div class="form-error">
+                                {{ form.start_date.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Deadline -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.deadline.id_for_label }}">
+                            Deadline
+                            <span class="required">*</span>
+                        </label>
+
+                        {{ form.deadline }}
+
+                        {% if form.deadline.errors %}
+
+                            <div class="form-error">
+                                {{ form.deadline.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
 
                 </div>
 
-            </div>
-
-            <!-- =========================
-                TEAM
-            ========================= -->   
-
-            <div class="form-group">
-
-                <label>Assign Teams</label>
-
-                <div class="team-dropdown">
-
-                    <button
-                        type="button"
-                        class="team-dropdown-btn"
-                        id="teamDropdownBtn"
-                    >
-                        <span id="selectedTeamsText">
-                            Select Teams
-                        </span>
-
-                        <span>⌄</span>
-                    </button>
+            </section>
 
 
-                    <div
-                        class="team-dropdown-content"
-                        id="teamDropdown"
-                    >
+            <!-- =================================================
+                 PROJECT DETAILS
+            ================================================== -->
 
-                        {% for checkbox in form.teams %}
+            <section class="form-section">
 
-                            <label class="team-option">
+                <div class="section-header">
 
-                                {{ checkbox.tag }}
+                    <div class="section-icon section-icon-purple">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
 
-                                <span>
-                                    {{ checkbox.choice_label }}
+                    <div>
+
+                        <h2>Project Details</h2>
+
+                        <p>
+                            Configure the project status, client and
+                            assign a manager.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Status + Manager -->
+
+                <div class="form-row">
+
+                    <!-- Project Status -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.status.id_for_label }}">
+                            Project Status
+                            <span class="required">*</span>
+                        </label>
+
+                        {{ form.status }}
+
+                        {% if form.status.errors %}
+
+                            <div class="form-error">
+                                {{ form.status.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Manager -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.manager.id_for_label }}">
+                            Assign Manager
+                        </label>
+
+                        {{ form.manager }}
+
+                        {% if form.manager.errors %}
+
+                            <div class="form-error">
+                                {{ form.manager.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Client + Teams -->
+
+                <div class="form-row">
+
+                    <!-- Client -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.client_name.id_for_label }}">
+                            Client Name
+                        </label>
+
+                        {{ form.client_name }}
+
+                        {% if form.client_name.errors %}
+
+                            <div class="form-error">
+                                {{ form.client_name.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Teams -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Assign Teams
+                        </label>
+
+                        <div class="team-dropdown">
+
+                            <button
+                                type="button"
+                                class="team-dropdown-btn"
+                                id="teamDropdownBtn"
+                            >
+
+                                <span id="selectedTeamsText">
+                                    Select Teams
                                 </span>
 
-                            </label>
+                                <i class="fa-solid fa-chevron-down"></i>
 
-                        {% empty %}
+                            </button>
 
-                            <p>No teams available</p>
 
-                        {% endfor %}
+                            <div
+                                class="team-dropdown-content"
+                                id="teamDropdown"
+                            >
+
+                                {% for checkbox in form.teams %}
+
+                                    <label class="team-option">
+
+                                        {{ checkbox.tag }}
+
+                                        <span>
+                                            {{ checkbox.choice_label }}
+                                        </span>
+
+                                    </label>
+
+                                {% empty %}
+
+                                    <p class="no-teams">
+                                        No teams available
+                                    </p>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+
+                        {% if form.teams.errors %}
+
+                            <div class="form-error">
+                                {{ form.teams.errors }}
+                            </div>
+
+                        {% endif %}
 
                     </div>
 
                 </div>
 
-            </div>
+            </section>
 
 
-            <!-- =========================
-                FORM ERRORS
-            ========================= -->
+            <!-- =================================================
+                 FORM ERRORS
+            ================================================== -->
 
             {% if form.non_field_errors %}
 
-                <div class="form-error">
+                <div class="form-error form-global-error">
 
                     {{ form.non_field_errors }}
 
@@ -244,15 +396,16 @@ Create Project | SD Tracker
             {% endif %}
 
 
-            <!-- =========================
-                BUTTONS
-            ========================= -->
+            <!-- =================================================
+                 FORM ACTIONS
+            ================================================== -->
 
             <div class="form-actions">
 
                 <a
                     href="{% url 'project_list' %}"
-                    class="btn btn-secondary">
+                    class="btn btn-secondary"
+                >
 
                     Cancel
 
@@ -261,7 +414,10 @@ Create Project | SD Tracker
 
                 <button
                     type="submit"
-                    class="btn btn-primary">
+                    class="btn btn-primary"
+                >
+
+                    <i class="fa-solid fa-floppy-disk"></i>
 
                     {% if project %}
 
@@ -282,6 +438,7 @@ Create Project | SD Tracker
     </div>
 
 </div>
+
 
 <script src="{% static 'js/projects/project_form.js' %}"></script>
 
