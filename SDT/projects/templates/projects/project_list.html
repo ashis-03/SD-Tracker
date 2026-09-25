@@ -1,147 +1,142 @@
 {% extends "base.html" %}
-
 {% load static %}
 
 {% block title %}
 Projects | SD Tracker
 {% endblock %}
 
-
 {% block extra_css %}
-
-<link rel="stylesheet"
-      href="{% static 'css/projects/project_list.css' %}">
-
+<link rel="stylesheet" href="{% static 'css/projects/project_list.css' %}">
 {% endblock %}
-
 
 {% block content %}
 
 <div class="projects-page">
 
-
-    <!-- =========================
+    <!-- =====================================================
          PAGE HEADER
-    ========================= -->
+    ====================================================== -->
 
     <div class="page-header">
 
         <div>
-
             <h1>Projects</h1>
-
-            <p>
-                Manage and monitor all software development projects.
-            </p>
-
+            <p>Manage and monitor all software development projects.</p>
         </div>
 
-
-        <a
-            href="{% url 'project_create' %}"
-            class="create-button"
-        >
-
+        <a href="{% url 'project_create' %}" class="create-button">
             <i class="fa-solid fa-plus"></i>
-
             Create Project
-
         </a>
 
     </div>
 
 
-
-    <!-- =========================
-         PROJECT STATISTICS
-    ========================= -->
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
 
     <div class="stats-grid">
 
-
+        <!-- Total -->
         <div class="stat-card">
 
-            <div>
+            <div class="stat-icon stat-blue">
+                <i class="fa-regular fa-folder"></i>
+            </div>
+
+            <div class="stat-content">
 
                 <p>Total Projects</p>
 
-                <h2>
-                    {{ total_projects }}
-                </h2>
+                <h2>{{ total_projects }}</h2>
+
+                <span class="stat-growth">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </span>
 
             </div>
-
-            <i class="fa-regular fa-folder"></i>
 
         </div>
 
 
-
+        <!-- Active -->
         <div class="stat-card">
 
-            <div>
-
-                <p>Active</p>
-
-                <h2>
-                    {{ active_projects }}
-                </h2>
-
+            <div class="stat-icon stat-green">
+                <i class="fa-solid fa-spinner"></i>
             </div>
 
-            <i class="fa-solid fa-spinner"></i>
+            <div class="stat-content">
+
+                <p>Active Projects</p>
+
+                <h2>{{ active_projects }}</h2>
+
+                <span class="stat-growth">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </span>
+
+            </div>
 
         </div>
 
 
-
+        <!-- Completed -->
         <div class="stat-card">
 
-            <div>
-
-                <p>Completed</p>
-
-                <h2>
-                    {{ completed_projects }}
-                </h2>
-
+            <div class="stat-icon stat-purple">
+                <i class="fa-solid fa-circle-check"></i>
             </div>
 
-            <i class="fa-solid fa-circle-check"></i>
+            <div class="stat-content">
+
+                <p>Completed Projects</p>
+
+                <h2>{{ completed_projects }}</h2>
+
+                <span class="stat-growth">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </span>
+
+            </div>
 
         </div>
 
 
-
+        <!-- On Hold -->
         <div class="stat-card">
 
-            <div>
+            <div class="stat-icon stat-orange">
+                <i class="fa-solid fa-pause"></i>
+            </div>
 
-                <p>On Hold</p>
+            <div class="stat-content">
 
-                <h2>
-                    {{ on_hold_projects }}
-                </h2>
+                <p>On Hold Projects</p>
+
+                <h2>{{ on_hold_projects }}</h2>
+
+                <span class="stat-growth">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </span>
 
             </div>
 
-            <i class="fa-solid fa-pause"></i>
-
         </div>
-
 
     </div>
 
 
-
-    <!-- =========================
+    <!-- =====================================================
          SEARCH + FILTER
-    ========================= -->
+    ====================================================== -->
 
-    <form
-        method="GET"
-        class="project-filter"
-    >
+    <form method="GET" class="project-filter">
 
         <div class="search-box">
 
@@ -151,11 +146,10 @@ Projects | SD Tracker
                 type="text"
                 name="search"
                 placeholder="Search projects..."
-                value="{{ request.GET.search }}"
+                value="{{ request.GET.search|default:'' }}"
             >
 
         </div>
-
 
 
         <select name="status">
@@ -163,7 +157,6 @@ Projects | SD Tracker
             <option value="">
                 All Status
             </option>
-
 
             {% for value, label in status_choices %}
 
@@ -173,9 +166,7 @@ Projects | SD Tracker
                         selected
                     {% endif %}
                 >
-
                     {{ label }}
-
                 </option>
 
             {% endfor %}
@@ -183,18 +174,20 @@ Projects | SD Tracker
         </select>
 
 
-
         <button type="submit">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
             Filter
+
         </button>
 
     </form>
 
 
-
-    <!-- =========================
+    <!-- =====================================================
          PROJECT TABLE
-    ========================= -->
+    ====================================================== -->
 
     <div class="table-card">
 
@@ -204,75 +197,129 @@ Projects | SD Tracker
 
                 <tr>
 
-                    <th>Project</th>
+                    <th class="number-column">
+                        #
+                    </th>
 
-                    <th>Client</th>
+                    <th>
+                        Project
+                    </th>
 
-                    <th>Manager</th>
+                    <th>
+                        Client
+                    </th>
 
-                    <th>Status</th>
+                    <th>
+                        Manager
+                    </th>
 
-                    <th>Deadline</th>
+                    <th>
+                        Status
+                    </th>
 
-                    <th>Actions</th>
+                    <th>
+                        Deadline
+                    </th>
+
+                    <th class="actions-column">
+                        Actions
+                    </th>
 
                 </tr>
 
             </thead>
 
 
-
             <tbody>
-
 
                 {% for project in projects %}
 
                 <tr>
 
+                    <!-- Number -->
+
+                    <td class="number-column">
+                        {{ forloop.counter }}
+                    </td>
+
+
+                    <!-- Project -->
 
                     <td>
 
-                        <a
-                            href="{% url 'project_detail' project.id %}"
-                        >
+                        <div class="project-info">
 
-                            {{ project.name }}
+                            <div class="project-avatar">
 
-                        </a>
+                                {{ project.name|first|upper }}
+
+                            </div>
+
+                            <div>
+
+                                <a
+                                    href="{% url 'project_detail' project.id %}"
+                                    class="project-name"
+                                >
+                                    {{ project.name }}
+                                </a>
+
+                            </div>
+
+                        </div>
 
                     </td>
 
 
+                    <!-- Client -->
 
                     <td>
 
-                        {{ project.client_name }}
+                        <span class="client-name">
+                            {{ project.client_name }}
+                        </span>
 
                     </td>
 
 
+                    <!-- Manager -->
 
                     <td>
 
                         {% if project.manager %}
 
-                            {{ project.manager }}
+                            <div class="manager-info">
+
+                                <div class="manager-avatar">
+
+                                    {{ project.manager.user.first_name|first|upper }}
+
+                                </div>
+
+                                <span>
+                                    {{ project.manager }}
+                                </span>
+
+                            </div>
 
                         {% else %}
 
-                            No Manager Assigned
+                            <span class="no-manager">
+                                No Manager Assigned
+                            </span>
 
                         {% endif %}
 
                     </td>
 
 
+                    <!-- Status -->
 
                     <td>
 
-                        <span
-                            class="status {{ project.status }}"
-                        >
+                        <span class="status {{ project.status }}">
+
+                            <span class="status-dot"></span>
 
                             {{ project.get_status_display }}
 
@@ -281,41 +328,62 @@ Projects | SD Tracker
                     </td>
 
 
+                    <!-- Deadline -->
 
                     <td>
 
-                        {{ project.deadline }}
+                        <div class="deadline-info">
+
+                            <i class="fa-regular fa-calendar"></i>
+
+                            {{ project.deadline|date:"M. d, Y" }}
+
+                        </div>
 
                     </td>
 
 
+                    <!-- Actions -->
 
-                    <td class="action-buttons">
+                    <td>
+
+                        <div class="action-buttons">
+
+                            <!-- View -->
+
+                            <a
+                                href="{% url 'project_detail' project.id %}"
+                                class="action-btn view-btn"
+                                title="View Project"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
 
 
-                        <a
-                            href="{% url 'project_detail' project.id %}"
-                        >
-                            View
-                        </a>
+                            <!-- Edit -->
+
+                            <a
+                                href="{% url 'project_edit' project.id %}"
+                                class="action-btn edit-btn"
+                                title="Edit Project"
+                            >
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
 
 
-                        <a
-                            href="{% url 'project_edit' project.id %}"
-                        >
-                            Edit
-                        </a>
+                            <!-- Delete -->
 
+                            <a
+                                href="{% url 'project_delete' project.id %}"
+                                class="action-btn delete-btn"
+                                title="Delete Project"
+                            >
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
 
-                        <a
-                            href="{% url 'project_delete' project.id %}"
-                        >
-                            Delete
-                        </a>
-
+                        </div>
 
                     </td>
-
 
                 </tr>
 
@@ -324,9 +392,23 @@ Projects | SD Tracker
 
                 <tr>
 
-                    <td colspan="6">
+                    <td colspan="7">
 
-                        No projects found.
+                        <div class="empty-state">
+
+                            <div class="empty-content">
+
+                                <i class="fa-regular fa-folder-open"></i>
+
+                                <h3>No Projects Found</h3>
+
+                                <p>
+                                    There are no projects matching your search.
+                                </p>
+
+                            </div>
+
+                        </div>
 
                     </td>
 
@@ -334,13 +416,58 @@ Projects | SD Tracker
 
                 {% endfor %}
 
-
             </tbody>
 
         </table>
 
-    </div>
 
+        <!-- =================================================
+             TABLE FOOTER
+        ================================================== -->
+
+        <div class="table-footer">
+
+            <div class="showing-count">
+
+                Showing
+                <strong>{{ projects|length }}</strong>
+                projects
+
+            </div>
+
+
+            <div class="pagination">
+
+                <button
+                    type="button"
+                    class="pagination-btn"
+                    disabled
+                >
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="pagination-btn active"
+                >
+                    1
+                </button>
+
+
+                <button
+                    type="button"
+                    class="pagination-btn"
+                    disabled
+                >
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
