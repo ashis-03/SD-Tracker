@@ -6,15 +6,20 @@ Employees | SD Tracker
 {% endblock %}
 
 {% block extra_css %}
-
-<link rel="stylesheet"
-      href="{% static 'css/employees/employee_list.css' %}">
-
+<link
+    rel="stylesheet"
+    href="{% static 'css/employees/employee_list.css' %}"
+>
 {% endblock %}
 
 {% block content %}
 
 <div class="employees-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
     <div class="page-header">
 
         <div>
@@ -25,79 +30,150 @@ Employees | SD Tracker
             </p>
         </div>
 
-        <a href="{% url 'employee_create' %}"
-        class="btn btn-primary">
-
-            + Add Employee
-
+        <a
+            href="{% url 'employee_create' %}"
+            class="create-button"
+        >
+            <i class="fa-solid fa-plus"></i>
+            Add Employee
         </a>
 
     </div>
 
 
-    <!-- STATISTICS -->
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
 
     <div class="stats-grid">
 
+        <!-- Total Employees -->
         <div class="stat-card">
 
-            <p>Total Employees</p>
+            <div class="stat-icon stat-blue">
+                <i class="fa-solid fa-users"></i>
+            </div>
 
-            <h2>
-                {{ total_employees }}
-            </h2>
+            <div class="stat-content">
+
+                <p>Total Employees</p>
+
+                <h2>
+                    {{ total_employees }}
+                </h2>
+
+                <div class="stat-growth">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </div>
+
+            </div>
 
         </div>
 
 
+        <!-- Active Employees -->
         <div class="stat-card">
 
-            <p>Active Employees</p>
+            <div class="stat-icon stat-green">
+                <i class="fa-solid fa-user-check"></i>
+            </div>
 
-            <h2>
-                {{ active_employees }}
-            </h2>
+            <div class="stat-content">
+
+                <p>Active Employees</p>
+
+                <h2>
+                    {{ active_employees }}
+                </h2>
+
+                <div class="stat-growth">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </div>
+
+            </div>
 
         </div>
 
 
+        <!-- On Leave -->
         <div class="stat-card">
 
-            <p>On Leave</p>
+            <div class="stat-icon stat-orange">
+                <i class="fa-solid fa-calendar-days"></i>
+            </div>
 
-            <h2>
-                {{ on_leave }}
-            </h2>
+            <div class="stat-content">
+
+                <p>On Leave</p>
+
+                <h2>
+                    {{ on_leave }}
+                </h2>
+
+                <div class="stat-growth">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </div>
+
+            </div>
 
         </div>
 
 
+        <!-- Departments -->
         <div class="stat-card">
 
-            <p>Departments</p>
+            <div class="stat-icon stat-purple">
+                <i class="fa-solid fa-sitemap"></i>
+            </div>
 
-            <h2>
-                {{ departments|length }}
-            </h2>
+            <div class="stat-content">
+
+                <p>Departments</p>
+
+                <h2>
+                    {{ departments|length }}
+                </h2>
+
+                <div class="stat-growth">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- FILTER -->
+    <!-- =====================================================
+         SEARCH / FILTER
+    ====================================================== -->
 
-    <form method="GET"
-        class="filter-section">
+    <form
+        method="GET"
+        class="employee-filter"
+    >
 
-        <input
-            type="text"
-            name="search"
-            placeholder="Search by name, email or employee ID..."
-            value="{{ request.GET.search }}"
-        >
+        <!-- Search -->
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search by name, email or employee ID..."
+                value="{{ request.GET.search }}"
+            >
+
+        </div>
 
 
+        <!-- Department -->
         <select name="department">
 
             <option value="">
@@ -106,10 +182,13 @@ Employees | SD Tracker
 
             {% for department in departments %}
 
-                <option value="{{ department }}">
-
+                <option
+                    value="{{ department }}"
+                    {% if request.GET.department == department %}
+                        selected
+                    {% endif %}
+                >
                     {{ department }}
-
                 </option>
 
             {% endfor %}
@@ -117,28 +196,47 @@ Employees | SD Tracker
         </select>
 
 
+        <!-- Status -->
         <select name="status">
 
             <option value="">
                 All Status
             </option>
 
-            <option value="active">
+            <option
+                value="active"
+                {% if request.GET.status == "active" %}
+                    selected
+                {% endif %}
+            >
                 Active
             </option>
 
-            <option value="on_leave">
+            <option
+                value="on_leave"
+                {% if request.GET.status == "on_leave" %}
+                    selected
+                {% endif %}
+            >
                 On Leave
             </option>
 
-            <option value="inactive">
+            <option
+                value="inactive"
+                {% if request.GET.status == "inactive" %}
+                    selected
+                {% endif %}
+            >
                 Inactive
             </option>
 
         </select>
 
 
-        <button type="submit">
+        <!-- Search Button -->
+        <button type="submit" class="search-button">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
 
             Search
 
@@ -147,9 +245,11 @@ Employees | SD Tracker
     </form>
 
 
-    <!-- TABLE -->
+    <!-- =====================================================
+         EMPLOYEE TABLE
+    ====================================================== -->
 
-    <div class="table-container">
+    <div class="table-card">
 
         <table>
 
@@ -159,9 +259,9 @@ Employees | SD Tracker
 
                     <th>#</th>
 
-                    <th>Employee ID</th>
-
                     <th>Employee</th>
+
+                    <th>Employee ID</th>
 
                     <th>Designation</th>
 
@@ -186,105 +286,209 @@ Employees | SD Tracker
 
                 <tr>
 
-                    <td>
+                    <!-- Number -->
+                    <td class="serial-number">
                         {{ forloop.counter }}
                     </td>
 
 
+                    <!-- Employee -->
                     <td>
 
-                        {{ employee.employee_id }}
+                        <div class="employee-info">
+
+                            <div class="employee-avatar">
+
+                                {% if employee.user.first_name %}
+
+                                    {{ employee.user.first_name|first|upper }}
+
+                                {% else %}
+
+                                    {{ employee.user.username|first|upper }}
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="employee-details">
+
+                                <strong>
+                                    {{ employee.user.get_full_name }}
+                                </strong>
+
+                                <span>
+                                    {{ employee.user.email }}
+                                </span>
+
+                            </div>
+
+                        </div>
 
                     </td>
 
 
+                    <!-- Employee ID -->
                     <td>
 
-                        <strong>
-
-                            {{ employee.user.get_full_name }}
-
-                        </strong>
-
-                        <br>
-
-                        <small>
-
-                            {{ employee.user.email }}
-
-                        </small>
+                        <span class="employee-id">
+                            {{ employee.employee_id }}
+                        </span>
 
                     </td>
 
 
+                    <!-- Designation -->
                     <td>
 
-                        {{ employee.designation }}
+                        <span class="designation">
+                            {{ employee.designation }}
+                        </span>
 
                     </td>
 
 
+                    <!-- Department -->
                     <td>
 
-                        {{ employee.department }}
+                        <span class="department">
+                            {{ employee.department }}
+                        </span>
 
                     </td>
 
 
+                    <!-- Role -->
                     <td>
 
-                        {{ employee.user.profile.role }}
+                        {% if employee.user.profile.role == "manager" %}
+
+                            <span class="role-badge manager">
+                                Manager
+                            </span>
+
+                        {% elif employee.user.profile.role == "admin" %}
+
+                            <span class="role-badge admin">
+                                Admin
+                            </span>
+
+                        {% else %}
+
+                            <span class="role-badge employee">
+                                Employee
+                            </span>
+
+                        {% endif %}
 
                     </td>
 
 
+                    <!-- Joining Date -->
                     <td>
 
-                        {{ employee.joining_date }}
+                        <div class="joining-date">
+
+                            <i class="fa-regular fa-calendar"></i>
+
+                            <span>
+                                {{ employee.joining_date|date:"M d, Y" }}
+                            </span>
+
+                        </div>
 
                     </td>
 
 
+                    <!-- Status -->
                     <td>
 
-                        {{ employee.get_status_display }}
+                        {% if employee.status == "active" %}
+
+                            <span class="status-badge active">
+                                <span class="status-dot"></span>
+                                Active
+                            </span>
+
+                        {% elif employee.status == "on_leave" %}
+
+                            <span class="status-badge on-leave">
+                                <span class="status-dot"></span>
+                                On Leave
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-badge inactive">
+                                <span class="status-dot"></span>
+                                Inactive
+                            </span>
+
+                        {% endif %}
 
                     </td>
 
 
+                    <!-- Actions -->
                     <td>
 
-                        <a href="{% url 'employee_detail' employee.pk %}">
+                        <div class="action-buttons">
 
-                            View
-
-                        </a>
-
-
-                        <a href="{% url 'employee_update' employee.pk %}">
-
-                            Edit
-
-                        </a>
+                            <!-- View -->
+                            <a
+                                href="{% url 'employee_detail' employee.pk %}"
+                                class="action-btn view-btn"
+                                title="View Employee"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
 
 
-                        <a href="{% url 'employee_delete' employee.pk %}">
+                            <!-- Edit -->
+                            <a
+                                href="{% url 'employee_update' employee.pk %}"
+                                class="action-btn edit-btn"
+                                title="Edit Employee"
+                            >
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
 
-                            Delete
 
-                        </a>
+                            <!-- Delete -->
+                            <a
+                                href="{% url 'employee_delete' employee.pk %}"
+                                class="action-btn delete-btn"
+                                title="Delete Employee"
+                            >
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+
+                        </div>
 
                     </td>
 
                 </tr>
 
+
                 {% empty %}
 
                 <tr>
 
-                    <td colspan="9">
+                    <td
+                        colspan="9"
+                        class="empty-state"
+                    >
 
-                        No employees found.
+                        <div>
+
+                            <i class="fa-solid fa-users"></i>
+
+                            <p>
+                                No employees found.
+                            </p>
+
+                        </div>
 
                     </td>
 
@@ -296,7 +500,52 @@ Employees | SD Tracker
 
         </table>
 
+
+        <!-- =================================================
+             TABLE FOOTER
+        ================================================== -->
+
+        <div class="table-footer">
+
+            <div class="showing-text">
+
+                Showing
+                <strong>{{ employees|length }}</strong>
+                employees
+
+            </div>
+
+
+            <div class="pagination">
+
+                <button
+                    type="button"
+                    class="pagination-btn disabled"
+                    disabled
+                >
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <button
+                    type="button"
+                    class="pagination-btn active"
+                >
+                    1
+                </button>
+
+                <button
+                    type="button"
+                    class="pagination-btn"
+                >
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
+
 </div>
 
 {% endblock %}
