@@ -212,12 +212,28 @@ def my_tasks(request):
         assigned_to=employee
     )
 
+    context = {
+        "tasks": tasks,
+
+        "total_tasks": tasks.count(),
+
+        "todo_tasks": tasks.filter(
+            status="todo"
+        ).count(),
+
+        "in_progress_tasks": tasks.filter(
+            status="in_progress"
+        ).count(),
+
+        "completed_tasks": tasks.filter(
+            status="completed"
+        ).count(),
+    }
+
     return render(
         request,
         "tasks/my_tasks.html",
-        {
-            "tasks": tasks
-        }
+        context
     )
 
 # for employees

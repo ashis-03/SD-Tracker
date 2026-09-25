@@ -1,145 +1,319 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Submit Task | SD Tracker{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tasks/task_submit.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<div class="page-header">
+<div class="task-submit-page">
 
-    <div>
+    <!-- =========================
+         BACK LINK
+    ========================== -->
 
-        <h1>Submit Task</h1>
-
-        <p>
-            Upload your work and submit it for manager review.
-        </p>
-
-    </div>
-
-</div>
-
-
-<div class="form-container">
-
-
-    <!-- Task Information -->
-
-    <div class="task-info">
-
-        <h2>{{ task.title }}</h2>
-
-
-        <p>
-
-            <strong>Project:</strong>
-
-            {{ task.project.name }}
-
-        </p>
-
-
-        {% if task.phase %}
-
-        <p>
-
-            <strong>Phase:</strong>
-
-            {{ task.phase.get_phase_name_display }}
-
-        </p>
-
-        {% endif %}
-
-
-        <p>
-
-            <strong>Current Progress:</strong>
-
-            {{ task.progress }}%
-
-        </p>
-
-    </div>
-
-
-    <form
-        method="POST"
-        enctype="multipart/form-data"
+    <a
+        href="{% url 'task_detail' task.id %}"
+        class="back-link"
     >
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Task Details
+    </a>
 
-        {% csrf_token %}
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                Submit Task
+            </h1>
+
+            <p>
+                Upload your work and submit it for manager review.
+            </p>
+
+        </div>
+
+    </div>
 
 
-        {% if form.errors %}
+    <!-- =========================
+         TASK SUMMARY CARD
+    ========================== -->
 
-            <div class="error">
+    <div class="task-summary-card">
 
-                {{ form.errors }}
+        <div class="task-summary-icon">
+
+            <i class="fa-solid fa-file-lines"></i>
+
+        </div>
+
+
+        <div class="task-summary-content">
+
+            <h2>
+                {{ task.title }}
+            </h2>
+
+
+            <div class="task-summary-details">
+
+                <span>
+                    <i class="fa-regular fa-folder"></i>
+
+                    <strong>Project:</strong>
+
+                    {{ task.project.name }}
+                </span>
+
+
+                {% if task.phase %}
+
+                    <span>
+                        <i class="fa-solid fa-diagram-project"></i>
+
+                        <strong>Phase:</strong>
+
+                        {{ task.phase.get_phase_name_display }}
+                    </span>
+
+                {% endif %}
+
+
+                <span>
+                    <i class="fa-solid fa-chart-simple"></i>
+
+                    <strong>Current Progress:</strong>
+
+                    {{ task.progress }}%
+                </span>
 
             </div>
 
-        {% endif %}
+        </div>
+
+    </div>
 
 
-        <!-- Work File -->
 
-        <div class="form-group">
+    <!-- =========================
+         UPLOAD CARD
+    ========================== -->
 
-            <label for="{{ form.work_file.id_for_label }}">
-
-                Upload Your Work
-
-            </label>
-
-            {{ form.work_file }}
+    <div class="upload-card">
 
 
-            {% if form.work_file.errors %}
+        <!-- Card Header -->
 
-                <div class="error">
+        <div class="card-header">
 
-                    {{ form.work_file.errors }}
+            <div class="card-icon">
+
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Upload Your Work
+                </h2>
+
+                <p>
+                    Upload the file containing your work for this task.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+
+
+            <!-- =========================
+                 FORM ERRORS
+            ========================== -->
+
+            {% if form.non_field_errors %}
+
+                <div class="form-errors">
+
+                    <i class="fa-solid fa-circle-exclamation"></i>
+
+                    <div>
+                        {{ form.non_field_errors }}
+                    </div>
 
                 </div>
 
             {% endif %}
 
-        </div>
 
 
-        <div class="submit-warning">
+            <!-- =========================
+                 FILE UPLOAD
+            ========================== -->
 
-            <p>
+            <div class="upload-area">
 
-                Once submitted, this task will be sent to the manager for review.
+                <div class="upload-icon">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
 
-            </p>
+                <h3>
+                    Upload your work
+                </h3>
 
-        </div>
+                <p class="upload-description">
+                    Choose a file or drag and drop it here
+                </p>
 
-
-        <div class="form-actions">
-
-            <button
-                type="submit"
-                class="btn btn-primary"
-            >
-
-                Submit for Review
-
-            </button>
+                <p class="upload-info">
+                    Supported formats: PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, ZIP
+                </p>
 
 
-            <a
-                href="{% url 'task_detail' task.id %}"
-                class="btn btn-secondary"
-            >
+                <!-- Existing file -->
 
-                Cancel
+                {% if task.work_file %}
 
-            </a>
+                    <div class="existing-file">
 
-        </div>
+                        <div class="existing-file-icon">
+                            <i class="fa-solid fa-file"></i>
+                        </div>
 
-    </form>
+                        <div class="existing-file-info">
+
+                            <span class="existing-file-label">
+                                Current submission
+                            </span>
+
+                            <a
+                                href="{{ task.work_file.url }}"
+                                target="_blank"
+                                class="existing-file-name"
+                            >
+                                {{ task.work_file.name|cut:"task_work/" }}
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <p class="replace-text">
+                        Upload a new file below to replace the current submission.
+                    </p>
+
+                {% endif %}
+
+
+                <!-- File input -->
+
+                <div class="file-input-wrapper">
+
+                    {{ form.work_file }}
+
+                    <label
+                        for="{{ form.work_file.id_for_label }}"
+                        class="choose-file-btn"
+                    >
+
+                        <i class="fa-solid fa-folder-open"></i>
+
+                        Choose File
+
+                    </label>
+
+                </div>
+
+
+                <!-- Selected file name -->
+
+                <p
+                    id="selected-file-name"
+                    class="selected-file-name"
+                >
+                    No file selected
+                </p>
+
+
+                {% if form.work_file.errors %}
+
+                    <div class="field-error">
+                        {{ form.work_file.errors }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- =========================
+                 SUBMISSION NOTICE
+            ========================== -->
+
+            <div class="submit-warning">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <span>
+                    Once submitted, this task will be sent to the
+                    manager for review.
+                </span>
+
+            </div>
+
+
+
+            <!-- =========================
+                 ACTIONS
+            ========================== -->
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                    Submit for Review
+
+                </button>
+
+
+                <a
+                    href="{% url 'task_detail' task.id %}"
+                    class="btn btn-secondary"
+                >
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
 
 </div>
 

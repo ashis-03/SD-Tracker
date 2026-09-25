@@ -82,7 +82,7 @@ class Task(models.Model):
     )
 
     work_file = models.FileField(
-        upload_to="task_work/",
+        upload_to="static/media/task_work/",
         blank=True,
         null=True
     )

@@ -1,0 +1,556 @@
+/* =========================================================
+   CREATE TASK PAGE
+========================================================= */
+
+.create-task-page {
+    max-width: 1390px;
+    margin: 0 auto;
+    padding: 20px 10px 40px;
+    color: #13294b;
+}
+
+
+/* =========================================================
+   BACK LINK
+========================================================= */
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 22px;
+
+    color: #2563eb;
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #1d4ed8;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    margin-bottom: 28px;
+}
+
+.page-header h1 {
+    margin: 0 0 8px;
+
+    color: #12284a;
+
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.page-header p {
+    margin: 0;
+
+    color: #7182a0;
+
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MAIN FORM CARD
+========================================================= */
+
+.task-form-card {
+    background: #ffffff;
+
+    border: 1px solid #e5eaf2;
+    border-radius: 18px;
+
+    padding: 34px 32px;
+
+    box-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.04),
+        0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.task-form-card form {
+    width: 100%;
+}
+
+
+/* =========================================================
+   FORM SECTION
+========================================================= */
+
+.form-section {
+    padding: 0 0 28px;
+    margin-bottom: 28px;
+
+    border-bottom: 1px solid #e8edf4;
+}
+
+.form-section:last-of-type {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    margin-bottom: 24px;
+}
+
+.section-icon {
+    width: 64px;
+    height: 64px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 24px;
+}
+
+
+/* Blue icon */
+
+.section-icon.blue {
+    background: #eaf1ff;
+    color: #2563eb;
+}
+
+
+/* Green icon */
+
+.section-icon.green {
+    background: #e7f8f1;
+    color: #16a36a;
+}
+
+
+/* Purple icon */
+
+.section-icon.purple {
+    background: #f1eaff;
+    color: #7048e8;
+}
+
+
+.section-header h2 {
+    margin: 0 0 5px;
+
+    color: #162b4d;
+
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.section-header p {
+    margin: 0;
+
+    color: #7383a0;
+
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   FORM LAYOUT
+========================================================= */
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 30px;
+
+    margin-bottom: 20px;
+}
+
+.form-row:last-child {
+    margin-bottom: 0;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.form-group.full-width {
+    width: 100%;
+}
+
+
+/* =========================================================
+   LABELS
+========================================================= */
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #152b4c;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.form-group label span {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+
+/* =========================================================
+   INPUTS / SELECT / TEXTAREA
+========================================================= */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d7dfeb;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #172b4d;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* Input + Select */
+
+.form-group input,
+.form-group select {
+    height: 48px;
+    padding: 0 16px;
+}
+
+
+/* Textarea */
+
+.form-group textarea {
+    min-height: 90px;
+
+    padding: 14px 16px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+
+/* Placeholder */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9aa9bf;
+}
+
+
+/* Focus */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #4f6fe8;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 111, 232, 0.10);
+}
+
+
+/* Hover */
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+    border-color: #bdc9da;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.form-section:first-of-type .form-group + .form-group {
+    margin-top: 20px;
+}
+
+
+/* =========================================================
+   ASSIGNMENT SECTION
+========================================================= */
+
+.assignment-section {
+    padding-bottom: 28px;
+}
+
+.assignment-section .form-group {
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   FORM ERRORS
+========================================================= */
+
+.form-errors {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    margin-bottom: 24px;
+    padding: 13px 16px;
+
+    background: #fff1f2;
+
+    border: 1px solid #fecdd3;
+    border-radius: 9px;
+
+    color: #be123c;
+
+    font-size: 14px;
+}
+
+.form-errors i {
+    margin-top: 2px;
+}
+
+.form-errors ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+
+.field-error {
+    margin-top: 6px;
+
+    color: #dc2626;
+
+    font-size: 13px;
+}
+
+.field-error ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding-top: 28px;
+}
+
+
+/* Common button */
+
+.btn {
+    min-height: 48px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 0 22px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.15s ease;
+}
+
+
+/* Primary */
+
+.btn-primary {
+    background: #3568e8;
+
+    border: 1px solid #3568e8;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 3px 8px rgba(53, 104, 232, 0.20);
+}
+
+.btn-primary:hover {
+    background: #2858d3;
+
+    border-color: #2858d3;
+
+    box-shadow:
+        0 5px 12px rgba(53, 104, 232, 0.25);
+
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+
+/* Secondary */
+
+.btn-secondary {
+    background: #ffffff;
+
+    border: 1px solid #d7dfeb;
+
+    color: #263a5a;
+}
+
+.btn-secondary:hover {
+    background: #f8fafc;
+
+    border-color: #c4cfdf;
+}
+
+
+/* =========================================================
+   DATE INPUT
+========================================================= */
+
+.form-group input[type="date"] {
+    color: #172b4d;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.form-group select {
+    cursor: pointer;
+
+    appearance: auto;
+}
+
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .create-task-page {
+        padding: 18px 16px 35px;
+    }
+
+    .task-form-card {
+        padding: 28px 24px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .create-task-page {
+        padding: 15px 12px 30px;
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+    }
+
+    .page-header p {
+        font-size: 14px;
+    }
+
+    .task-form-card {
+        padding: 22px 18px;
+
+        border-radius: 14px;
+    }
+
+    .section-header {
+        gap: 12px;
+
+        margin-bottom: 20px;
+    }
+
+    .section-icon {
+        width: 52px;
+        height: 52px;
+
+        font-size: 20px;
+    }
+
+    .section-header h2 {
+        font-size: 20px;
+    }
+
+    .section-header p {
+        font-size: 14px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

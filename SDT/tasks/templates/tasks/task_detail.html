@@ -1,431 +1,702 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ task.title }} | SD Tracker{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tasks/task_detail.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<!-- Page Header -->
+<div class="task-detail-page">
 
-<div class="page-header">
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
 
-    <div>
+    <div class="task-page-header">
 
-        <h1>{{ task.title }}</h1>
+        <div class="task-title-section">
 
-        <p>
-            Task details and progress information.
-        </p>
-
-    </div>
-
-
-    <div>
-
-        <a href="{% url back_url %}" class="btn btn-secondary">
-            {{ back_text }}
-        </a>
-
-        {% if user.is_superuser or user.profile.role == "manager" or user.profile.role == "admin" %}
-
-            <a
-                href="{% url 'task_edit' task.id %}"
-                class="btn btn-primary"
-            >
-                Edit Task
-            </a>
-
-        {% endif %}
-
-    </div>
-
-</div>
-
-
-<!-- Task Information -->
-
-<div class="detail-container">
-
-    <div class="detail-card">
-
-        <h2>Task Information</h2>
-
-
-        <div class="detail-row">
-
-            <strong>Task Title:</strong>
-
-            <span>
-                {{ task.title }}
-            </span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-            <strong>Description:</strong>
-
-            <span>
-                {% if task.description %}
-                    {{ task.description }}
-                {% else %}
-                    No description provided.
-                {% endif %}
-            </span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-            <strong>Project:</strong>
-
-            <span>
-                {{ task.project.name }}
-            </span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-            <strong>SDLC Phase:</strong>
-
-            <span>
-
-                {% if task.phase %}
-
-                    {{ task.phase.get_phase_name_display }}
-
-                {% else %}
-
-                    No phase assigned
-
-                {% endif %}
-
-            </span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-            <strong>Assigned To:</strong>
-
-            <span>
-
-                {% if task.assigned_to %}
-
-                    {{ task.assigned_to }}
-
-                {% else %}
-
-                    Unassigned
-
-                {% endif %}
-
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <!-- Task Status -->
-
-    <div class="detail-card">
-
-        <h2>Status & Priority</h2>
-
-
-        <div class="detail-row">
-
-            <strong>Status:</strong>
-
-            <span class="status {{ task.status }}">
-
-                {{ task.get_status_display }}
-
-            </span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-            <strong>Priority:</strong>
-
-            <span class="priority {{ task.priority }}">
-
-                {{ task.get_priority_display }}
-
-            </span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-            <strong>Deadline:</strong>
-
-            <span>
-
-                {{ task.deadline }}
-
-            </span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-            <strong>Created At:</strong>
-
-            <span>
-
-                {{ task.created_at|date:"d M Y, h:i A" }}
-
-            </span>
-
-        </div>
-
-
-        <div class="detail-row">
-
-            <strong>Last Updated:</strong>
-
-            <span>
-
-                {{ task.updated_at|date:"d M Y, h:i A" }}
-
-            </span>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- Progress Section -->
-
-<div class="detail-card progress-section">
-
-    <h2>Task Progress</h2>
-
-    <div class="progress-bar large">
-
-        <div
-            class="progress-fill"
-            style="width: {{ task.progress }}%"
-        >
-        </div>
-
-    </div>
-
-    <h3>
-        {{ task.progress }}%
-    </h3>
-
-
-    <!-- Only assigned employee can update progress -->
-
-    {% if user.profile.role == "employee" and task.assigned_to == user.employee %}
-
-        {% if task.status != "completed" and task.status != "in_review" %}
-
-            <a
-                href="{% url 'task_progress' task.id %}"
-                class="btn btn-primary"
-            >
-                Update Progress
-            </a>
-
-        {% endif %}
-
-    {% endif %}
-
-</div>
-
-
-<!-- Submitted Work -->
-
-<div class="detail-card">
-
-    <h2>Submitted Work</h2>
-
-
-    {% if task.work_file %}
-
-        <p>
-
-            <strong>Uploaded File:</strong>
-
-            <a
-                href="{{ task.work_file.url }}"
-                target="_blank"
-            >
-                View Submitted Work
-            </a>
-
-        </p>
-
-
-        {% if task.submitted_at %}
+            <h1>{{ task.title }}</h1>
 
             <p>
-
-                Submitted on:
-
-                {{ task.submitted_at|date:"d M Y, h:i A" }}
-
+                Task details and progress information.
             </p>
 
-        {% endif %}
+        </div>
 
 
-    {% else %}
+        <div class="task-header-actions">
 
-        <p>
-            No work has been submitted yet.
-        </p>
-
-    {% endif %}
-
-
-    <!-- Only assigned employee can submit work -->
-
-    {% if user.profile.role == "employee" and task.assigned_to == user.employee %}
-
-        {% if task.status == "in_progress" or task.status == "todo" %}
-
-            <a
-                href="{% url 'submit_task' task.id %}"
-                class="btn btn-primary"
-            >
-                Upload & Submit Work
+            <a href="{% url back_url %}" class="btn btn-secondary">
+                <i class="fa-solid fa-arrow-left"></i>
+                {{ back_text }}
             </a>
 
-        {% endif %}
 
-    {% endif %}
+            {% if user.is_superuser or user.profile.role == "manager" or user.profile.role == "admin" %}
 
-</div>
+                <a
+                    href="{% url 'task_edit' task.id %}"
+                    class="btn btn-primary"
+                >
+                    <i class="fa-solid fa-pen"></i>
+                    Edit Task
+                </a>
 
-<!-- Review Section -->
+            {% endif %}
 
-<div class="detail-card">
-
-    <h2>Review Status</h2>
-
-
-    <div class="detail-row">
-
-        <strong>Review:</strong>
-
-        <span class="review-status {{ task.review_status }}">
-
-            {{ task.get_review_status_display }}
-
-        </span>
+        </div>
 
     </div>
 
 
-    <!-- Task waiting for review -->
+    <!-- =========================
+         TOP INFORMATION CARDS
+    ========================== -->
 
-    {% if task.status == "in_review" %}
-
-        <p>
-            This task has been submitted and is waiting for review.
-        </p>
+    <div class="task-info-grid">
 
 
-        <!-- Only Manager/Admin can review -->
+        <!-- =========================
+             TASK INFORMATION
+        ========================== -->
 
-        {% if user.is_superuser or user.profile.role == "manager" or user.profile.role == "admin" %}
+        <div class="detail-card">
 
-            <div class="review-actions">
+            <div class="card-header">
 
-                <h3>Review Submitted Task</h3>
+                <div class="card-icon blue">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
 
-
-                <form
-                    method="POST"
-                    action="{% url 'review_task' task.id %}"
-                >
-
-                    {% csrf_token %}
-
-
-                    <!-- Approve -->
-
-                    <button
-                        type="submit"
-                        name="action"
-                        value="approve"
-                        class="btn btn-success"
-                    >
-                        Approve
-                    </button>
-
-
-                    <!-- Request Changes -->
-
-                    <button
-                        type="submit"
-                        name="action"
-                        value="changes"
-                        class="btn btn-warning"
-                    >
-                        Request Changes
-                    </button>
-
-
-                    <!-- Reject -->
-
-                    <button
-                        type="submit"
-                        name="action"
-                        value="reject"
-                        class="btn btn-danger"
-                    >
-                        Reject
-                    </button>
-
-                </form>
+                <div>
+                    <h2>Task Information</h2>
+                    <p>Complete information about this task.</p>
+                </div>
 
             </div>
 
+
+            <div class="detail-list">
+
+
+                <!-- Task Title -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+                        <div class="row-icon">
+                            <i class="fa-regular fa-file"></i>
+                        </div>
+
+                        <strong>Task Title</strong>
+                    </div>
+
+                    <span>
+                        {{ task.title }}
+                    </span>
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+                        <div class="row-icon">
+                            <i class="fa-solid fa-align-left"></i>
+                        </div>
+
+                        <strong>Description</strong>
+                    </div>
+
+                    <span class="description-text">
+
+                        {% if task.description %}
+                            {{ task.description }}
+                        {% else %}
+                            No description provided.
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <!-- Project -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+                        <div class="row-icon">
+                            <i class="fa-regular fa-folder"></i>
+                        </div>
+
+                        <strong>Project</strong>
+                    </div>
+
+                    <span>
+                        {{ task.project.name }}
+                    </span>
+
+                </div>
+
+
+                <!-- SDLC Phase -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+                        <div class="row-icon">
+                            <i class="fa-solid fa-diagram-project"></i>
+                        </div>
+
+                        <strong>SDLC Phase</strong>
+                    </div>
+
+                    <span>
+
+                        {% if task.phase %}
+                            {{ task.phase.get_phase_name_display }}
+                        {% else %}
+                            No phase assigned
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <!-- Assigned Employee -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+                        <div class="row-icon">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+
+                        <strong>Assigned To</strong>
+                    </div>
+
+                    <span>
+
+                        {% if task.assigned_to %}
+                            {{ task.assigned_to }}
+                        {% else %}
+                            Unassigned
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             STATUS & PRIORITY
+        ========================== -->
+
+        <div class="detail-card">
+
+            <div class="card-header">
+
+                <div class="card-icon blue">
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+
+                <div>
+                    <h2>Status & Priority</h2>
+                    <p>Current status, priority and key dates.</p>
+                </div>
+
+            </div>
+
+
+            <div class="detail-list">
+
+
+                <!-- Status -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+
+                        <div class="row-icon">
+                            <i class="fa-regular fa-flag"></i>
+                        </div>
+
+                        <strong>Status</strong>
+
+                    </div>
+
+
+                    <span class="status {{ task.status }}">
+                        {{ task.get_status_display }}
+                    </span>
+
+                </div>
+
+
+                <!-- Priority -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+
+                        <div class="row-icon">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </div>
+
+                        <strong>Priority</strong>
+
+                    </div>
+
+
+                    <span class="priority {{ task.priority }}">
+                        {{ task.get_priority_display }}
+                    </span>
+
+                </div>
+
+
+                <!-- Deadline -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+
+                        <div class="row-icon">
+                            <i class="fa-regular fa-calendar"></i>
+                        </div>
+
+                        <strong>Deadline</strong>
+
+                    </div>
+
+
+                    <span>
+                        {{ task.deadline|date:"M d, Y" }}
+                    </span>
+
+                </div>
+
+
+                <!-- Created At -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+
+                        <div class="row-icon">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+
+                        <strong>Created At</strong>
+
+                    </div>
+
+
+                    <span>
+                        {{ task.created_at|date:"d M Y, h:i A" }}
+                    </span>
+
+                </div>
+
+
+                <!-- Last Updated -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+
+                        <div class="row-icon">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </div>
+
+                        <strong>Last Updated</strong>
+
+                    </div>
+
+
+                    <span>
+                        {{ task.updated_at|date:"d M Y, h:i A" }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         TASK PROGRESS
+    ========================== -->
+
+    <div class="detail-card progress-card">
+
+        <div class="card-header">
+
+            <div class="card-icon blue">
+                <i class="fa-solid fa-chart-simple"></i>
+            </div>
+
+            <div>
+                <h2>Task Progress</h2>
+                <p>Current progress of this task.</p>
+            </div>
+
+        </div>
+
+
+        <div class="progress-content">
+
+            <div class="progress-percentage">
+                {{ task.progress }}%
+            </div>
+
+
+            <div class="progress-bar large">
+
+                <div
+                    class="progress-fill"
+                    style="width: {{ task.progress }}%"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Only assigned employee can update progress -->
+
+        {% if user.profile.role == "employee" and task.assigned_to == user.employee %}
+
+            {% if task.status != "completed" and task.status != "in_review" %}
+
+                <div class="progress-action">
+
+                    <a
+                        href="{% url 'task_progress' task.id %}"
+                        class="btn btn-primary"
+                    >
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        Update Progress
+                    </a>
+
+                </div>
+
+            {% endif %}
+
         {% endif %}
 
-
-    {% elif task.review_status == "approved" %}
-
-        <p>
-            This task has been approved and completed.
-        </p>
+    </div>
 
 
-    {% elif task.review_status == "changes_requested" %}
 
-        <p>
-            Changes have been requested. The assigned employee should update the work and submit it again.
-        </p>
+    <!-- =========================
+         BOTTOM CARDS
+    ========================== -->
 
-
-    {% elif task.review_status == "rejected" %}
-
-        <p>
-            This task has been rejected.
-        </p>
+    <div class="task-bottom-grid">
 
 
-    {% else %}
+        <!-- =========================
+             SUBMITTED WORK
+        ========================== -->
 
-        <p>
-            This task has not been submitted for review yet.
-        </p>
+        <div class="detail-card submitted-card">
 
-    {% endif %}
+            <div class="card-header">
+
+                <div class="card-icon green">
+                    <i class="fa-solid fa-file-arrow-up"></i>
+                </div>
+
+                <div>
+                    <h2>Submitted Work</h2>
+                    <p>Files and work submitted by the employee.</p>
+                </div>
+
+            </div>
+
+
+            {% if task.work_file %}
+
+                <div class="submitted-file">
+
+                    <div class="file-icon">
+                        <i class="fa-regular fa-file-lines"></i>
+                    </div>
+
+
+                    <div class="file-info">
+
+                        <strong>
+                            Submitted Work
+                        </strong>
+
+                        {% if task.submitted_at %}
+
+                            <span>
+                                Submitted on
+                                {{ task.submitted_at|date:"d M Y, h:i A" }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <a
+                        href="{{ task.work_file.url }}"
+                        target="_blank"
+                        class="view-file-btn"
+                    >
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        View
+                    </a>
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        <i class="fa-regular fa-file-lines"></i>
+                    </div>
+
+                    <p>
+                        No work has been submitted yet.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- Only assigned employee can submit work -->
+
+            {% if user.profile.role == "employee" and task.assigned_to == user.employee %}
+
+                {% if task.status == "in_progress" or task.status == "todo" %}
+
+                    <div class="card-action">
+
+                        <a
+                            href="{% url 'submit_task' task.id %}"
+                            class="btn btn-primary"
+                        >
+                            <i class="fa-solid fa-upload"></i>
+                            Upload & Submit Work
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- =========================
+             REVIEW STATUS
+        ========================== -->
+
+        <div class="detail-card review-card">
+
+            <div class="card-header">
+
+                <div class="card-icon purple">
+                    <i class="fa-solid fa-user-group"></i>
+                </div>
+
+                <div>
+                    <h2>Review Status</h2>
+                    <p>Review information for this task.</p>
+                </div>
+
+            </div>
+
+
+            <div class="review-row">
+
+                <div class="detail-label">
+
+                    <div class="row-icon">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+
+                    <strong>Review</strong>
+
+                </div>
+
+
+                <span class="review-status {{ task.review_status }}">
+                    {{ task.get_review_status_display }}
+                </span>
+
+            </div>
+
+
+
+            <!-- Waiting for review -->
+
+            {% if task.status == "in_review" %}
+
+                <div class="review-message info">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <span>
+                        This task has been submitted and is waiting for review.
+                    </span>
+
+                </div>
+
+
+                <!-- Manager/Admin Review -->
+
+                {% if user.is_superuser or user.profile.role == "manager" or user.profile.role == "admin" %}
+
+                    <div class="review-actions">
+
+                        <h3>
+                            Review Submitted Task
+                        </h3>
+
+
+                        <form
+                            method="POST"
+                            action="{% url 'review_task' task.id %}"
+                        >
+
+                            {% csrf_token %}
+
+
+                            <button
+                                type="submit"
+                                name="action"
+                                value="approve"
+                                class="btn btn-success"
+                            >
+                                <i class="fa-solid fa-check"></i>
+                                Approve
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                name="action"
+                                value="changes"
+                                class="btn btn-warning"
+                            >
+                                <i class="fa-solid fa-rotate"></i>
+                                Request Changes
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                name="action"
+                                value="reject"
+                                class="btn btn-danger"
+                            >
+                                <i class="fa-solid fa-xmark"></i>
+                                Reject
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                {% endif %}
+
+
+
+            <!-- Approved -->
+
+            {% elif task.review_status == "approved" %}
+
+                <div class="review-message success">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    <span>
+                        This task has been approved and completed.
+                    </span>
+
+                </div>
+
+
+
+            <!-- Changes Requested -->
+
+            {% elif task.review_status == "changes_requested" %}
+
+                <div class="review-message warning">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <span>
+                        Changes have been requested. The assigned employee should update the work and submit it again.
+                    </span>
+
+                </div>
+
+
+
+            <!-- Rejected -->
+
+            {% elif task.review_status == "rejected" %}
+
+                <div class="review-message danger">
+
+                    <i class="fa-solid fa-circle-xmark"></i>
+
+                    <span>
+                        This task has been rejected.
+                    </span>
+
+                </div>
+
+
+
+            <!-- Not Submitted -->
+
+            {% else %}
+
+                <div class="review-message info">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <span>
+                        This task has not been submitted for review yet.
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
 
 </div>
 

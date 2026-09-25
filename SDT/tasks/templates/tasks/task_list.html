@@ -1,397 +1,593 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Tasks | SD Tracker
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/tasks/task_list.css' %}">
+
+{% endblock %}
+
 
 {% block content %}
 
-<div class="page-header">
+<div class="task-page">
 
-    <div>
-        <h1>Tasks</h1>
-        <p>Create, assign and track tasks across all projects.</p>
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <div class="page-header">
+
+        <div>
+            <h1>Tasks</h1>
+
+            <p>
+                Create, assign and track tasks across all projects.
+            </p>
+        </div>
+
+        <a href="{% url 'task_create' %}"
+           class="btn btn-primary create-task-btn">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Create Task
+
+        </a>
+
     </div>
 
-    <a href="{% url 'task_create' %}" class="btn btn-primary">
-        + Create Task
-    </a>
 
-</div>
+    <!-- =========================
+         SUMMARY CARDS
+    ========================== -->
+
+    <div class="summary-cards">
 
 
-<!-- Task Summary Cards -->
+        <!-- Total -->
 
-<div class="summary-cards">
+        <div class="summary-card total">
 
-    <div class="summary-card">
-        <h3>Total Tasks</h3>
-        <h2>{{ total_tasks }}</h2>
+            <div class="summary-icon">
+                <i class="fa-regular fa-file-lines"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <p>Total Tasks</p>
+
+                <h2>
+                    {{ total_tasks }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- To Do -->
+
+        <div class="summary-card todo">
+
+            <div class="summary-icon">
+                <i class="fa-regular fa-clock"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <p>To Do</p>
+
+                <h2>
+                    {{ todo_tasks }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- In Progress -->
+
+        <div class="summary-card progress">
+
+            <div class="summary-icon">
+                <i class="fa-solid fa-spinner"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <p>In Progress</p>
+
+                <h2>
+                    {{ in_progress_tasks }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- In Review -->
+
+        <div class="summary-card review">
+
+            <div class="summary-icon">
+                <i class="fa-regular fa-eye"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <p>In Review</p>
+
+                <h2>
+                    {{ review_tasks }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- Completed -->
+
+        <div class="summary-card completed">
+
+            <div class="summary-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <p>Completed</p>
+
+                <h2>
+                    {{ completed_tasks }}
+                </h2>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="summary-card">
-        <h3>To Do</h3>
-        <h2>{{ todo_tasks }}</h2>
-    </div>
 
-    <div class="summary-card">
-        <h3>In Progress</h3>
-        <h2>{{ in_progress_tasks }}</h2>
-    </div>
+    <!-- =========================
+         FILTER SECTION
+    ========================== -->
 
-    <div class="summary-card">
-        <h3>In Review</h3>
-        <h2>{{ review_tasks }}</h2>
-    </div>
+    <div class="task-filter-card">
 
-    <div class="summary-card">
-        <h3>Completed</h3>
-        <h2>{{ completed_tasks }}</h2>
-    </div>
-
-</div>
+        <form method="GET"
+              class="task-filter-form">
 
 
-<!-- Filters -->
+            <!-- Search -->
 
-<div class="filter-section">
+            <div class="task-search">
 
-    <form method="GET">
+                <i class="fa-solid fa-magnifying-glass"></i>
 
-        <!-- Search -->
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search tasks..."
+                    value="{{ request.GET.search }}"
+                >
 
-        <input
-            type="text"
-            name="search"
-            placeholder="Search tasks..."
-            value="{{ request.GET.search }}"
-        >
+            </div>
 
 
-        <!-- Project Filter -->
+            <!-- Project -->
 
-        <select name="project">
+            <select name="project">
 
-            <option value="">
-                All Projects
-            </option>
+                <option value="">
+                    All Projects
+                </option>
 
-            {% for project in projects %}
+                {% for project in projects %}
+
+                    <option
+                        value="{{ project.id }}"
+
+                        {% if request.GET.project == project.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ project.name }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <!-- Status -->
+
+            <select name="status">
+
+                <option value="">
+                    All Status
+                </option>
 
                 <option
-                    value="{{ project.id }}"
-                    {% if request.GET.project == project.id|stringformat:"s" %}
+                    value="todo"
+                    {% if request.GET.status == "todo" %}
                         selected
                     {% endif %}
                 >
-                    {{ project.name }}
+                    To Do
                 </option>
 
-            {% endfor %}
-
-        </select>
-
-
-        <!-- Status Filter -->
-
-        <select name="status">
-
-            <option value="">
-                All Status
-            </option>
-
-            <option
-                value="todo"
-                {% if request.GET.status == "todo" %}
-                    selected
-                {% endif %}
-            >
-                To Do
-            </option>
-
-            <option
-                value="in_progress"
-                {% if request.GET.status == "in_progress" %}
-                    selected
-                {% endif %}
-            >
-                In Progress
-            </option>
-
-            <option
-                value="in_review"
-                {% if request.GET.status == "in_review" %}
-                    selected
-                {% endif %}
-            >
-                In Review
-            </option>
-
-            <option
-                value="completed"
-                {% if request.GET.status == "completed" %}
-                    selected
-                {% endif %}
-            >
-                Completed
-            </option>
-
-            <option
-                value="overdue"
-                {% if request.GET.status == "overdue" %}
-                    selected
-                {% endif %}
-            >
-                Overdue
-            </option>
-
-        </select>
-
-
-        <!-- Priority Filter -->
-
-        <select name="priority">
-
-            <option value="">
-                All Priorities
-            </option>
-
-            <option
-                value="low"
-                {% if request.GET.priority == "low" %}
-                    selected
-                {% endif %}
-            >
-                Low
-            </option>
-
-            <option
-                value="medium"
-                {% if request.GET.priority == "medium" %}
-                    selected
-                {% endif %}
-            >
-                Medium
-            </option>
-
-            <option
-                value="high"
-                {% if request.GET.priority == "high" %}
-                    selected
-                {% endif %}
-            >
-                High
-            </option>
-
-        </select>
-
-
-        <button
-            type="submit"
-            class="btn btn-secondary"
-        >
-            Filter
-        </button>
-
-
-        <!-- Clear Filters -->
-
-        <a
-            href="{% url 'task_list' %}"
-            class="btn btn-sm"
-        >
-            Clear
-        </a>
-
-    </form>
-
-</div>
-
-
-<!-- Task Table -->
-
-<div class="table-container">
-
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>Task</th>
-                <th>Project / Phase</th>
-                <th>Assignee</th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Deadline</th>
-                <th>Progress</th>
-                <th>Actions</th>
-
-            </tr>
-
-        </thead>
-
-
-        <tbody>
-
-            {% for task in tasks %}
-
-            <tr>
-
-
-                <!-- Task -->
-
-                <td>
-
-                    <strong>
-                        {{ task.title }}
-                    </strong>
-
-                    <br>
-
-                    <small>
-                        {{ task.description|truncatewords:10 }}
-                    </small>
-
-                </td>
-
-
-                <!-- Project and Phase -->
-
-                <td>
-
-                    {{ task.project.name }}
-
-                    <br>
-
-                    <small>
-
-                        {% if task.phase %}
-
-                            {{ task.phase.get_phase_name_display }}
-
-                        {% else %}
-
-                            No Phase
-
-                        {% endif %}
-
-                    </small>
-
-                </td>
-
-
-                <!-- Assigned Employee -->
-
-                <td>
-
-                    {% if task.assigned_to %}
-
-                        {{ task.assigned_to }}
-
-                    {% else %}
-
-                        Unassigned
-
+                <option
+                    value="in_progress"
+                    {% if request.GET.status == "in_progress" %}
+                        selected
                     {% endif %}
+                >
+                    In Progress
+                </option>
 
-                </td>
+                <option
+                    value="in_review"
+                    {% if request.GET.status == "in_review" %}
+                        selected
+                    {% endif %}
+                >
+                    In Review
+                </option>
 
+                <option
+                    value="completed"
+                    {% if request.GET.status == "completed" %}
+                        selected
+                    {% endif %}
+                >
+                    Completed
+                </option>
 
-                <!-- Status -->
-
-                <td>
-
-                    <span class="status {{ task.status }}">
-
-                        {{ task.get_status_display }}
-
-                    </span>
-
-                </td>
-
-
-                <!-- Priority -->
-
-                <td>
-
-                    <span class="priority {{ task.priority }}">
-
-                        {{ task.get_priority_display }}
-
-                    </span>
-
-                </td>
+            </select>
 
 
-                <!-- Deadline -->
+            <!-- Priority -->
 
-                <td>
+            <select name="priority">
 
-                    {{ task.deadline }}
+                <option value="">
+                    All Priorities
+                </option>
 
-                </td>
+                <option
+                    value="low"
+                    {% if request.GET.priority == "low" %}
+                        selected
+                    {% endif %}
+                >
+                    Low
+                </option>
+
+                <option
+                    value="medium"
+                    {% if request.GET.priority == "medium" %}
+                        selected
+                    {% endif %}
+                >
+                    Medium
+                </option>
+
+                <option
+                    value="high"
+                    {% if request.GET.priority == "high" %}
+                        selected
+                    {% endif %}
+                >
+                    High
+                </option>
+
+            </select>
 
 
-                <!-- Progress -->
+            <!-- Filter -->
 
-                <td>
+            <button
+                type="submit"
+                class="filter-btn"
+            >
 
-                    <div class="progress-bar">
+                <i class="fa-solid fa-filter"></i>
 
-                        <div
-                            class="progress-fill"
-                            style="width: {{ task.progress }}%"
+                Filter
+
+            </button>
+
+
+            <!-- Clear -->
+
+            <a
+                href="{% url 'task_list' %}"
+                class="clear-btn"
+            >
+
+                Clear
+
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         TASK TABLE
+    ========================== -->
+
+    <div class="task-table-card">
+
+        <div class="table-responsive">
+
+            <table class="task-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Task</th>
+
+                        <th>Project / Phase</th>
+
+                        <th>Assignee</th>
+
+                        <th>Status</th>
+
+                        <th>Priority</th>
+
+                        <th>Deadline</th>
+
+                        <th>Progress</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for task in tasks %}
+
+                    <tr>
+
+
+                        <!-- Number -->
+
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+
+
+                        <!-- Task -->
+
+                        <td class="task-name">
+
+                            <strong>
+                                {{ task.title }}
+                            </strong>
+
+                            {% if task.description %}
+
+                                <small>
+                                    {{ task.description|truncatewords:8 }}
+                                </small>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Project -->
+
+                        <td>
+
+                            <strong>
+                                {{ task.project.name }}
+                            </strong>
+
+                            <small>
+
+                                {% if task.phase %}
+
+                                    {{ task.phase.get_phase_name_display }}
+
+                                {% else %}
+
+                                    No Phase
+
+                                {% endif %}
+
+                            </small>
+
+                        </td>
+
+
+                        <!-- Assignee -->
+
+                        <td>
+
+                            {% if task.assigned_to %}
+
+                                <div class="assignee">
+
+                                    <div class="assignee-avatar">
+
+                                        {{ task.assigned_to.user.username|slice:":1"|upper }}
+
+                                    </div>
+
+                                    <span>
+                                        {{ task.assigned_to }}
+                                    </span>
+
+                                </div>
+
+                            {% else %}
+
+                                <span class="unassigned">
+                                    Unassigned
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Status -->
+
+                        <td>
+
+                            <span class="status {{ task.status }}">
+
+                                {{ task.get_status_display }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Priority -->
+
+                        <td>
+
+                            <span class="priority {{ task.priority }}">
+
+                                {{ task.get_priority_display }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Deadline -->
+
+                        <td>
+
+                            <span class="deadline">
+
+                                <i class="fa-regular fa-calendar"></i>
+
+                                {{ task.deadline }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Progress -->
+
+                        <td>
+
+                            <div class="progress-wrapper">
+
+                                <div class="progress-bar">
+
+                                    <div
+                                        class="progress-fill"
+                                        style="width: {{ task.progress }}%;"
+                                    ></div>
+
+                                </div>
+
+                                <span>
+                                    {{ task.progress }}%
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Actions -->
+
+                        <td>
+
+                            <div class="task-actions">
+
+                                <a
+                                    href="{% url 'task_detail' task.id %}"
+                                    class="action-btn view"
+                                    title="View"
+                                >
+
+                                    <i class="fa-solid fa-eye"></i>
+
+                                </a>
+
+
+                                <a
+                                    href="{% url 'task_edit' task.id %}"
+                                    class="action-btn edit"
+                                    title="Edit"
+                                >
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% empty %}
+
+                    <!-- EMPTY STATE -->
+
+                    <tr>
+
+                        <td
+                            colspan="9"
+                            class="empty-state"
                         >
-                        </div>
 
-                    </div>
+                            <div class="empty-icon">
 
-                    <small>
-                        {{ task.progress }}%
-                    </small>
+                                <i class="fa-regular fa-file-lines"></i>
 
-                </td>
+                            </div>
 
+                            <h3>
+                                No tasks found.
+                            </h3>
 
-                <!-- Actions -->
+                            <p>
+                                Create a task to get started.
+                            </p>
 
-                <td>
+                        </td>
 
-                    <a
-                        href="{% url 'task_detail' task.id %}"
-                        class="btn btn-sm"
-                    >
-                        View
-                    </a>
+                    </tr>
 
+                    {% endfor %}
 
-                    <a
-                        href="{% url 'task_edit' task.id %}"
-                        class="btn btn-sm"
-                    >
-                        Edit
-                    </a>
+                </tbody>
 
-                </td>
+            </table>
 
+        </div>
 
-            </tr>
-
-
-            {% empty %}
-
-            <tr>
-
-                <td colspan="8">
-
-                    No tasks found.
-
-                </td>
-
-            </tr>
-
-            {% endfor %}
-
-        </tbody>
-
-    </table>
+    </div>
 
 </div>
 

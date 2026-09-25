@@ -154,20 +154,15 @@ class TaskUpdateForm(forms.ModelForm):
 
 # Employee uploads and submits work
 class TaskSubmissionForm(forms.ModelForm):
-
     class Meta:
-
         model = Task
-
-        fields = [
-            "work_file",
-        ]
+        fields = ["work_file"]
 
         widgets = {
-
-            "work_file": forms.ClearableFileInput(
+            "work_file": forms.FileInput(
                 attrs={
-                    "class": "form-control"
+                    "class": "file-input",
+                    "accept": ".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip"
                 }
-            ),
+            )
         }

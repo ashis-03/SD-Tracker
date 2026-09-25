@@ -1,221 +1,463 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Tasks | SD Tracker{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tasks/my_tasks.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<div class="page-header">
+<div class="my-tasks-page">
 
-    <div>
-        <h1>My Tasks</h1>
-        <p>View and manage tasks assigned to you.</p>
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <div class="page-header">
+
+        <div>
+            <h1>My Tasks</h1>
+
+            <p>
+                View and manage tasks assigned to you.
+            </p>
+        </div>
+
     </div>
 
-</div>
+
+    <!-- =========================
+         SUMMARY CARDS
+    ========================== -->
+
+    <div class="summary-cards">
 
 
-<div class="summary-cards">
+        <!-- Total -->
 
-    <div class="summary-card">
-        <h3>Total Tasks</h3>
-        <h2>{{ tasks.count }}</h2>
+        <div class="summary-card">
+
+            <div class="summary-icon blue">
+                <i class="fa-solid fa-clipboard-list"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <h3>Total Tasks</h3>
+
+                <h2>
+                    {{ total_tasks }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- To Do -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon blue">
+                <i class="fa-regular fa-clock"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <h3>To Do</h3>
+
+                <h2>
+                    {{ todo_tasks }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- In Progress -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon yellow">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <h3>In Progress</h3>
+
+                <h2>
+                    {{ in_progress_tasks }}
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- Completed -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon green">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <h3>Completed</h3>
+
+                <h2>
+                    {{ completed_tasks }}
+                </h2>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="summary-card">
-        <h3>To Do</h3>
-        <h2>{{ tasks|length }}</h2>
-    </div>
 
-</div>
 
+    <!-- =========================
+         TASK TABLE
+    ========================== -->
 
-<div class="table-container">
+    <div class="table-card">
 
-    <table>
+        <div class="table-wrapper">
 
-        <thead>
+            <table>
 
-            <tr>
+                <thead>
 
-                <th>Task</th>
+                    <tr>
 
-                <th>Project</th>
+                        <th>Task</th>
 
-                <th>Phase</th>
+                        <th>Project</th>
 
-                <th>Priority</th>
+                        <th>Phase</th>
 
-                <th>Status</th>
+                        <th>Priority</th>
 
-                <th>Deadline</th>
+                        <th>Status</th>
 
-                <th>Progress</th>
+                        <th>Deadline</th>
 
-                <th>Actions</th>
+                        <th>Progress</th>
 
-            </tr>
+                        <th>Actions</th>
 
-        </thead>
+                    </tr>
 
+                </thead>
 
-        <tbody>
 
-            {% for task in tasks %}
+                <tbody>
 
-            <tr>
+                    {% for task in tasks %}
 
-                <!-- Task -->
+                    <tr>
 
-                <td>
 
-                    <strong>
-                        {{ task.title }}
-                    </strong>
+                        <!-- =========================
+                             TASK
+                        ========================== -->
 
-                    <br>
+                        <td class="task-column">
 
-                    <small>
-                        {{ task.description|truncatewords:10 }}
-                    </small>
+                            <strong class="task-title">
+                                {{ task.title }}
+                            </strong>
 
-                </td>
+                            {% if task.description %}
 
+                                <span class="task-description">
+                                    {{ task.description|truncatewords:10 }}
+                                </span>
 
-                <!-- Project -->
+                            {% else %}
 
-                <td>
+                                <span class="task-description">
+                                    No description provided.
+                                </span>
 
-                    {{ task.project.name }}
+                            {% endif %}
 
-                </td>
+                        </td>
 
 
-                <!-- Phase -->
 
-                <td>
+                        <!-- =========================
+                             PROJECT
+                        ========================== -->
 
-                    {% if task.phase %}
+                        <td>
 
-                        {{ task.phase.get_phase_name_display }}
+                            <span class="project-name">
+                                {{ task.project.name }}
+                            </span>
 
-                    {% else %}
+                        </td>
 
-                        No Phase
 
-                    {% endif %}
 
-                </td>
+                        <!-- =========================
+                             PHASE
+                        ========================== -->
 
+                        <td>
 
-                <!-- Priority -->
+                            {% if task.phase %}
 
-                <td>
+                                <span class="phase-badge">
+                                    {{ task.phase.get_phase_name_display }}
+                                </span>
 
-                    <span class="priority {{ task.priority }}">
+                            {% else %}
 
-                        {{ task.get_priority_display }}
+                                <span class="phase-badge">
+                                    No Phase
+                                </span>
 
-                    </span>
+                            {% endif %}
 
-                </td>
+                        </td>
 
 
-                <!-- Status -->
 
-                <td>
+                        <!-- =========================
+                             PRIORITY
+                        ========================== -->
 
-                    <span class="status {{ task.status }}">
+                        <td>
 
-                        {{ task.get_status_display }}
+                            <span class="priority {{ task.priority }}">
 
-                    </span>
+                                <span class="badge-dot"></span>
 
-                </td>
+                                {{ task.get_priority_display }}
 
+                            </span>
 
-                <!-- Deadline -->
+                        </td>
 
-                <td>
 
-                    {{ task.deadline|date:"d M Y" }}
 
-                </td>
+                        <!-- =========================
+                             STATUS
+                        ========================== -->
 
+                        <td>
 
-                <!-- Progress -->
+                            <span class="status {{ task.status }}">
 
-                <td>
+                                <span class="badge-dot"></span>
 
-                    <div class="progress-bar">
+                                {{ task.get_status_display }}
 
-                        <div
-                            class="progress-fill"
-                            style="width: {{ task.progress }}%"
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- =========================
+                             DEADLINE
+                        ========================== -->
+
+                        <td class="deadline-column">
+
+                            <i class="fa-regular fa-calendar"></i>
+
+                            {{ task.deadline|date:"d M Y" }}
+
+                        </td>
+
+
+
+                        <!-- =========================
+                             PROGRESS
+                        ========================== -->
+
+                        <td class="progress-column">
+
+                            <div class="progress-info">
+
+                                <span>
+                                    {{ task.progress }}%
+                                </span>
+
+                            </div>
+
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-fill"
+                                    style="width: {{ task.progress }}%"
+                                ></div>
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- =========================
+                             ACTIONS
+                        ========================== -->
+
+                        <td class="actions-column">
+
+
+                            <!-- View -->
+
+                            <a
+                                href="{% url 'task_detail' task.id %}"
+                                class="action-btn view-btn"
+                            >
+
+                                <i class="fa-solid fa-eye"></i>
+
+                                View
+
+                            </a>
+
+
+
+                            <!-- Update -->
+
+                            {% if task.status != "in_review" and task.status != "completed" %}
+
+                                <a
+                                    href="{% url 'task_progress' task.id %}"
+                                    class="action-btn update-btn"
+                                >
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                    Update
+
+                                </a>
+
+                            {% endif %}
+
+
+
+                            <!-- Submit -->
+
+                            {% if task.status == "in_progress" %}
+
+                                <a
+                                    href="{% url 'submit_task' task.id %}"
+                                    class="action-btn submit-btn"
+                                >
+
+                                    <i class="fa-solid fa-upload"></i>
+
+                                    Submit
+
+                                </a>
+
+                            {% endif %}
+
+
+                        </td>
+
+                    </tr>
+
+
+                    {% empty %}
+
+                    <!-- =========================
+                         EMPTY STATE
+                    ========================== -->
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="empty-table"
                         >
-                        </div>
 
-                    </div>
+                            <div class="empty-state">
 
-                    {{ task.progress }}%
+                                <div class="empty-icon">
 
-                </td>
+                                    <i class="fa-regular fa-clipboard"></i>
 
+                                </div>
 
-                <!-- Actions -->
+                                <h3>
+                                    No Tasks Assigned
+                                </h3>
 
-                <td>
+                                <p>
+                                    No tasks have been assigned to you yet.
+                                </p>
 
-                    <a
-                        href="{% url 'task_detail' task.id %}"
-                        class="btn btn-sm"
-                    >
-                        View
-                    </a>
+                            </div>
 
+                        </td>
 
-                    {% if task.status != "in_review" and task.status != "completed" %}
+                    </tr>
 
-                    <a
-                        href="{% url 'task_progress' task.id %}"
-                        class="btn btn-sm btn-primary"
-                    >
-                        Update
-                    </a>
+                    {% endfor %}
 
-                    {% endif %}
+                </tbody>
 
+            </table>
 
-                    {% if task.status == "in_progress" %}
-
-                    <a
-                        href="{% url 'submit_task' task.id %}"
-                        class="btn btn-sm btn-success"
-                    >
-                        Submit
-                    </a>
-
-                    {% endif %}
-
-                </td>
-
-            </tr>
+        </div>
 
 
-            {% empty %}
 
-            <tr>
+        <!-- =========================
+             TABLE FOOTER
+        ========================== -->
 
-                <td colspan="8">
+        <div class="table-footer">
 
-                    No tasks have been assigned to you.
+            <span>
+                Showing {{ tasks|length }} task{{ tasks|length|pluralize }}
+            </span>
 
-                </td>
 
-            </tr>
+            <div class="pagination">
 
-            {% endfor %}
+                <button
+                    type="button"
+                    class="pagination-btn disabled"
+                >
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
 
-        </tbody>
 
-    </table>
+                <button
+                    type="button"
+                    class="pagination-btn active"
+                >
+                    1
+                </button>
+
+
+                <button
+                    type="button"
+                    class="pagination-btn disabled"
+                >
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

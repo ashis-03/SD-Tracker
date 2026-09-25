@@ -1,161 +1,270 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Update Task Progress | SD Tracker{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tasks/task_progress.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<div class="page-header">
+<div class="task-progress-page">
 
-    <div>
+    <!-- =========================
+         BACK LINK
+    ========================== -->
 
-        <h1>Update Task Progress</h1>
-
-        <p>
-            Update the progress of your assigned task.
-        </p>
-
-    </div>
-
-</div>
-
-
-<div class="form-container">
-
-    <div class="task-info">
-
-        <h2>{{ task.title }}</h2>
-
-        <p>
-
-            <strong>Project:</strong>
-
-            {{ task.project.name }}
-
-        </p>
+    <a
+        href="{% url 'task_detail' task.id %}"
+        class="back-link"
+    >
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Task Details
+    </a>
 
 
-        {% if task.phase %}
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
 
-        <p>
+    <div class="page-header">
 
-            <strong>SDLC Phase:</strong>
+        <div>
 
-            {{ task.phase.get_phase_name_display }}
+            <h1>
+                Update Task Progress
+            </h1>
 
-        </p>
+            <p>
+                Update the progress of your assigned task.
+            </p>
 
-        {% endif %}
+        </div>
 
     </div>
 
 
-    <form method="POST">
+    <!-- =========================
+         TASK SUMMARY CARD
+    ========================== -->
 
-        {% csrf_token %}
+    <div class="task-summary-card">
 
+        <div class="task-summary-icon">
 
-        {% if form.errors %}
+            <i class="fa-solid fa-file-lines"></i>
 
-            <div class="error">
-
-                {{ form.errors }}
-
-            </div>
-
-        {% endif %}
+        </div>
 
 
-        <!-- Status -->
+        <div class="task-summary-content">
 
-        <div class="form-group">
+            <h2>
+                {{ task.title }}
+            </h2>
 
-            <label for="{{ form.status.id_for_label }}">
+            <p>
+                <strong>Project:</strong>
+                {{ task.project.name }}
+            </p>
 
+            {% if task.phase %}
+
+                <p>
+                    <strong>SDLC Phase:</strong>
+                    {{ task.phase.get_phase_name_display }}
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Current Status -->
+
+        <div class="task-status">
+
+            <span class="status-badge {{ task.status }}">
+
+                <span class="status-dot"></span>
+
+                {{ task.get_status_display }}
+
+            </span>
+
+            <small>
                 Task Status
-
-            </label>
-
-            {{ form.status }}
-
-            {% if form.status.errors %}
-
-                <div class="error">
-
-                    {{ form.status.errors }}
-
-                </div>
-
-            {% endif %}
+            </small>
 
         </div>
 
-
-        <!-- Progress -->
-
-        <div class="form-group">
-
-            <label for="{{ form.progress.id_for_label }}">
-
-                Progress (%)
-
-            </label>
-
-            {{ form.progress }}
-
-            {% if form.progress.errors %}
-
-                <div class="error">
-
-                    {{ form.progress.errors }}
-
-                </div>
-
-            {% endif %}
-
-        </div>
+    </div>
 
 
-        <!-- Current Progress -->
+    <!-- =========================
+         UPDATE PROGRESS CARD
+    ========================== -->
 
-        <div class="progress-section">
+    <div class="progress-form-card">
 
-            <h3>Current Progress: {{ task.progress }}%</h3>
+        <!-- Card Header -->
 
-            <div class="progress-bar">
+        <div class="card-header">
 
-                <div
-                    class="progress-fill"
-                    style="width: {{ task.progress }}%"
-                >
-                </div>
+            <div class="card-icon">
+
+                <i class="fa-solid fa-chart-simple"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Update Progress
+                </h2>
+
+                <p>
+                    Enter the current progress of your work (0% - 100%).
+                </p>
 
             </div>
 
         </div>
 
 
-        <div class="form-actions">
+        <form method="POST">
 
-            <button
-                type="submit"
-                class="btn btn-primary"
-            >
-
-                Update Progress
-
-            </button>
+            {% csrf_token %}
 
 
-            <a
-                href="{% url 'task_detail' task.id %}"
-                class="btn btn-secondary"
-            >
+            <!-- =========================
+                 FORM ERRORS
+            ========================== -->
 
-                Cancel
+            {% if form.non_field_errors %}
 
-            </a>
+                <div class="form-errors">
 
-        </div>
+                    <i class="fa-solid fa-circle-exclamation"></i>
 
-    </form>
+                    <div>
+                        {{ form.non_field_errors }}
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =========================
+                 PROGRESS INPUT
+            ========================== -->
+
+            <div class="form-group">
+
+                <label for="{{ form.progress.id_for_label }}">
+
+                    Progress (%)
+
+                </label>
+
+
+                <div class="progress-input-wrapper">
+
+                    {{ form.progress }}
+
+                    <span class="percentage-symbol">
+                        %
+                    </span>
+
+                </div>
+
+
+                {% if form.progress.errors %}
+
+                    <div class="field-error">
+
+                        {{ form.progress.errors }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <small class="help-text">
+
+                    Enter a value between 0 and 100.
+
+                </small>
+
+            </div>
+
+
+            <!-- =========================
+                 CURRENT PROGRESS
+            ========================== -->
+
+            <div class="current-progress-section">
+
+                <div class="current-progress-header">
+
+                    <h3>
+                        Current Progress:
+                        {{ task.progress }}%
+                    </h3>
+
+                    <span>
+                        {{ task.progress }}%
+                    </span>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        style="width: {{ task.progress }}%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 FORM ACTIONS
+            ========================== -->
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                    Update Progress
+
+                </button>
+
+
+                <a
+                    href="{% url 'task_detail' task.id %}"
+                    class="btn btn-secondary"
+                >
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
 
 </div>
 

@@ -1,182 +1,389 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Task | SD Tracker{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tasks/task_edit.css' %}">
+{% endblock %}
+
 
 {% block content %}
 
-<div class="form-container">
+<div class="task-edit-page">
+
+    <!-- =====================================================
+         BACK LINK
+    ====================================================== -->
+
+    <a href="{% url 'task_list' %}" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Tasks
+    </a>
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
 
     <div class="page-header">
+
         <div>
+
             <h1>Edit Task</h1>
-            <p>Update the task information.</p>
+
+            <p>
+                Update the task information.
+            </p>
+
         </div>
+
     </div>
 
-    <form method="POST">
 
-        {% csrf_token %}
+    <!-- =====================================================
+         MAIN FORM CARD
+    ====================================================== -->
 
-        {% if form.errors %}
-            <div class="error">
-                {{ form.errors }}
+    <div class="task-form-card">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <!-- =================================================
+                 FORM ERRORS
+            ================================================== -->
+
+            {% if form.non_field_errors %}
+
+                <div class="form-errors">
+
+                    <i class="fa-solid fa-circle-exclamation"></i>
+
+                    <div>
+                        {{ form.non_field_errors }}
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 SECTION 1
+                 TASK INFORMATION
+            ================================================== -->
+
+            <div class="form-section">
+
+                <div class="section-header">
+
+                    <div class="section-icon blue">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Task Information
+                        </h2>
+
+                        <p>
+                            Update the basic details of this task.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Task Title -->
+
+                <div class="form-group full-width">
+
+                    <label for="{{ form.title.id_for_label }}">
+                        Task Title
+                        <span>*</span>
+                    </label>
+
+                    {{ form.title }}
+
+                    {% if form.title.errors %}
+
+                        <div class="field-error">
+                            {{ form.title.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="form-group full-width">
+
+                    <label for="{{ form.description.id_for_label }}">
+                        Description
+                    </label>
+
+                    {{ form.description }}
+
+                    {% if form.description.errors %}
+
+                        <div class="field-error">
+                            {{ form.description.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
             </div>
-        {% endif %}
 
 
-        <!-- Task Title -->
 
-        <div class="form-group">
+            <!-- =================================================
+                 SECTION 2
+                 PROJECT & PLANNING
+            ================================================== -->
 
-            <label for="{{ form.title.id_for_label }}">
-                Task Title
-            </label>
+            <div class="form-section">
 
-            {{ form.title }}
+                <div class="section-header">
 
-            {% if form.title.errors %}
-                <div class="error">
-                    {{ form.title.errors }}
+                    <div class="section-icon green">
+                        <i class="fa-solid fa-folder-open"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Project &amp; Planning
+                        </h2>
+
+                        <p>
+                            Manage the project, phase, priority and deadline.
+                        </p>
+
+                    </div>
+
                 </div>
-            {% endif %}
-
-        </div>
 
 
-        <!-- Description -->
+                <!-- Project + SDLC Phase -->
 
-        <div class="form-group">
+                <div class="form-row">
 
-            <label for="{{ form.description.id_for_label }}">
-                Description
-            </label>
 
-            {{ form.description }}
+                    <!-- Project -->
 
-            {% if form.description.errors %}
-                <div class="error">
-                    {{ form.description.errors }}
+                    <div class="form-group">
+
+                        <label>
+                            Project
+                            <span>*</span>
+                        </label>
+
+                        <div class="readonly-field">
+                            {{ task.project.name }}
+                        </div>
+
+                    </div>
+
+
+                    <!-- SDLC Phase -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.phase.id_for_label }}">
+                            SDLC Phase
+                            <span>*</span>
+                        </label>
+
+                        {{ form.phase }}
+
+                        {% if form.phase.errors %}
+
+                            <div class="field-error">
+                                {{ form.phase.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
                 </div>
-            {% endif %}
-
-        </div>
 
 
-        <!-- Project -->
+                <!-- Priority + Deadline -->
 
-        <div class="form-group">
+                <div class="form-row">
 
-            <label for="{{ form.project.id_for_label }}">
-                Project
-            </label>
 
-            {{ form.project }}
+                    <!-- Priority -->
 
-            {% if form.project.errors %}
-                <div class="error">
-                    {{ form.project.errors }}
+                    <div class="form-group">
+
+                        <label for="{{ form.priority.id_for_label }}">
+                            Priority
+                            <span>*</span>
+                        </label>
+
+                        {{ form.priority }}
+
+                        {% if form.priority.errors %}
+
+                            <div class="field-error">
+                                {{ form.priority.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Deadline -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.deadline.id_for_label }}">
+                            Deadline
+                            <span>*</span>
+                        </label>
+
+                        {{ form.deadline }}
+
+                        {% if form.deadline.errors %}
+
+                            <div class="field-error">
+                                {{ form.deadline.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
                 </div>
-            {% endif %}
 
-        </div>
+            </div>
 
 
-        <!-- SDLC Phase -->
 
-        <div class="form-group">
+            <!-- =================================================
+                 SECTION 3
+                 ASSIGNMENT
+            ================================================== -->
 
-            <label for="{{ form.phase.id_for_label }}">
-                SDLC Phase
-            </label>
+            <div class="form-section assignment-section">
 
-            {{ form.phase }}
+                <div class="section-header">
 
-            {% if form.phase.errors %}
-                <div class="error">
-                    {{ form.phase.errors }}
+                    <div class="section-icon purple">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Assignment
+                        </h2>
+
+                        <p>
+                            Manage the assigned employee and task status.
+                        </p>
+
+                    </div>
+
                 </div>
-            {% endif %}
-
-        </div>
 
 
-        <!-- Assign Employee -->
+                <!-- Assign Employee -->
 
-        <div class="form-group">
+                <div class="form-group full-width">
 
-            <label for="{{ form.assigned_to.id_for_label }}">
-                Assign Employee
-            </label>
+                    <label for="{{ form.assigned_to.id_for_label }}">
+                        Assign Employee
+                        <span>*</span>
+                    </label>
 
-            {{ form.assigned_to }}
+                    {{ form.assigned_to }}
 
-            {% if form.assigned_to.errors %}
-                <div class="error">
-                    {{ form.assigned_to.errors }}
+                    {% if form.assigned_to.errors %}
+
+                        <div class="field-error">
+                            {{ form.assigned_to.errors }}
+                        </div>
+
+                    {% endif %}
+
                 </div>
-            {% endif %}
-
-        </div>
 
 
-        <!-- Deadline -->
+                <!-- Status -->
 
-        <div class="form-group">
+                {% if form.status %}
 
-            <label for="{{ form.deadline.id_for_label }}">
-                Deadline
-            </label>
+                    <div class="form-group full-width">
 
-            {{ form.deadline }}
+                        <label for="{{ form.status.id_for_label }}">
+                            Status
+                        </label>
 
-            {% if form.deadline.errors %}
-                <div class="error">
-                    {{ form.deadline.errors }}
-                </div>
-            {% endif %}
+                        {{ form.status }}
 
-        </div>
+                        {% if form.status.errors %}
 
+                            <div class="field-error">
+                                {{ form.status.errors }}
+                            </div>
 
-        <!-- Priority -->
+                        {% endif %}
 
-        <div class="form-group">
+                    </div>
 
-            <label for="{{ form.priority.id_for_label }}">
-                Priority
-            </label>
+                {% endif %}
 
-            {{ form.priority }}
-
-            {% if form.priority.errors %}
-                <div class="error">
-                    {{ form.priority.errors }}
-                </div>
-            {% endif %}
-
-        </div>
+            </div>
 
 
-        <!-- Buttons -->
 
-        <div class="form-actions">
+            <!-- =================================================
+                 ACTION BUTTONS
+            ================================================== -->
 
-            <button
-                type="submit"
-                class="btn btn-primary"
-            >
-                Update Task
-            </button>
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Update Task
+
+                </button>
 
 
-            <a
-                href="{% url 'task_detail' task.id %}"
-                class="btn btn-secondary"
-            >
-                Cancel
-            </a>
+                <a
+                    href="{% url 'task_detail' task.id %}"
+                    class="btn btn-secondary"
+                >
 
-        </div>
+                    Cancel
 
-    </form>
+                </a>
+
+            </div>
+
+
+        </form>
+
+    </div>
 
 </div>
 

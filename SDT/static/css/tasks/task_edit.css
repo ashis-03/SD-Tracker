@@ -1,0 +1,594 @@
+/* =========================================================
+   EDIT TASK PAGE
+========================================================= */
+
+.task-edit-page {
+    max-width: 1390px;
+    margin: 0 auto;
+    padding: 20px 10px 40px;
+    color: #13294b;
+}
+
+
+/* =========================================================
+   BACK LINK
+========================================================= */
+
+.task-edit-page .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 22px;
+
+    color: #2563eb;
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.task-edit-page .back-link:hover {
+    color: #1d4ed8;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.task-edit-page .page-header {
+    margin-bottom: 28px;
+}
+
+.task-edit-page .page-header h1 {
+    margin: 0 0 8px;
+
+    color: #12284a;
+
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.task-edit-page .page-header p {
+    margin: 0;
+
+    color: #7182a0;
+
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MAIN FORM CARD
+========================================================= */
+
+.task-edit-page .task-form-card {
+    background: #ffffff;
+
+    border: 1px solid #e5eaf2;
+    border-radius: 18px;
+
+    padding: 34px 32px;
+
+    box-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.04),
+        0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.task-edit-page .task-form-card form {
+    width: 100%;
+}
+
+
+/* =========================================================
+   FORM SECTION
+========================================================= */
+
+.task-edit-page .form-section {
+    padding: 0 0 28px;
+    margin-bottom: 28px;
+
+    border-bottom: 1px solid #e8edf4;
+}
+
+.task-edit-page .form-section:last-of-type {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.task-edit-page .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    margin-bottom: 24px;
+}
+
+.task-edit-page .section-icon {
+    width: 64px;
+    height: 64px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 24px;
+}
+
+
+/* Blue */
+
+.task-edit-page .section-icon.blue {
+    background: #eaf1ff;
+    color: #2563eb;
+}
+
+
+/* Green */
+
+.task-edit-page .section-icon.green {
+    background: #e7f8f1;
+    color: #16a36a;
+}
+
+
+/* Purple */
+
+.task-edit-page .section-icon.purple {
+    background: #f1eaff;
+    color: #7048e8;
+}
+
+
+/* Section title */
+
+.task-edit-page .section-header h2 {
+    margin: 0 0 5px;
+
+    color: #162b4d;
+
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.task-edit-page .section-header p {
+    margin: 0;
+
+    color: #7383a0;
+
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   FORM LAYOUT
+========================================================= */
+
+.task-edit-page .form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 30px;
+
+    margin-bottom: 20px;
+}
+
+.task-edit-page .form-row:last-child {
+    margin-bottom: 0;
+}
+
+.task-edit-page .form-group {
+    width: 100%;
+}
+
+.task-edit-page .form-group.full-width {
+    width: 100%;
+}
+
+
+/* =========================================================
+   LABELS
+========================================================= */
+
+.task-edit-page .form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #152b4c;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.task-edit-page .form-group label span {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+
+/* =========================================================
+   INPUTS / SELECT / TEXTAREA
+========================================================= */
+
+.task-edit-page .form-group input,
+.task-edit-page .form-group select,
+.task-edit-page .form-group textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d7dfeb;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #172b4d;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* Input + Select */
+
+.task-edit-page .form-group input,
+.task-edit-page .form-group select {
+    height: 48px;
+    padding: 0 16px;
+}
+
+
+/* Textarea */
+
+.task-edit-page .form-group textarea {
+    min-height: 90px;
+
+    padding: 14px 16px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+
+/* Placeholder */
+
+.task-edit-page .form-group input::placeholder,
+.task-edit-page .form-group textarea::placeholder {
+    color: #9aa9bf;
+}
+
+
+/* Focus */
+
+.task-edit-page .form-group input:focus,
+.task-edit-page .form-group select:focus,
+.task-edit-page .form-group textarea:focus {
+    border-color: #4f6fe8;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 111, 232, 0.10);
+}
+
+
+/* Hover */
+
+.task-edit-page .form-group input:hover,
+.task-edit-page .form-group select:hover,
+.task-edit-page .form-group textarea:hover {
+    border-color: #bdc9da;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.task-edit-page .form-section:first-of-type .form-group + .form-group {
+    margin-top: 20px;
+}
+
+
+/* =========================================================
+   READONLY PROJECT FIELD
+========================================================= */
+
+.task-edit-page .readonly-field {
+    width: 100%;
+
+    min-height: 48px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 16px;
+
+    border: 1px solid #d7dfeb;
+    border-radius: 10px;
+
+    background: #f8fafc;
+
+    color: #172b4d;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    cursor: default;
+}
+
+
+/* =========================================================
+   ASSIGNMENT SECTION
+========================================================= */
+
+.task-edit-page .assignment-section {
+    padding-bottom: 28px;
+}
+
+.task-edit-page .assignment-section .form-group {
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   FORM ERRORS
+========================================================= */
+
+.task-edit-page .form-errors {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    margin-bottom: 24px;
+    padding: 13px 16px;
+
+    background: #fff1f2;
+
+    border: 1px solid #fecdd3;
+    border-radius: 9px;
+
+    color: #be123c;
+
+    font-size: 14px;
+}
+
+.task-edit-page .form-errors i {
+    margin-top: 2px;
+}
+
+.task-edit-page .form-errors ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+
+.task-edit-page .field-error {
+    margin-top: 6px;
+
+    color: #dc2626;
+
+    font-size: 13px;
+}
+
+.task-edit-page .field-error ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.task-edit-page .form-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding-top: 28px;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.task-edit-page .btn {
+    min-height: 48px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 0 22px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.15s ease;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.task-edit-page .btn-primary {
+    background: #3568e8;
+
+    border: 1px solid #3568e8;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 3px 8px rgba(53, 104, 232, 0.20);
+}
+
+.task-edit-page .btn-primary:hover {
+    background: #2858d3;
+
+    border-color: #2858d3;
+
+    box-shadow:
+        0 5px 12px rgba(53, 104, 232, 0.25);
+
+    transform: translateY(-1px);
+}
+
+.task-edit-page .btn-primary:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
+
+.task-edit-page .btn-secondary {
+    background: #ffffff;
+
+    border: 1px solid #d7dfeb;
+
+    color: #263a5a;
+}
+
+.task-edit-page .btn-secondary:hover {
+    background: #f8fafc;
+
+    border-color: #c4cfdf;
+}
+
+
+/* =========================================================
+   DATE INPUT
+========================================================= */
+
+.task-edit-page .form-group input[type="date"] {
+    color: #172b4d;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.task-edit-page .form-group select {
+    cursor: pointer;
+
+    appearance: auto;
+}
+
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .task-edit-page {
+        padding: 18px 16px 35px;
+    }
+
+    .task-edit-page .task-form-card {
+        padding: 28px 24px;
+    }
+
+    .task-edit-page .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .task-edit-page {
+        padding: 15px 12px 30px;
+    }
+
+    .task-edit-page .page-header h1 {
+        font-size: 28px;
+    }
+
+    .task-edit-page .page-header p {
+        font-size: 14px;
+    }
+
+    .task-edit-page .task-form-card {
+        padding: 22px 18px;
+
+        border-radius: 14px;
+    }
+
+    .task-edit-page .section-header {
+        gap: 12px;
+
+        margin-bottom: 20px;
+    }
+
+    .task-edit-page .section-icon {
+        width: 52px;
+        height: 52px;
+
+        font-size: 20px;
+    }
+
+    .task-edit-page .section-header h2 {
+        font-size: 20px;
+    }
+
+    .task-edit-page .section-header p {
+        font-size: 14px;
+    }
+
+    .task-edit-page .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .task-edit-page .btn {
+        width: 100%;
+    }
+}
