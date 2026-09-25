@@ -1,137 +1,468 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Teams | SD Tracker
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{% static 'css/teams/team_list.css' %}">
+{% endblock %}
+
 
 {% block content %}
 
-<div class="page-header">
+<div class="teams-page">
 
-    <div>
-        <h1>Teams</h1>
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
 
-        <p>
-            Manage teams, managers and team members.
-        </p>
+    <div class="page-header">
+
+        <div>
+            <h1>Teams</h1>
+
+            <p>
+                Manage teams, managers and team members.
+            </p>
+        </div>
+
+
+        <a href="{% url 'team_create' %}"
+           class="btn btn-primary create-team-btn">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Create Team
+
+        </a>
+
     </div>
 
-    <a href="{% url 'team_create' %}"
-       class="btn btn-primary">
 
-        + Create Team
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
 
-    </a>
+    <div class="team-stats">
 
-</div>
+        <!-- Total Teams -->
 
+        <div class="team-stat-card blue">
 
-<div class="table-container">
+            <div class="stat-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
 
-    <table class="team-table">
+            <div class="stat-content">
 
-        <thead>
+                <span>Total Teams</span>
 
-            <tr>
+                <strong>
+                    {{ teams|length }}
+                </strong>
 
-                <th>#</th>
-                <th>Team</th>
-                <th>Manager</th>
-                <th>Members</th>
-                <th>Actions</th>
+                <small>
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </small>
 
-            </tr>
+            </div>
 
-        </thead>
-
-
-        <tbody>
-
-            {% for team in teams %}
-
-            <tr>
-
-                <td>
-                    {{ forloop.counter }}
-                </td>
+        </div>
 
 
-                <td>
+        <!-- Total Members -->
 
-                    <strong>
-                        {{ team.name }}
-                    </strong>
+        <div class="team-stat-card green">
 
-                </td>
+            <div class="stat-icon">
+                <i class="fa-solid fa-user-group"></i>
+            </div>
 
+            <div class="stat-content">
 
-                <td>
+                <span>Total Members</span>
 
-                    {% if team.manager %}
+                <strong>
+                    {{ total_members }}
+                </strong>
 
-                        {{ team.manager.user.get_full_name }}
+                <small>
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </small>
 
-                    {% else %}
+            </div>
 
-                        No Manager Assigned
-
-                    {% endif %}
-
-                </td>
-
-
-                <td>
-
-                    {{ team.members.count }}
-
-                </td>
+        </div>
 
 
-                <td>
+        <!-- Managers -->
 
-                    <!-- View -->
+        <div class="team-stat-card purple">
 
-                    <a href="{% url 'team_detail' team.pk %}">
+            <div class="stat-icon">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
 
-                        View
+            <div class="stat-content">
 
-                    </a>
+                <span>Team Managers</span>
+
+                <strong>
+                    {{ total_managers }}
+                </strong>
+
+                <small>
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </small>
+
+            </div>
+
+        </div>
 
 
-                    <!-- Edit -->
+        <!-- Active Teams -->
 
-                    <a href="{% url 'team_update' team.pk %}">
+        <div class="team-stat-card orange">
 
-                        Edit
+            <div class="stat-icon">
+                <i class="fa-solid fa-chart-column"></i>
+            </div>
 
-                    </a>
+            <div class="stat-content">
+
+                <span>Active Teams</span>
+
+                <strong>
+                    {{ active_teams }}
+                </strong>
+
+                <small>
+                    <i class="fa-solid fa-arrow-up"></i>
+                    0% from last month
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
-                    <!-- Delete -->
+    <!-- =====================================================
+         SEARCH
+    ====================================================== -->
 
-                    <a href="{% url 'team_delete' team.pk %}">
+    <form method="GET" class="team-search">
 
-                        Delete
+        <div class="search-input">
 
-                    </a>
+            <i class="fa-solid fa-magnifying-glass"></i>
 
-                </td>
+            <input
+                type="text"
+                name="search"
+                placeholder="Search by team name or manager..."
+                value="{{ request.GET.search }}"
+            >
 
-            </tr>
+        </div>
 
-            {% empty %}
+        <button type="submit">
 
-            <tr>
+            <i class="fa-solid fa-magnifying-glass"></i>
 
-                <td colspan="5">
+            Search
 
-                    No teams found.
+        </button>
 
-                </td>
+    </form>
 
-            </tr>
 
-            {% endfor %}
+    <!-- =====================================================
+         TEAM TABLE
+    ====================================================== -->
 
-        </tbody>
+    <div class="team-table-card">
 
-    </table>
+        <table class="team-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Team</th>
+
+                    <th>Manager</th>
+
+                    <th>Members</th>
+
+                    <th>Status</th>
+
+                    <th>Created Date</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for team in teams %}
+
+                <tr>
+
+                    <!-- Number -->
+
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+
+
+                    <!-- Team -->
+
+                    <td>
+
+                        <div class="team-name-cell">
+
+                            <div class="team-avatar">
+
+                                {{ team.name|slice:":1"|upper }}
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    {{ team.name }}
+                                </strong>
+
+                                <small>
+                                    Team for collaboration
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Manager -->
+
+                    <td>
+
+                        {% if team.manager %}
+
+                            <div class="manager-cell">
+
+                                <div class="manager-avatar">
+
+                                    {{ team.manager.user.get_full_name|slice:":1"|upper }}
+
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        {{ team.manager.user.get_full_name }}
+                                    </strong>
+
+                                    <small>
+                                        {{ team.manager.user.email }}
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        {% else %}
+
+                            <span class="no-manager">
+                                No Manager Assigned
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Members -->
+
+                    <td>
+
+                        <div class="member-count">
+
+                            <i class="fa-solid fa-users"></i>
+
+                            <strong>
+                                {{ team.members.count }}
+                            </strong>
+
+                            <small>
+                                member{{ team.members.count|pluralize }}
+                            </small>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Status -->
+
+                    <td>
+
+                        <span class="team-status active">
+
+                            <span></span>
+
+                            Active
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- Created Date -->
+
+                    <td>
+
+                        <div class="created-date">
+
+                            <i class="fa-regular fa-calendar"></i>
+
+                            {% if team.created_at %}
+                                {{ team.created_at|date:"M. d, Y" }}
+                            {% else %}
+                                —
+                            {% endif %}
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Actions -->
+
+                    <td>
+
+                        <div class="team-actions">
+
+                            <!-- View -->
+
+                            <a
+                                href="{% url 'team_detail' team.pk %}"
+                                class="action-view"
+                                title="View Team"
+                            >
+
+                                <i class="fa-solid fa-eye"></i>
+
+                            </a>
+
+
+                            <!-- Edit -->
+
+                            <a
+                                href="{% url 'team_update' team.pk %}"
+                                class="action-edit"
+                                title="Edit Team"
+                            >
+
+                                <i class="fa-solid fa-pen"></i>
+
+                            </a>
+
+
+                            <!-- Delete -->
+
+                            <a
+                                href="{% url 'team_delete' team.pk %}"
+                                class="action-delete"
+                                title="Delete Team"
+                            >
+
+                                <i class="fa-solid fa-trash"></i>
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="7"
+                        class="empty-teams">
+
+                        <i class="fa-solid fa-users"></i>
+
+                        <h3>No teams found</h3>
+
+                        <p>
+                            Create your first team to get started.
+                        </p>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        <!-- =================================================
+             TABLE FOOTER
+        ================================================== -->
+
+        <div class="table-footer">
+
+            <span>
+
+                Showing
+                <strong>{{ teams|length }}</strong>
+                team{{ teams|length|pluralize }}
+
+            </span>
+
+
+            <div class="pagination">
+
+                <button disabled>
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <button class="active">
+                    1
+                </button>
+
+                <button disabled>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

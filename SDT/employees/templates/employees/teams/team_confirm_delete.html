@@ -1,56 +1,173 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Delete Team | SD Tracker
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{% static 'css/teams/team_confirm_delete.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<div class="delete-container">
+<div class="delete-team-page">
 
-    <h1>
-
-        Delete Team
-
-    </h1>
-
-
-    <p>
-
-        Are you sure you want to delete
-
-        <strong>
-
-            {{ team.name }}
-
-        </strong>
-
-        ?
-
-    </p>
+    <!-- Back -->
+    <a href="{% url 'team_detail' team.pk %}" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Team
+    </a>
 
 
-    <form method="POST">
+    <!-- Page Header -->
+    <div class="delete-page-header">
 
-        {% csrf_token %}
+        <h1>Delete Team</h1>
 
+        <p>
+            This action cannot be undone. Please confirm before proceeding.
+        </p>
 
-        <button
-            type="submit"
-            class="btn btn-danger"
-        >
-
-            Yes, Delete
-
-        </button>
+    </div>
 
 
-        <a
-            href="{% url 'team_detail' team.pk %}"
-            class="btn btn-secondary"
-        >
+    <!-- Delete Card -->
+    <div class="delete-team-card">
 
-            Cancel
 
-        </a>
+        <!-- Warning -->
+        <div class="delete-warning-box">
 
-    </form>
+            <div class="delete-warning-icon">
+                <i class="fa-solid fa-trash"></i>
+            </div>
+
+            <div>
+                <h2>Are you sure?</h2>
+
+                <p>
+                    You are about to delete this team.
+                    This action cannot be undone and all associated
+                    information will be permanently removed.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- Team Details -->
+        <div class="team-delete-details">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+                <h2>Team Details</h2>
+
+            </div>
+
+
+            <div class="delete-info-list">
+
+                <div class="delete-info-item">
+
+                    <i class="fa-solid fa-users"></i>
+
+                    <span>Team Name</span>
+
+                    <strong>
+                        {{ team.name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="delete-info-item">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    <span>Manager</span>
+
+                    <strong>
+                        {% if team.manager %}
+                            {{ team.manager.user.get_full_name }}
+                        {% else %}
+                            No Manager Assigned
+                        {% endif %}
+                    </strong>
+
+                </div>
+
+
+                <div class="delete-info-item">
+
+                    <i class="fa-solid fa-user-group"></i>
+
+                    <span>Total Members</span>
+
+                    <strong>
+                        {{ team.members.count }}
+                    </strong>
+
+                </div>
+
+
+                {% if team.created_at %}
+
+                <div class="delete-info-item">
+
+                    <i class="fa-solid fa-calendar"></i>
+
+                    <span>Created Date</span>
+
+                    <strong>
+                        {{ team.created_at|date:"M. d, Y" }}
+                    </strong>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- Actions -->
+        <div class="delete-actions">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="btn-delete-team">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Yes, Delete
+
+                </button>
+
+            </form>
+
+
+            <a
+                href="{% url 'team_detail' team.pk %}"
+                class="btn-cancel-team">
+
+                Cancel
+
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 

@@ -1,0 +1,350 @@
+/* =========================================================
+   SD TRACKER - EMPLOYEE FORM PAGE
+   ========================================================= */
+
+.employee-form-page {
+    width: 100%;
+    color: #101828;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.employee-form-page .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 26px;
+}
+
+.employee-form-page .page-header h1 {
+    margin: 0;
+
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 700;
+
+    color: #101828;
+}
+
+.employee-form-page .page-header p {
+    margin: 7px 0 0;
+
+    color: #667085;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FORM CARD
+   ========================================================= */
+
+.employee-form-page .form-card {
+    width: 100%;
+
+    padding: 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e7ec;
+    border-radius: 12px;
+
+    box-shadow:
+        0 2px 8px rgba(16, 24, 40, 0.04);
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.employee-form-page .form-group {
+    margin-bottom: 20px;
+}
+
+.employee-form-page .form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #344054;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   INPUTS / SELECT / TEXTAREA
+   ========================================================= */
+
+.employee-form-page .form-group input,
+.employee-form-page .form-group select,
+.employee-form-page .form-group textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 13px;
+
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #344054;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* Input height */
+
+.employee-form-page .form-group input,
+.employee-form-page .form-group select {
+    height: 46px;
+}
+
+
+/* Textarea */
+
+.employee-form-page .form-group textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+
+/* Placeholder */
+
+.employee-form-page .form-group input::placeholder,
+.employee-form-page .form-group textarea::placeholder {
+    color: #98a2b3;
+}
+
+
+/* Focus */
+
+.employee-form-page .form-group input:focus,
+.employee-form-page .form-group select:focus,
+.employee-form-page .form-group textarea:focus {
+    border-color: #4c7df0;
+
+    box-shadow:
+        0 0 0 3px rgba(76, 125, 240, 0.10);
+}
+
+
+/* =========================================================
+   TWO COLUMN ROW
+   ========================================================= */
+
+.employee-form-page .form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 24px;
+}
+
+
+/* =========================================================
+   ERRORS
+   ========================================================= */
+
+.employee-form-page .error {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #d92d20;
+
+    font-size: 12px;
+}
+
+.employee-form-page .form-errors {
+    margin-bottom: 20px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #fecdca;
+    border-radius: 8px;
+
+    background: #fef3f2;
+
+    color: #b42318;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BUTTON AREA
+   ========================================================= */
+
+.employee-form-page .form-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 8px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid #eaecf0;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.employee-form-page .btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 0 18px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    box-sizing: border-box;
+}
+
+
+/* Secondary */
+
+.employee-form-page .btn-secondary {
+    border: 1px solid #d0d5dd;
+
+    background: #ffffff;
+
+    color: #344054;
+}
+
+.employee-form-page .btn-secondary:hover {
+    background: #f9fafb;
+
+    border-color: #98a2b3;
+}
+
+
+/* Primary */
+
+.employee-form-page .btn-primary {
+    border: 1px solid #2563eb;
+
+    background: #2563eb;
+
+    color: #ffffff;
+}
+
+.employee-form-page .btn-primary:hover {
+    background: #1d4ed8;
+
+    border-color: #1d4ed8;
+
+    box-shadow:
+        0 4px 10px rgba(37, 99, 235, 0.20);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SELECT ARROW / DATE INPUT
+   ========================================================= */
+
+.employee-form-page select {
+    cursor: pointer;
+}
+
+.employee-form-page input[type="date"] {
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   EDIT MODE
+   ========================================================= */
+
+.employee-form-page .form-card form {
+    width: 100%;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .employee-form-page .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+    .employee-form-page .form-card {
+        padding: 22px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .employee-form-page .page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .employee-form-page .page-header h1 {
+        font-size: 24px;
+    }
+
+    .employee-form-page .form-card {
+        padding: 18px;
+    }
+
+    .employee-form-page .form-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+    .employee-form-page .form-actions .btn {
+        width: 100%;
+    }
+
+}

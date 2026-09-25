@@ -1,0 +1,874 @@
+/* =========================================================
+   TEAMS PAGE
+========================================================= */
+
+.teams-page {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 36px 50px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.teams-page .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.teams-page .page-header h1 {
+    margin: 0;
+    color: #0f1f3d;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.teams-page .page-header p {
+    margin: 6px 0 0;
+    color: #64748b;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   CREATE TEAM BUTTON
+========================================================= */
+
+.create-team-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 46px;
+    padding: 0 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #3563e9;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    box-shadow: 0 5px 12px rgba(53, 99, 233, 0.18);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.create-team-btn:hover {
+    background: #2853d8;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 7px 16px rgba(53, 99, 233, 0.25);
+}
+
+
+/* =========================================================
+   STATISTICS GRID
+========================================================= */
+
+.team-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+
+/* =========================================================
+   STAT CARD
+========================================================= */
+
+.team-stat-card {
+    position: relative;
+    min-height: 128px;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+
+    padding: 22px;
+
+    border: 1px solid #e4e9f2;
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    overflow: hidden;
+
+    box-shadow: 0 3px 12px rgba(15, 31, 61, 0.05);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.team-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 31, 61, 0.08);
+}
+
+
+/* =========================================================
+   STAT CARD COLORS
+========================================================= */
+
+.team-stat-card.blue {
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f7faff 100%
+    );
+}
+
+.team-stat-card.green {
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f5fffa 100%
+    );
+}
+
+.team-stat-card.purple {
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #fbf8ff 100%
+    );
+}
+
+.team-stat-card.orange {
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #fffaf4 100%
+    );
+}
+
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.team-stat-card .stat-icon {
+    width: 54px;
+    height: 54px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 23px;
+}
+
+.team-stat-card.blue .stat-icon {
+    background: #eaf1ff;
+    color: #3563e9;
+}
+
+.team-stat-card.green .stat-icon {
+    background: #e4faef;
+    color: #18a866;
+}
+
+.team-stat-card.purple .stat-icon {
+    background: #f0e8ff;
+    color: #7540dc;
+}
+
+.team-stat-card.orange .stat-icon {
+    background: #fff0df;
+    color: #f47b20;
+}
+
+
+/* =========================================================
+   STAT CONTENT
+========================================================= */
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.stat-content span {
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+
+.stat-content strong {
+    color: #0f1f3d;
+    font-size: 30px;
+    line-height: 1.15;
+    font-weight: 700;
+}
+
+.stat-content small {
+    margin-top: 8px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.stat-content small i {
+    color: #12a968;
+    margin-right: 3px;
+}
+
+
+/* =========================================================
+   SEARCH AREA
+========================================================= */
+
+.team-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    margin-bottom: 18px;
+    padding: 18px 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e9f2;
+    border-radius: 12px;
+
+    box-shadow: 0 3px 12px rgba(15, 31, 61, 0.04);
+
+    box-sizing: border-box;
+}
+
+.search-input {
+    position: relative;
+    flex: 1;
+}
+
+.search-input i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #64748b;
+    font-size: 16px;
+
+    pointer-events: none;
+}
+
+.search-input input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 16px 0 44px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d9e0eb;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #172554;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.search-input input::placeholder {
+    color: #94a3b8;
+}
+
+.search-input input:focus {
+    border-color: #3563e9;
+    box-shadow: 0 0 0 3px rgba(53, 99, 233, 0.10);
+}
+
+
+/* =========================================================
+   SEARCH BUTTON
+========================================================= */
+
+.team-search > button {
+    height: 46px;
+
+    padding: 0 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #3563e9;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.team-search > button:hover {
+    background: #2853d8;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TABLE CARD
+========================================================= */
+
+.team-table-card {
+    width: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e9f2;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 14px rgba(15, 31, 61, 0.05);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.team-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.team-table thead {
+    background: #f8fafc;
+}
+
+.team-table th {
+    padding: 16px 14px;
+
+    color: #172033;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-align: left;
+
+    white-space: nowrap;
+
+    border-bottom: 1px solid #e5eaf1;
+}
+
+.team-table td {
+    padding: 17px 14px;
+
+    color: #334155;
+
+    font-size: 14px;
+
+    vertical-align: middle;
+
+    border-bottom: 1px solid #edf1f5;
+}
+
+.team-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.team-table tbody tr:hover {
+    background: #f9fbff;
+}
+
+.team-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   TEAM NAME
+========================================================= */
+
+.team-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-width: 190px;
+}
+
+.team-avatar {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e8efff;
+    color: #3563e9;
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.team-name-cell strong {
+    display: block;
+
+    color: #172033;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.team-name-cell small {
+    display: block;
+
+    max-width: 220px;
+    margin-top: 4px;
+
+    color: #718096;
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   MANAGER
+========================================================= */
+
+.manager-cell {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    min-width: 180px;
+}
+
+.manager-avatar {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e7efff;
+    color: #3563e9;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.manager-cell strong {
+    display: block;
+
+    color: #172033;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.manager-cell small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #718096;
+
+    font-size: 11px;
+}
+
+.no-manager {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MEMBERS
+========================================================= */
+
+.member-count {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    min-width: 75px;
+}
+
+.member-count i {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e8f0ff;
+    color: #3563e9;
+
+    font-size: 14px;
+}
+
+.member-count strong {
+    color: #172033;
+    font-size: 15px;
+}
+
+.member-count small {
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.team-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 7px 12px;
+
+    border-radius: 7px;
+
+    background: #e4f8ed;
+
+    color: #15935a;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.team-status span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #18ad69;
+}
+
+
+/* =========================================================
+   CREATED DATE
+========================================================= */
+
+.created-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #475569;
+
+    white-space: nowrap;
+}
+
+.created-date i {
+    color: #64748b;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.team-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.team-actions a {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.team-actions a:hover {
+    transform: translateY(-1px);
+}
+
+.action-view {
+    background: #edf3ff;
+    color: #3563e9;
+}
+
+.action-view:hover {
+    background: #dce8ff;
+    color: #2853d8;
+}
+
+.action-edit {
+    background: #edf3ff;
+    color: #3563e9;
+}
+
+.action-edit:hover {
+    background: #dce8ff;
+    color: #2853d8;
+}
+
+.action-delete {
+    background: #ffeded;
+    color: #e53935;
+}
+
+.action-delete:hover {
+    background: #ffe0e0;
+    color: #d92d2d;
+}
+
+
+/* =========================================================
+   TABLE FOOTER
+========================================================= */
+
+.table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 17px 20px;
+
+    border-top: 1px solid #edf1f5;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+.table-footer strong {
+    color: #334155;
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.pagination button {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #dbe2ec;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #64748b;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.pagination button.active {
+    border-color: #3563e9;
+    background: #3563e9;
+    color: #ffffff;
+}
+
+.pagination button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.pagination button:not(:disabled):hover {
+    border-color: #3563e9;
+    color: #3563e9;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-teams {
+    padding: 70px 20px !important;
+
+    text-align: center !important;
+
+    color: #64748b;
+}
+
+.empty-teams > i {
+    font-size: 40px;
+    color: #94a3b8;
+    margin-bottom: 15px;
+}
+
+.empty-teams h3 {
+    margin: 0 0 6px;
+
+    color: #172033;
+
+    font-size: 18px;
+}
+
+.empty-teams p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .teams-page {
+        padding: 28px 24px 40px;
+    }
+
+    .team-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .team-table-card {
+        overflow-x: auto;
+    }
+
+    .team-table {
+        min-width: 1000px;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .teams-page {
+        padding: 22px 16px 35px;
+    }
+
+    .teams-page .page-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .teams-page .page-header h1 {
+        font-size: 27px;
+    }
+
+    .create-team-btn {
+        width: 100%;
+    }
+
+    .team-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .team-search {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .team-search > button {
+        width: 100%;
+    }
+
+    .table-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .team-stat-card {
+        padding: 18px;
+    }
+
+    .team-stat-card .stat-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 19px;
+    }
+
+    .stat-content strong {
+        font-size: 25px;
+    }
+
+    .team-search {
+        padding: 14px;
+    }
+}

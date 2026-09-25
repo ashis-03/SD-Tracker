@@ -1,0 +1,604 @@
+/* =========================================================
+   TEAM FORM PAGE
+========================================================= */
+
+.team-form-page {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 30px 35px 50px;
+    color: #172554;
+}
+
+
+/* =========================================================
+   BACK LINK
+========================================================= */
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 22px;
+
+    color: #3158a8;
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.back-link:hover {
+    color: #2563eb;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.team-form-page .page-header {
+    margin-bottom: 26px;
+}
+
+
+.team-form-page .page-header h1 {
+    margin: 0;
+
+    font-size: 32px;
+    font-weight: 700;
+
+    color: #14213d;
+}
+
+
+.team-form-page .page-header p {
+    margin: 6px 0 0;
+
+    color: #64748b;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.team-form-card {
+    background: #ffffff;
+
+    border: 1px solid #e1e7ef;
+
+    border-radius: 14px;
+
+    padding: 28px 30px;
+
+    box-shadow:
+        0 4px 15px rgba(15, 23, 42, 0.05);
+}
+
+
+/* =========================================================
+   FORM SECTION
+========================================================= */
+
+.form-section {
+    padding: 0 0 28px;
+
+    margin-bottom: 28px;
+
+    border-bottom: 1px solid #e8edf3;
+}
+
+
+.form-section:last-of-type {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+
+.section-heading h2 {
+    margin: 0;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    color: #172554;
+}
+
+
+.section-heading p {
+    margin: 4px 0 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   SECTION ICON
+========================================================= */
+
+.section-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+
+.section-icon.blue {
+    background: #e8f1ff;
+    color: #2563eb;
+}
+
+
+.section-icon.purple {
+    background: #f1e9ff;
+    color: #7c3aed;
+}
+
+
+.section-icon.green {
+    background: #e4f9ed;
+    color: #16a34a;
+}
+
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #243b64;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.required {
+    color: #ef4444;
+}
+
+
+/* =========================================================
+   INPUTS / SELECT
+========================================================= */
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="number"],
+.form-group select,
+.dropdown-btn {
+    width: 100%;
+
+    min-height: 48px;
+
+    padding: 0 16px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #d7e0eb;
+
+    border-radius: 9px;
+
+    color: #334155;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: all 0.2s ease;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.dropdown-btn:focus {
+    border-color: #4f7df3;
+
+    box-shadow:
+        0 0 0 3px rgba(59, 130, 246, 0.10);
+}
+
+
+.form-group input::placeholder {
+    color: #94a3b8;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.form-group select {
+    cursor: pointer;
+
+    appearance: auto;
+}
+
+
+/* =========================================================
+   CUSTOM MEMBER DROPDOWN
+========================================================= */
+
+.custom-dropdown {
+    position: relative;
+
+    width: 100%;
+}
+
+
+.dropdown-btn {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    cursor: pointer;
+
+    text-align: left;
+}
+
+
+.dropdown-btn i {
+    color: #64748b;
+
+    font-size: 13px;
+
+    transition: transform 0.2s ease;
+}
+
+
+.custom-dropdown.open .dropdown-btn i {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   DROPDOWN CONTENT
+========================================================= */
+
+.dropdown-content {
+    display: none;
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    top: calc(100% + 7px);
+
+    z-index: 50;
+
+    max-height: 280px;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border: 1px solid #dce3ed;
+
+    border-radius: 10px;
+
+    padding: 8px;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.12);
+}
+
+
+.custom-dropdown.open .dropdown-content {
+    display: block;
+}
+
+
+/* =========================================================
+   MEMBER OPTION
+========================================================= */
+
+.member-option {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: background 0.15s ease;
+}
+
+
+.member-option:hover {
+    background: #f5f8ff;
+}
+
+
+/* Hide default checkbox */
+
+.member-option input[type="checkbox"] {
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   MEMBER INFO
+========================================================= */
+
+.member-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    flex: 1;
+}
+
+
+.member-info strong {
+    color: #172554;
+
+    font-size: 14px;
+}
+
+
+.member-avatar {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eee8ff;
+
+    color: #7c3aed;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   CHECK ICON
+========================================================= */
+
+.custom-check {
+    width: 21px;
+    height: 21px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: transparent;
+
+    font-size: 11px;
+
+    transition: all 0.15s ease;
+}
+
+
+.member-option input[type="checkbox"]:checked
+~ .custom-check {
+    background: #2563eb;
+
+    border-color: #2563eb;
+
+    color: white;
+}
+
+
+/* =========================================================
+   EMPTY MEMBERS
+========================================================= */
+
+.no-members {
+    padding: 20px;
+
+    text-align: center;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.form-error {
+    margin-top: 7px;
+
+    color: #dc2626;
+
+    font-size: 13px;
+}
+
+
+.form-error-main {
+    padding: 12px 14px;
+
+    margin-bottom: 20px;
+
+    background: #fff1f2;
+
+    border: 1px solid #fecdd3;
+
+    border-radius: 8px;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.form-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding-top: 4px;
+}
+
+
+.btn {
+    min-height: 46px;
+
+    padding: 0 20px;
+
+    border-radius: 9px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.btn-primary {
+    background: #3563e9;
+
+    border: 1px solid #3563e9;
+
+    color: #ffffff;
+}
+
+
+.btn-primary:hover {
+    background: #2853d3;
+
+    border-color: #2853d3;
+}
+
+
+.btn-secondary {
+    background: #ffffff;
+
+    border: 1px solid #d7e0eb;
+
+    color: #334155;
+}
+
+
+.btn-secondary:hover {
+    background: #f8fafc;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .team-form-page {
+        padding: 22px 16px 40px;
+    }
+
+
+    .team-form-card {
+        padding: 22px 18px;
+    }
+
+
+    .team-form-page .page-header h1 {
+        font-size: 27px;
+    }
+
+
+    .section-heading {
+        align-items: flex-start;
+    }
+
+
+    .form-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .form-actions .btn {
+        width: 100%;
+    }
+
+}

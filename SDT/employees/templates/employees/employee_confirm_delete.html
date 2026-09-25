@@ -1,4 +1,16 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Employee Delete | SD Tracker
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/employees/employee_confirm_delete.css' %}">
+
+{% endblock %}
 
 {% block content %}
 

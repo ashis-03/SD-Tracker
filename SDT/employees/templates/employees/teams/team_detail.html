@@ -1,178 +1,425 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ team.name }} | SD Tracker
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/teams/team_detail.css' %}">
+
+{% endblock %}
+
 
 {% block content %}
 
-<div class="page-header">
+<div class="team-detail-page">
 
-    <div>
+    <!-- =========================
+         BACK LINK
+    ========================== -->
 
-        <h1>
-            {{ team.name }}
-        </h1>
+    <a href="{% url 'team_list' %}" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Teams
+    </a>
 
-        <p>
-            Team details and members
-        </p>
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <div class="team-page-header">
+
+        <div class="team-title">
+
+            <div class="team-avatar">
+                {{ team.name|slice:":1"|upper }}
+            </div>
+
+            <div>
+                <h1>{{ team.name }}</h1>
+
+                <p>
+                    Team details and members.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <a href="{% url 'team_update' team.pk %}"
+               class="btn btn-primary">
+
+                <i class="fa-solid fa-pen"></i>
+                Edit Team
+
+            </a>
+
+
+            <a href="{% url 'team_list' %}"
+               class="btn btn-secondary">
+
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+
+            </a>
+
+        </div>
 
     </div>
 
 
-    <div>
+    <!-- =========================
+         TOP INFORMATION CARDS
+    ========================== -->
 
-        <a
-            href="{% url 'team_update' team.pk %}"
-            class="btn btn-primary"
-        >
-
-            Edit Team
-
-        </a>
+    <div class="team-info-grid">
 
 
-        <a
-            href="{% url 'team_list' %}"
-            class="btn btn-secondary"
-        >
+        <!-- TEAM INFORMATION -->
 
-            Back
+        <div class="detail-card">
 
-        </a>
+            <div class="card-heading">
+
+                <div class="card-icon blue">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+                <h2>Team Information</h2>
+
+            </div>
+
+
+            <div class="info-list">
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Team Name</span>
+                    </div>
+
+                    <strong>
+                        {{ team.name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <span>Manager</span>
+                    </div>
+
+                    <strong>
+
+                        {% if team.manager %}
+                            {{ team.manager.user.get_full_name }}
+                        {% else %}
+                            Not Assigned
+                        {% endif %}
+
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        <i class="fa-solid fa-building"></i>
+                        <span>Designation</span>
+                    </div>
+
+                    <strong>
+
+                        {% if team.manager %}
+                            {{ team.manager.designation }}
+                        {% else %}
+                            —
+                        {% endif %}
+
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-label">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span>Total Members</span>
+                    </div>
+
+                    <strong>
+                        {{ team.members.count }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MANAGER INFORMATION -->
+
+        <div class="detail-card manager-card">
+
+            <div class="card-heading">
+
+                <div class="card-icon purple">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+
+                <h2>Manager Information</h2>
+
+            </div>
+
+
+            {% if team.manager %}
+
+                <div class="manager-profile">
+
+                    <div class="manager-avatar">
+
+                        {{ team.manager.user.get_full_name|slice:":1"|upper }}
+
+                    </div>
+
+
+                    <div class="manager-details">
+
+                        <h3>
+                            {{ team.manager.user.get_full_name }}
+                        </h3>
+
+                        <span class="role-badge">
+
+                            <i class="fa-solid fa-crown"></i>
+
+                            Project Manager
+
+                        </span>
+
+                        <p>
+                            {{ team.manager.designation }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-contact">
+
+                    <div>
+                        <i class="fa-solid fa-envelope"></i>
+
+                        <span>
+                            {{ team.manager.user.email }}
+                        </span>
+                    </div>
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-manager">
+
+                    <i class="fa-solid fa-user-slash"></i>
+
+                    <p>
+                        No manager assigned to this team.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
 
     </div>
 
-</div>
 
+    <!-- =========================
+         TEAM MEMBERS
+    ========================== -->
 
-<!-- Manager -->
+    <div class="detail-card members-card">
 
-<div class="detail-card">
 
-    <h3>
-        Team Manager
-    </h3>
+        <div class="members-header">
 
+            <div class="card-heading">
 
-    {% if team.manager %}
+                <div class="card-icon purple">
+                    <i class="fa-solid fa-users"></i>
+                </div>
 
-        <p>
+                <div>
 
-            <strong>
+                    <h2>
+                        Team Members
+                        <span class="member-count">
+                            {{ team.members.count }}
+                        </span>
+                    </h2>
 
-                {{ team.manager.user.get_full_name }}
+                </div>
 
-            </strong>
+            </div>
 
-        </p>
 
+            <!-- Optional: Add member URL -->
+            <!--
+            <a href="#" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i>
+                Add Members
+            </a>
+            -->
 
-        <p>
+        </div>
 
-            {{ team.manager.designation }}
 
-        </p>
+        <!-- TABLE -->
 
-    {% else %}
+        <div class="table-wrapper">
 
-        <p>
+            <table class="team-members-table">
 
-            No manager assigned.
+                <thead>
 
-        </p>
+                    <tr>
 
-    {% endif %}
+                        <th>#</th>
 
-</div>
+                        <th>Employee ID</th>
 
+                        <th>Employee</th>
 
-<!-- Members -->
+                        <th>Designation</th>
 
-<div class="members-section">
+                        <th>Department</th>
 
-    <h2>
+                    </tr>
 
-        Team Members
+                </thead>
 
-        ({{ team.members.count }})
 
-    </h2>
+                <tbody>
 
+                    {% for employee in team.members.all %}
 
-    <table class="team-table">
+                    <tr>
 
-        <thead>
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
 
-            <tr>
 
-                <th>#</th>
-                <th>Employee ID</th>
-                <th>Employee</th>
-                <th>Designation</th>
-                <th>Department</th>
+                        <td>
 
-            </tr>
+                            <strong class="employee-id">
 
-        </thead>
+                                {{ employee.employee_id }}
 
+                            </strong>
 
-        <tbody>
+                        </td>
 
-            {% for employee in team.members.all %}
 
-            <tr>
+                        <td>
 
-                <td>
+                            <div class="employee-cell">
 
-                    {{ forloop.counter }}
+                                <div class="employee-avatar">
 
-                </td>
+                                    {{ employee.user.get_full_name|slice:":1"|upper }}
 
+                                </div>
 
-                <td>
 
-                    {{ employee.employee_id }}
+                                <div>
 
-                </td>
+                                    <strong>
+                                        {{ employee.user.get_full_name }}
+                                    </strong>
 
+                                    <small>
+                                        {{ employee.user.email }}
+                                    </small>
 
-                <td>
+                                </div>
 
-                    {{ employee.user.get_full_name }}
+                            </div>
 
-                </td>
+                        </td>
 
 
-                <td>
+                        <td>
+                            {{ employee.designation }}
+                        </td>
 
-                    {{ employee.designation }}
 
-                </td>
+                        <td>
+                            {{ employee.department }}
+                        </td>
 
+                    </tr>
 
-                <td>
 
-                    {{ employee.department }}
+                    {% empty %}
 
-                </td>
+                    <tr>
 
-            </tr>
+                        <td colspan="5"
+                            class="empty-row">
 
-            {% empty %}
+                            <i class="fa-solid fa-users-slash"></i>
 
-            <tr>
+                            <p>
+                                No employees added to this team.
+                            </p>
 
-                <td colspan="5">
+                        </td>
 
-                    No employees added to this team.
+                    </tr>
 
-                </td>
+                    {% endfor %}
 
-            </tr>
+                </tbody>
 
-            {% endfor %}
+            </table>
 
-        </tbody>
+        </div>
 
-    </table>
+
+        <!-- TABLE FOOTER -->
+
+        {% if team.members.all %}
+
+        <div class="members-footer">
+
+            <span>
+                Showing
+                {{ team.members.count }}
+                member{{ team.members.count|pluralize }}
+            </span>
+
+        </div>
+
+        {% endif %}
+
+    </div>
 
 </div>
 

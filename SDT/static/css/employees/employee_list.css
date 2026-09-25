@@ -1,0 +1,583 @@
+/* =========================================================
+   SD TRACKER - EMPLOYEE LIST PAGE
+   ========================================================= */
+
+.employees-page {
+    width: 100%;
+    color: #101828;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.employees-page .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 26px;
+}
+
+.employees-page .page-header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #101828;
+}
+
+.employees-page .page-header p {
+    margin: 7px 0 0;
+    color: #667085;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   ADD EMPLOYEE BUTTON
+   ========================================================= */
+
+.employees-page .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 17px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.employees-page .btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.20);
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.employees-page .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-bottom: 20px;
+}
+
+.employees-page .stat-card {
+    position: relative;
+
+    min-height: 105px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e7ec;
+    border-radius: 12px;
+
+    box-shadow: 0 2px 7px rgba(16, 24, 40, 0.04);
+
+    overflow: hidden;
+
+    transition: all 0.2s ease;
+}
+
+.employees-page .stat-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(16, 24, 40, 0.08);
+}
+
+.employees-page .stat-card p {
+    margin: 0 0 8px;
+
+    color: #667085;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.employees-page .stat-card h2 {
+    margin: 0;
+
+    color: #101828;
+
+    font-size: 26px;
+    font-weight: 700;
+}
+
+
+/* Decorative circles */
+
+.employees-page .stat-card::after {
+    content: "";
+
+    position: absolute;
+
+    right: -18px;
+    bottom: -28px;
+
+    width: 75px;
+    height: 75px;
+
+    border-radius: 50%;
+
+    opacity: 0.10;
+}
+
+
+/* Total */
+
+.employees-page .stat-card:nth-child(1)::after {
+    background: #2563eb;
+}
+
+
+/* Active */
+
+.employees-page .stat-card:nth-child(2)::after {
+    background: #16a34a;
+}
+
+
+/* On Leave */
+
+.employees-page .stat-card:nth-child(3)::after {
+    background: #f59e0b;
+}
+
+
+/* Departments */
+
+.employees-page .stat-card:nth-child(4)::after {
+    background: #9333ea;
+}
+
+
+/* =========================================================
+   FILTER SECTION
+   ========================================================= */
+
+.employees-page .filter-section {
+    display: grid;
+
+    grid-template-columns: minmax(280px, 1.8fr) minmax(170px, 1fr) minmax(150px, 0.8fr) auto;
+
+    gap: 10px;
+
+    padding: 12px;
+
+    margin-bottom: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e7ec;
+    border-radius: 10px;
+
+    box-shadow: 0 2px 7px rgba(16, 24, 40, 0.03);
+}
+
+
+/* Search input */
+
+.employees-page .filter-section input {
+    width: 100%;
+    height: 40px;
+
+    padding: 0 13px;
+
+    border: 1px solid #d0d5dd;
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #344054;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    box-sizing: border-box;
+}
+
+.employees-page .filter-section input::placeholder {
+    color: #98a2b3;
+}
+
+.employees-page .filter-section input:focus {
+    border-color: #4c7df0;
+
+    box-shadow: 0 0 0 3px rgba(76, 125, 240, 0.10);
+}
+
+
+/* Select */
+
+.employees-page .filter-section select {
+    width: 100%;
+    height: 40px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d0d5dd;
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #344054;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.employees-page .filter-section select:focus {
+    border-color: #4c7df0;
+
+    box-shadow: 0 0 0 3px rgba(76, 125, 240, 0.10);
+}
+
+
+/* Search button */
+
+.employees-page .filter-section button {
+    height: 40px;
+
+    padding: 0 18px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.employees-page .filter-section button:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================================================
+   TABLE CONTAINER
+   ========================================================= */
+
+.employees-page .table-container {
+    width: 100%;
+
+    overflow-x: auto;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e7ec;
+    border-radius: 11px;
+
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.employees-page .table-container table {
+    width: 100%;
+
+    min-width: 1050px;
+
+    border-collapse: collapse;
+
+    table-layout: auto;
+}
+
+
+/* Header */
+
+.employees-page .table-container thead {
+    background: #f9fafb;
+}
+
+.employees-page .table-container th {
+    padding: 13px 14px;
+
+    border-bottom: 1px solid #e4e7ec;
+
+    color: #667085;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-align: left;
+
+    white-space: nowrap;
+}
+
+
+/* Body */
+
+.employees-page .table-container td {
+    padding: 13px 14px;
+
+    border-bottom: 1px solid #f0f2f5;
+
+    color: #344054;
+
+    font-size: 12px;
+
+    vertical-align: middle;
+}
+
+.employees-page .table-container tbody tr {
+    transition: background 0.15s ease;
+}
+
+.employees-page .table-container tbody tr:hover {
+    background: #f9fbff;
+}
+
+.employees-page .table-container tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   EMPLOYEE NAME
+   ========================================================= */
+
+.employees-page .table-container td strong {
+    display: inline-block;
+
+    color: #101828;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.employees-page .table-container td small {
+    display: inline-block;
+
+    margin-top: 3px;
+
+    color: #98a2b3;
+
+    font-size: 10px;
+}
+
+
+/* Employee ID */
+
+.employees-page .table-container td:nth-child(2) {
+    color: #475467;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ROLE BADGES
+   ========================================================= */
+
+.employees-page .table-container td:nth-child(6) {
+    font-weight: 500;
+}
+
+
+/* Manager */
+
+.employees-page .table-container td:nth-child(6) {
+    color: #6941c6;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.employees-page .table-container td:nth-child(8) {
+    white-space: nowrap;
+}
+
+.employees-page .table-container td:nth-child(8)::before {
+    content: "";
+
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 5px;
+
+    border-radius: 50%;
+
+    background: #12b76a;
+
+    vertical-align: middle;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.employees-page .table-container td:last-child {
+    white-space: nowrap;
+}
+
+.employees-page .table-container td:last-child a {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 45px;
+
+    margin-right: 4px;
+
+    padding: 6px 8px;
+
+    border: 1px solid #e4e7ec;
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #475467;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition: all 0.15s ease;
+}
+
+
+/* View */
+
+.employees-page .table-container td:last-child a:nth-child(1) {
+    color: #2563eb;
+    background: #eff6ff;
+    border-color: #dbeafe;
+}
+
+.employees-page .table-container td:last-child a:nth-child(1):hover {
+    background: #dbeafe;
+}
+
+
+/* Edit */
+
+.employees-page .table-container td:last-child a:nth-child(2) {
+    color: #7c3aed;
+    background: #f5f3ff;
+    border-color: #e9d5ff;
+}
+
+.employees-page .table-container td:last-child a:nth-child(2):hover {
+    background: #ede9fe;
+}
+
+
+/* Delete */
+
+.employees-page .table-container td:last-child a:nth-child(3) {
+    color: #dc2626;
+    background: #fef2f2;
+    border-color: #fee2e2;
+}
+
+.employees-page .table-container td:last-child a:nth-child(3):hover {
+    background: #fee2e2;
+}
+
+
+/* =========================================================
+   EMPTY TABLE
+   ========================================================= */
+
+.employees-page .table-container td[colspan] {
+    padding: 40px 20px;
+
+    text-align: center;
+
+    color: #667085;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .employees-page .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .employees-page .filter-section {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .employees-page .filter-section button {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .employees-page .page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .employees-page .page-header .btn-primary {
+        width: 100%;
+    }
+
+    .employees-page .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .employees-page .filter-section {
+        grid-template-columns: 1fr;
+    }
+
+    .employees-page .table-container {
+        overflow-x: auto;
+    }
+}

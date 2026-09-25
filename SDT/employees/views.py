@@ -206,12 +206,47 @@ def employee_delete(request, pk):
 
 
 # Team List
+from django.db.models import Q
+
 def team_list(request):
 
     teams = Team.objects.all()
 
+    # =========================
+    # SEARCH
+    # =========================
+
+    search = request.GET.get("search", "").strip()
+
+    if search:
+        teams = teams.filter(
+            Q(name__icontains=search) |
+            Q(manager__user__first_name__icontains=search) |
+            Q(manager__user__last_name__icontains=search) |
+            Q(manager__user__username__icontains=search) |
+            Q(manager__user__email__icontains=search)
+        ).distinct()
+
+    # =========================
+    # STATISTICS
+    # =========================
+
+    total_members = Employee.objects.filter(
+        teams__in=Team.objects.all()
+    ).distinct().count()
+
+    total_managers = Team.objects.exclude(
+        manager=None
+    ).count()
+
+    active_teams = Team.objects.count()
+
     context = {
-        "teams": teams
+        "teams": teams,
+        "total_members": total_members,
+        "total_managers": total_managers,
+        "active_teams": active_teams,
+        "search": search,
     }
 
     return render(
@@ -257,7 +292,11 @@ def team_create(request):
 def team_detail(request, pk):
 
     team = get_object_or_404(
-        Team,
+        Team.objects.select_related(
+            "manager__user"
+        ).prefetch_related(
+            "members__user"
+        ),
         pk=pk
     )
 

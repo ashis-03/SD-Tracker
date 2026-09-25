@@ -1,127 +1,119 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if employees %}
+    Edit Employees | SD Tracker
+    {% else %}
+    Create Employees | SD Tracker
+    {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/employees/employee_form.css' %}">
+
+{% endblock %}
 
 {% block content %}
 
-<div class="page-header">
+<div class="employee-form-page">
+    <div class="page-header">
 
-    <div>
+        <div>
 
-        {% if employee %}
+            {% if employee %}
 
-            <h1>Edit Employee</h1>
-            <p>Update employee information.</p>
+                <h1>Edit Employee</h1>
+                <p>Update employee information.</p>
 
-        {% else %}
+            {% else %}
 
-            <h1>Add Employee</h1>
-            <p>Add a new employee to the organization.</p>
-
-        {% endif %}
-
-    </div>
-
-</div>
-
-
-<div class="form-card">
-
-    <form method="POST">
-
-        {% csrf_token %}
-
-
-        {% if form.non_field_errors %}
-
-            <div class="form-errors">
-
-                {{ form.non_field_errors }}
-
-            </div>
-
-        {% endif %}
-
-
-        <!-- User -->
-
-        <div class="form-group">
-
-            <label for="{{ form.user.id_for_label }}">
-                User
-            </label>
-
-            {{ form.user }}
-
-            {% if form.user.errors %}
-
-                <small class="error">
-
-                    {{ form.user.errors }}
-
-                </small>
+                <h1>Add Employee</h1>
+                <p>Add a new employee to the organization.</p>
 
             {% endif %}
 
         </div>
 
-        <!-- Role -->
-        <div class="form-group">
+    </div>
 
-            <label>Role</label>
 
-            {{ form.role }}
+    <div class="form-card">
 
-            {% if form.role.errors %}
+        <form method="POST">
 
-                <div class="error">
+            {% csrf_token %}
 
-                    {{ form.role.errors }}
+
+            {% if form.non_field_errors %}
+
+                <div class="form-errors">
+
+                    {{ form.non_field_errors }}
 
                 </div>
 
             {% endif %}
 
-        </div>
 
-        <!-- Employee ID -->
-
-        <div class="form-group">
-
-            <label for="{{ form.employee_id.id_for_label }}">
-                Employee ID
-            </label>
-
-            {{ form.employee_id }}
-
-            {% if form.employee_id.errors %}
-
-                <small class="error">
-
-                    {{ form.employee_id.errors }}
-
-                </small>
-
-            {% endif %}
-
-        </div>
-
-
-        <div class="form-row">
-
-            <!-- Designation -->
+            <!-- User -->
 
             <div class="form-group">
 
-                <label for="{{ form.designation.id_for_label }}">
-                    Designation
+                <label for="{{ form.user.id_for_label }}">
+                    User
                 </label>
 
-                {{ form.designation }}
+                {{ form.user }}
 
-                {% if form.designation.errors %}
+                {% if form.user.errors %}
 
                     <small class="error">
 
-                        {{ form.designation.errors }}
+                        {{ form.user.errors }}
+
+                    </small>
+
+                {% endif %}
+
+            </div>
+
+            <!-- Role -->
+            <div class="form-group">
+
+                <label>Role</label>
+
+                {{ form.role }}
+
+                {% if form.role.errors %}
+
+                    <div class="error">
+
+                        {{ form.role.errors }}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <!-- Employee ID -->
+
+            <div class="form-group">
+
+                <label for="{{ form.employee_id.id_for_label }}">
+                    Employee ID
+                </label>
+
+                {{ form.employee_id }}
+
+                {% if form.employee_id.errors %}
+
+                    <small class="error">
+
+                        {{ form.employee_id.errors }}
 
                     </small>
 
@@ -130,21 +122,71 @@
             </div>
 
 
-            <!-- Department -->
+            <div class="form-row">
+
+                <!-- Designation -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.designation.id_for_label }}">
+                        Designation
+                    </label>
+
+                    {{ form.designation }}
+
+                    {% if form.designation.errors %}
+
+                        <small class="error">
+
+                            {{ form.designation.errors }}
+
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Department -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.department.id_for_label }}">
+                        Department
+                    </label>
+
+                    {{ form.department }}
+
+                    {% if form.department.errors %}
+
+                        <small class="error">
+
+                            {{ form.department.errors }}
+
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- Skills -->
 
             <div class="form-group">
 
-                <label for="{{ form.department.id_for_label }}">
-                    Department
+                <label for="{{ form.skills.id_for_label }}">
+                    Skills
                 </label>
 
-                {{ form.department }}
+                {{ form.skills }}
 
-                {% if form.department.errors %}
+                {% if form.skills.errors %}
 
                     <small class="error">
 
-                        {{ form.department.errors }}
+                        {{ form.skills.errors }}
 
                     </small>
 
@@ -152,113 +194,89 @@
 
             </div>
 
-        </div>
+
+            <div class="form-row">
+
+                <!-- Joining Date -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.joining_date.id_for_label }}">
+                        Joining Date
+                    </label>
+
+                    {{ form.joining_date }}
+
+                    {% if form.joining_date.errors %}
+
+                        <small class="error">
+
+                            {{ form.joining_date.errors }}
+
+                        </small>
+
+                    {% endif %}
+
+                </div>
 
 
-        <!-- Skills -->
+                <!-- Status -->
 
-        <div class="form-group">
+                <div class="form-group">
 
-            <label for="{{ form.skills.id_for_label }}">
-                Skills
-            </label>
+                    <label for="{{ form.status.id_for_label }}">
+                        Status
+                    </label>
 
-            {{ form.skills }}
+                    {{ form.status }}
 
-            {% if form.skills.errors %}
+                    {% if form.status.errors %}
 
-                <small class="error">
+                        <small class="error">
 
-                    {{ form.skills.errors }}
+                            {{ form.status.errors }}
 
-                </small>
+                        </small>
 
-            {% endif %}
+                    {% endif %}
 
-        </div>
-
-
-        <div class="form-row">
-
-            <!-- Joining Date -->
-
-            <div class="form-group">
-
-                <label for="{{ form.joining_date.id_for_label }}">
-                    Joining Date
-                </label>
-
-                {{ form.joining_date }}
-
-                {% if form.joining_date.errors %}
-
-                    <small class="error">
-
-                        {{ form.joining_date.errors }}
-
-                    </small>
-
-                {% endif %}
-
-            </div>
-
-
-            <!-- Status -->
-
-            <div class="form-group">
-
-                <label for="{{ form.status.id_for_label }}">
-                    Status
-                </label>
-
-                {{ form.status }}
-
-                {% if form.status.errors %}
-
-                    <small class="error">
-
-                        {{ form.status.errors }}
-
-                    </small>
-
-                {% endif %}
+                </div>
 
             </div>
 
-        </div>
+
+            <!-- Buttons -->
+
+            <div class="form-actions">
+
+                <a href="{% url 'employee_list' %}"
+                class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
 
 
-        <!-- Buttons -->
+                <button type="submit"
+                        class="btn btn-primary">
 
-        <div class="form-actions">
+                    {% if employee %}
 
-            <a href="{% url 'employee_list' %}"
-               class="btn btn-secondary">
+                        Update Employee
 
-                Cancel
+                    {% else %}
 
-            </a>
+                        Add Employee
 
+                    {% endif %}
 
-            <button type="submit"
-                    class="btn btn-primary">
+                </button>
 
-                {% if employee %}
+            </div>
 
-                    Update Employee
+        </form>
 
-                {% else %}
-
-                    Add Employee
-
-                {% endif %}
-
-            </button>
-
-        </div>
-
-    </form>
-
+    </div>
 </div>
 
 {% endblock %}

@@ -1,130 +1,389 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ title }} | SD Tracker
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/teams/team_form.css' %}">
+
+{% endblock %}
+
 
 {% block content %}
 
-<div class="form-container">
-
-    <h1>{{ title }}</h1>
-
-    <form method="POST">
-
-        {% csrf_token %}
+<div class="team-form-page">
 
 
-        <!-- Team Name -->
+    <!-- =========================
+         BACK LINK
+    ========================== -->
 
-        <div class="form-group">
+    <a href="{% url 'team_list' %}" class="back-link">
 
-            <label>Team Name</label>
+        <i class="fa-solid fa-arrow-left"></i>
 
-            {{ form.name }}
+        Back to Teams
 
-            {% if form.name.errors %}
-                <div class="error">
-                    {{ form.name.errors }}
+    </a>
+
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                {{ title }}
+            </h1>
+
+            <p>
+                Update team information, manager and team members.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FORM CARD
+    ========================== -->
+
+    <div class="team-form-card">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <!-- =========================
+                 TEAM INFORMATION
+            ========================== -->
+
+            <section class="form-section">
+
+                <div class="section-heading">
+
+                    <div class="section-icon blue">
+
+                        <i class="fa-solid fa-users"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>Team Information</h2>
+
+                        <p>
+                            Enter the basic information for this team.
+                        </p>
+
+                    </div>
+
                 </div>
-            {% endif %}
-
-        </div>
 
 
-        <!-- Manager Dropdown -->
+                <div class="form-group">
 
-        <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">
 
-            <label>Assign Manager</label>
+                        Team Name
+                        <span class="required">*</span>
 
-            {{ form.manager }}
+                    </label>
 
-        </div>
+                    {{ form.name }}
 
+                    {% if form.name.errors %}
 
-        <!-- Members Dropdown -->
+                        <div class="form-error">
+                            {{ form.name.errors }}
+                        </div>
 
-        <div class="form-group">
+                    {% endif %}
 
-            <label>Add Team Members</label>
+                </div>
 
-            <div class="custom-dropdown">
-
-                <!-- Dropdown Button -->
-
-                <button
-                    type="button"
-                    class="dropdown-btn"
-                    onclick="toggleMembers()"
-                >
-
-                    <span id="selected-text">
-                        Select Team Members
-                    </span>
-
-                    <span>⌄</span>
-
-                </button>
+            </section>
 
 
-                <!-- Dropdown Content -->
+            <!-- =========================
+                 MANAGER
+            ========================== -->
+
+            <section class="form-section">
+
+                <div class="section-heading">
+
+                    <div class="section-icon purple">
+
+                        <i class="fa-solid fa-user-tie"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>Assign Manager</h2>
+
+                        <p>
+                            Select a manager responsible for this team.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="{{ form.manager.id_for_label }}">
+
+                        Manager
+
+                    </label>
+
+                    {{ form.manager }}
+
+                    {% if form.manager.errors %}
+
+                        <div class="form-error">
+                            {{ form.manager.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 TEAM MEMBERS
+            ========================== -->
+
+            <section class="form-section">
+
+                <div class="section-heading">
+
+                    <div class="section-icon green">
+
+                        <i class="fa-solid fa-user-group"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>Team Members</h2>
+
+                        <p>
+                            Select team members to add to this team.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Custom dropdown -->
+
+                <div class="form-group">
+
+                    <label>
+                        Members
+                    </label>
+
+
+                    <div class="custom-dropdown">
+
+
+                        <!-- Dropdown button -->
+
+                        <button
+                            type="button"
+                            class="dropdown-btn"
+                            id="membersDropdownBtn"
+                        >
+
+                            <span id="selected-text">
+
+                                Select team members...
+
+                            </span>
+
+                            <i class="fa-solid fa-chevron-down"></i>
+
+                        </button>
+
+
+                        <!-- Dropdown content -->
+
+                        <div
+                            class="dropdown-content"
+                            id="members-dropdown"
+                        >
+
+                            {% for checkbox in form.members %}
+
+                                <label
+                                    class="member-option"
+                                    for="{{ checkbox.id_for_label }}"
+                                >
+
+                                    {{ checkbox.tag }}
+
+
+                                    <div class="member-info">
+
+                                        <div class="member-avatar">
+
+                                            {{ checkbox.choice_label|slice:":1"|upper }}
+
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                {{ checkbox.choice_label }}
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <span class="custom-check">
+
+                                        <i class="fa-solid fa-check"></i>
+
+                                    </span>
+
+                                </label>
+
+                            {% empty %}
+
+                                <div class="no-members">
+
+                                    No employees available.
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Selected members -->
 
                 <div
-                    class="dropdown-content"
-                    id="members-dropdown"
+                    class="selected-members"
+                    id="selected-members"
                 >
 
                     {% for checkbox in form.members %}
 
-                    <div class="member-option">
+                        {% if checkbox.data.selected %}
 
-                        {{ checkbox.tag }}
+                            <div class="selected-member">
 
-                        <label for="{{ checkbox.id_for_label }}">
-                            {{ checkbox.choice_label }}
-                        </label>
+                                <div class="member-avatar">
 
-                    </div>
+                                    {{ checkbox.choice_label|slice:":1"|upper }}
+
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        {{ checkbox.choice_label }}
+                                    </strong>
+
+                                </div>
+
+                                <i class="fa-solid fa-check"></i>
+
+                            </div>
+
+                        {% endif %}
 
                     {% endfor %}
 
                 </div>
 
+            </section>
+
+
+            <!-- =========================
+                 FORM ERRORS
+            ========================== -->
+
+            {% if form.non_field_errors %}
+
+                <div class="form-error form-error-main">
+
+                    {{ form.non_field_errors }}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =========================
+                 ACTIONS
+            ========================== -->
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    {% if title == "Edit Team" %}
+                        Save Team
+                    {% else %}
+                        Create Team
+                    {% endif %}
+
+                </button>
+
+
+                <a
+                    href="{% url 'team_list' %}"
+                    class="btn btn-secondary"
+                >
+
+                    Cancel
+
+                </a>
+
             </div>
 
-        </div>
 
+        </form>
 
-        <!-- Buttons -->
-
-        <button
-            type="submit"
-            class="btn btn-primary"
-        >
-            Save Team
-        </button>
-
-
-        <a
-            href="{% url 'team_list' %}"
-            class="btn btn-secondary"
-        >
-            Cancel
-        </a>
-
-    </form>
+    </div>
 
 </div>
 
 
-<script>
+{% block extra_js %}
 
-function toggleMembers() {
+<script src="{% static 'js/team_form.js' %}"></script>
 
-    const dropdown =
-        document.getElementById("members-dropdown");
-
-    dropdown.classList.toggle("show");
-
-}
-
-</script>
+{% endblock %}
 
 {% endblock %}
