@@ -12,10 +12,51 @@ html {
     scroll-behavior: smooth;
 }
 
+/* =========================================================
+   THEME VARIABLES
+========================================================= */
+
+:root {
+    --bg-main: #f7f8fc;
+    --bg-card: #ffffff;
+    --bg-navbar: #ffffff;
+    --bg-sidebar: #ffffff;
+
+    --text-main: #172033;
+    --text-heading: #101828;
+    --text-muted: #667085;
+
+    --border-color: #e7e9f0;
+    --input-bg: #ffffff;
+
+    --hover-bg: #f4f7fc;
+}
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+html.dark-theme {
+    --bg-main: #111827;
+    --bg-card: #1f2937;
+    --bg-navbar: #172033;
+    --bg-sidebar: #172033;
+
+    --text-main: #e5e7eb;
+    --text-heading: #f9fafb;
+    --text-muted: #9ca3af;
+
+    --border-color: #374151;
+    --input-bg: #1f2937;
+
+    --hover-bg: #273449;
+}
+
 body {
     font-family: "Segoe UI", Arial, sans-serif;
-    background: #f7f8fc;
-    color: #172033;
+    background: var(--bg-main);
+    color: var(--text-main);
     min-height: 100vh;
 }
 
@@ -1798,4 +1839,191 @@ img {
 
         gap: 5px;
     }
+}
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+html.dark-theme .top-navbar {
+    background: var(--bg-navbar);
+    border-color: var(--border-color);
+}
+
+html.dark-theme .sidebar {
+    background: var(--bg-sidebar);
+    border-color: var(--border-color);
+}
+
+html.dark-theme .main-content {
+    background: var(--bg-main);
+}
+
+html.dark-theme .footer {
+    background: var(--bg-main);
+    color: var(--text-muted);
+}
+
+
+/* Text */
+
+html.dark-theme .logo-text h2,
+html.dark-theme .page-header h1,
+html.dark-theme .dashboard-title h1,
+html.dark-theme .dashboard-card-header h2,
+html.dark-theme .stat-content h3 {
+    color: var(--text-heading);
+}
+
+html.dark-theme .logo-text span,
+html.dark-theme .page-header p,
+html.dark-theme .dashboard-title p,
+html.dark-theme .stat-content p {
+    color: var(--text-muted);
+}
+
+
+/* Cards */
+
+html.dark-theme .stat-card,
+html.dark-theme .dashboard-card,
+html.dark-theme .task-table-card,
+html.dark-theme .ai-insights,
+html.dark-theme .form-card {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+
+/* Sidebar */
+
+html.dark-theme .sidebar-link {
+    color: #d1d5db;
+}
+
+html.dark-theme .sidebar-link i {
+    color: #9ca3af;
+}
+
+html.dark-theme .sidebar-link:hover {
+    background: var(--hover-bg);
+}
+
+html.dark-theme .sidebar-link.active {
+    background: #1e40af;
+    color: #ffffff;
+}
+
+html.dark-theme .sidebar-link.active i {
+    color: #ffffff;
+}
+
+
+/* Search */
+
+html.dark-theme .navbar-search {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+html.dark-theme .navbar-search input {
+    background: transparent;
+    color: #f9fafb;
+}
+
+html.dark-theme .navbar-search input::placeholder {
+    color: #9ca3af;
+}
+
+
+/* Icons */
+
+html.dark-theme .notification-icon,
+html.dark-theme .theme-button {
+    color: #e5e7eb;
+}
+
+
+/* User */
+
+html.dark-theme .user-details strong {
+    color: #f9fafb;
+}
+
+html.dark-theme .user-details span {
+    color: #9ca3af;
+}
+
+html.dark-theme .user-arrow {
+    color: #9ca3af;
+}
+
+
+/* Buttons */
+
+html.dark-theme .btn-secondary {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+    color: #e5e7eb;
+}
+
+
+/* Forms */
+
+html.dark-theme .form-group label {
+    color: #d1d5db;
+}
+
+html.dark-theme .form-group input,
+html.dark-theme .form-group select,
+html.dark-theme .form-group textarea {
+    background: var(--input-bg);
+    color: #f9fafb;
+    border-color: var(--border-color);
+}
+
+
+/* Tables */
+
+html.dark-theme .task-table th {
+    background: #273449;
+    color: #d1d5db;
+}
+
+html.dark-theme .task-table td {
+    color: #d1d5db;
+    border-color: var(--border-color);
+}
+
+
+/* Profile popup */
+
+html.dark-theme .user-profile-popup {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+html.dark-theme .popup-user-info h3 {
+    color: #f9fafb;
+}
+
+html.dark-theme .popup-user-info p,
+html.dark-theme .popup-detail-row span {
+    color: #9ca3af;
+}
+
+html.dark-theme .popup-detail-row strong {
+    color: #e5e7eb;
+}
+
+html.dark-theme .popup-divider {
+    background: #374151;
+}
+
+html.dark-theme .popup-menu-links a {
+    color: #d1d5db;
+}
+
+html.dark-theme .popup-menu-links a:hover {
+    background: #273449;
 }

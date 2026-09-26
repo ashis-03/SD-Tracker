@@ -1,3 +1,4 @@
+// user detail pop-up
 function toggleUserMenu() {
 
     const userMenu = document.getElementById("userMenu");
@@ -41,5 +42,47 @@ document.addEventListener("keydown", function(event) {
         }
 
     }
+
+});
+
+// theme control dark-light 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const themeToggle = document.getElementById("themeToggle");
+
+    if (!themeToggle) return;
+
+    const icon = themeToggle.querySelector("i");
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+        document.documentElement.classList.add("dark-theme");
+
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+    }
+
+    themeToggle.addEventListener("click", function () {
+
+        document.documentElement.classList.toggle("dark-theme");
+
+        const isDark =
+            document.documentElement.classList.contains("dark-theme");
+
+        localStorage.setItem(
+            "theme",
+            isDark ? "dark" : "light"
+        );
+
+        if (isDark) {
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+        } else {
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+        }
+    });
 
 });
