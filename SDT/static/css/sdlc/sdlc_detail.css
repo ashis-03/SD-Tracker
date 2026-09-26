@@ -1,0 +1,1419 @@
+/* =========================================================
+   SDLC DETAIL PAGE
+========================================================= */
+
+.sdlc-detail-page {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 22px 40px;
+    color: #17233c;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BREADCRUMB
+========================================================= */
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 48px;
+
+    font-size: 14px;
+    color: #64748b;
+}
+
+.breadcrumb a {
+    color: #1769ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb-arrow {
+    color: #94a3b8;
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   PROJECT HEADER
+========================================================= */
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 25px;
+
+    padding: 8px 0 20px;
+}
+
+.project-header-left {
+    min-width: 0;
+}
+
+.project-title-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.project-title-row h1 {
+    margin: 0;
+
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 700;
+
+    color: #17233c;
+}
+
+.project-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.project-status.active {
+    color: #087443;
+    background: #e2f7eb;
+}
+
+.project-status.planning {
+    color: #1769ff;
+    background: #e7f0ff;
+}
+
+.project-status.on_hold {
+    color: #a66a00;
+    background: #fff3c7;
+}
+
+.project-status.completed {
+    color: #087443;
+    background: #dff7eb;
+}
+
+.project-status.cancelled {
+    color: #c62828;
+    background: #ffe8e8;
+}
+
+.project-description {
+    margin: 5px 0 13px;
+
+    color: #5d6d87;
+    font-size: 16px;
+}
+
+.project-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 22px;
+
+    color: #53647e;
+    font-size: 14px;
+}
+
+.meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.meta-icon {
+    font-size: 16px;
+}
+
+.project-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+.edit-project-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 40px;
+    padding: 0 17px;
+
+    border-radius: 7px;
+
+    background: #1769ff;
+    color: white;
+
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.edit-project-btn:hover {
+    background: #0759e8;
+}
+
+.more-btn {
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid #dbe3ef;
+    border-radius: 7px;
+
+    background: white;
+    color: #52647e;
+
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.more-btn:hover {
+    background: #f6f9fd;
+}
+
+
+/* =========================================================
+   DETAIL TABS
+========================================================= */
+
+.detail-tabs {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+
+    border-bottom: 1px solid #dfe6ef;
+
+    margin-bottom: 22px;
+}
+
+.detail-tab {
+    position: relative;
+
+    padding: 13px 2px 12px;
+
+    color: #52627b;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.detail-tab:hover {
+    color: #1769ff;
+}
+
+.detail-tab.active {
+    color: #1769ff;
+    font-weight: 700;
+}
+
+.detail-tab.active::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+
+    height: 3px;
+
+    border-radius: 3px 3px 0 0;
+
+    background: #1769ff;
+}
+
+
+/* =========================================================
+   PHASE CARDS
+========================================================= */
+
+.phase-cards {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+
+    width: 100%;
+    margin-bottom: 22px;
+}
+
+.phase-card {
+    flex: 1;
+    min-width: 0;
+
+    padding: 14px 16px;
+
+    border: 1px solid #dbe4ef;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    transition: 0.2s ease;
+}
+
+.phase-card.completed {
+    border-color: #bdebd2;
+    background: #f7fffb;
+}
+
+.phase-card.current {
+    border-color: #1769ff;
+    background: #f7faff;
+    box-shadow: 0 0 0 1px rgba(23, 105, 255, 0.08);
+}
+
+.phase-card.on-hold {
+    border-color: #f0d477;
+    background: #fffdf5;
+}
+
+.phase-card:hover {
+    transform: translateY(-1px);
+}
+
+.phase-card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.phase-status-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #e8edf4;
+    color: #53647c;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.phase-card.completed .phase-status-icon {
+    background: #28b66f;
+    color: white;
+}
+
+.phase-card.current .phase-status-icon {
+    background: #2188ed;
+    color: white;
+}
+
+.phase-card.on-hold .phase-status-icon {
+    background: #f4c414;
+    color: #5c4900;
+}
+
+.phase-card-info {
+    min-width: 0;
+}
+
+.phase-card-info h3 {
+    margin: 0 0 2px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #23324c;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.phase-card.completed .phase-card-info h3 {
+    color: #078448;
+}
+
+.phase-card.current .phase-card-info h3 {
+    color: #1769ff;
+}
+
+.phase-card-info span {
+    font-size: 12px;
+    color: #687a94;
+}
+
+.phase-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-top: 12px;
+}
+
+.phase-progress-track {
+    flex: 1;
+
+    height: 6px;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: #e5ebf2;
+}
+
+.phase-progress-fill {
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: #27b879;
+}
+
+.phase-card.current .phase-progress-fill {
+    background: #2388ed;
+}
+
+.phase-card.on-hold .phase-progress-fill {
+    background: #f4c414;
+}
+
+.phase-progress-value {
+    min-width: 30px;
+
+    text-align: right;
+
+    font-size: 11px;
+    font-weight: 600;
+    color: #52647d;
+}
+
+.phase-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 14px;
+
+    color: #52708f;
+    font-size: 25px;
+}
+
+.no-phase-message {
+    width: 100%;
+
+    padding: 30px;
+
+    border: 1px solid #dce4ef;
+    border-radius: 8px;
+
+    background: white;
+
+    text-align: center;
+    color: #64748b;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.sdlc-main-layout {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 275px;
+
+    gap: 16px;
+
+    align-items: start;
+}
+
+.sdlc-main-column {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   PHASE OVERVIEW
+========================================================= */
+
+.phase-overview-card {
+    padding: 18px 20px;
+
+    border: 1px solid #dce4ef;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    box-shadow: 0 1px 2px rgba(30, 50, 80, 0.02);
+
+    margin-bottom: 0;
+}
+
+.phase-overview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 25px;
+}
+
+.phase-overview-title {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    min-width: 0;
+}
+
+.large-phase-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #2188ed;
+    color: white;
+
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.phase-title-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.phase-title-line h2 {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    color: #17233c;
+}
+
+.phase-overview-title p {
+    margin: 5px 0 0;
+
+    color: #62738d;
+    font-size: 14px;
+}
+
+.phase-status-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 11px;
+
+    border-radius: 15px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.phase-status-badge.in-progress {
+    background: #e4f0ff;
+    color: #1769ff;
+}
+
+.phase-status-badge.completed {
+    background: #e2f7eb;
+    color: #087443;
+}
+
+.phase-status-badge.on_hold {
+    background: #fff3ca;
+    color: #986800;
+}
+
+.phase-status-badge.not_started {
+    background: #edf1f6;
+    color: #607087;
+}
+
+.phase-dates {
+    display: flex;
+    gap: 35px;
+    flex-shrink: 0;
+}
+
+.phase-date {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.date-label {
+    font-size: 12px;
+    color: #63738a;
+}
+
+.phase-date strong {
+    font-size: 13px;
+    font-weight: 500;
+    color: #334560;
+}
+
+.phase-overall-progress {
+    margin-top: 20px;
+}
+
+.progress-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 7px;
+
+    font-size: 13px;
+    color: #344762;
+}
+
+.progress-heading strong {
+    font-size: 14px;
+    color: #31435e;
+}
+
+.large-progress-track {
+    width: 100%;
+    height: 10px;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: #e5eaf0;
+}
+
+.large-progress-fill {
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: #2188ed;
+
+    transition: width 0.3s ease;
+}
+
+.progress-task-count {
+    margin-top: 6px;
+
+    text-align: right;
+
+    font-size: 12px;
+    color: #61738d;
+}
+
+
+/* =========================================================
+   PHASE TABS
+========================================================= */
+
+.phase-tabs {
+    display: flex;
+    align-items: center;
+
+    min-height: 51px;
+
+    margin-top: 0;
+
+    padding: 0 12px;
+
+    border: 1px solid #dce4ef;
+    border-top: none;
+
+    background: #ffffff;
+}
+
+.phase-tab {
+    position: relative;
+
+    height: 51px;
+
+    padding: 0 15px;
+
+    border: none;
+    background: transparent;
+
+    color: #53647e;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.phase-tab span {
+    margin-left: 4px;
+
+    color: #7889a0;
+}
+
+.phase-tab.active {
+    color: #1769ff;
+    font-weight: 700;
+}
+
+.phase-tab.active::after {
+    content: "";
+
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+
+    height: 2px;
+
+    background: #1769ff;
+}
+
+.add-task-btn {
+    margin-left: auto;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 34px;
+    padding: 0 16px;
+
+    border-radius: 6px;
+
+    background: #1769ff;
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.add-task-btn:hover {
+    background: #0759e8;
+}
+
+
+/* =========================================================
+   TASK TABLE
+========================================================= */
+
+.task-table-card {
+    overflow: hidden;
+
+    border: 1px solid #dce4ef;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+
+    background: white;
+}
+
+.task-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.task-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: auto;
+
+    font-size: 12px;
+}
+
+.task-table thead {
+    background: #f7f9fc;
+}
+
+.task-table th {
+    height: 43px;
+
+    padding: 0 9px;
+
+    border-bottom: 1px solid #dfe6ef;
+
+    text-align: left;
+
+    color: #42536d;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.task-table td {
+    height: 56px;
+
+    padding: 8px 9px;
+
+    border-bottom: 1px solid #edf1f5;
+
+    color: #40516b;
+
+    vertical-align: middle;
+}
+
+.task-table tbody tr:hover {
+    background: #fbfdff;
+}
+
+.checkbox-column {
+    width: 35px;
+    text-align: center !important;
+}
+
+.task-table input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+
+    accent-color: #1769ff;
+
+    cursor: pointer;
+}
+
+.task-name {
+    color: #233957;
+
+    text-decoration: none;
+
+    font-weight: 500;
+}
+
+.task-name:hover {
+    color: #1769ff;
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   TASK STATUS
+========================================================= */
+
+.task-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 13px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.task-status.todo {
+    background: #edf1f7;
+    color: #586a83;
+}
+
+.task-status.in_progress {
+    background: #e2efff;
+    color: #1769ff;
+}
+
+.task-status.in_review {
+    background: #fff0d7;
+    color: #a36500;
+}
+
+.task-status.completed {
+    background: #e2f7eb;
+    color: #087443;
+}
+
+.task-status.overdue {
+    background: #ffe5e5;
+    color: #d32f2f;
+}
+
+
+/* =========================================================
+   ASSIGNED USER
+========================================================= */
+
+.assigned-user {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    min-width: 120px;
+}
+
+.user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #e6efff;
+    color: #1769ff;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.assigned-user strong {
+    font-size: 11px;
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+.not-assigned {
+    color: #9aa7b8;
+    font-size: 11px;
+}
+
+.task-date {
+    white-space: nowrap;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   PRIORITY
+========================================================= */
+
+.priority-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 10px;
+
+    border-radius: 13px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.priority-badge.high {
+    background: #ffe5e5;
+    color: #d73535;
+}
+
+.priority-badge.medium {
+    background: #fff1c9;
+    color: #9a6a00;
+}
+
+.priority-badge.low {
+    background: #e3f7ec;
+    color: #087443;
+}
+
+
+/* =========================================================
+   TASK PROGRESS
+========================================================= */
+
+.task-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    min-width: 90px;
+}
+
+.task-progress-track {
+    width: 70px;
+    height: 7px;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: #e3e9ef;
+}
+
+.task-progress-fill {
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: #31b77a;
+}
+
+.task-progress span {
+    min-width: 28px;
+
+    font-size: 11px;
+    color: #566982;
+}
+
+
+/* =========================================================
+   TASK ACTION
+========================================================= */
+
+.task-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 5px;
+
+    color: #536680;
+
+    text-decoration: none;
+
+    font-size: 18px;
+}
+
+.task-action-btn:hover {
+    background: #edf4ff;
+    color: #1769ff;
+}
+
+.empty-task-row {
+    height: 100px !important;
+
+    text-align: center;
+
+    color: #7a899d !important;
+}
+
+
+/* =========================================================
+   RIGHT SIDEBAR
+========================================================= */
+
+.sdlc-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    min-width: 0;
+}
+
+.sidebar-card {
+    padding: 16px;
+
+    border: 1px solid #dce4ef;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    box-shadow: 0 1px 2px rgba(30, 50, 80, 0.02);
+}
+
+.sidebar-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 14px;
+}
+
+.sidebar-card-header h3 {
+    margin: 0;
+
+    flex: 1;
+
+    color: #1d2d46;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.sidebar-card-header a {
+    color: #1769ff;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.sidebar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 26px;
+    height: 26px;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.sidebar-icon.blue {
+    background: #e3efff;
+    color: #1769ff;
+}
+
+.sidebar-icon.purple {
+    background: #eee6ff;
+    color: #7b45d8;
+}
+
+.sidebar-icon.orange {
+    background: #fff0d9;
+    color: #d48617;
+}
+
+
+/* =========================================================
+   INFORMATION LIST
+========================================================= */
+
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.info-row {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 10px;
+
+    font-size: 12px;
+}
+
+.info-row span:first-child {
+    color: #65768e;
+}
+
+.info-row strong {
+    color: #33445f;
+
+    font-weight: 500;
+
+    text-align: right;
+}
+
+.small-status {
+    display: inline-flex;
+
+    padding: 4px 8px;
+
+    border-radius: 12px;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.small-status.in-progress {
+    color: #1769ff;
+    background: #e2efff;
+}
+
+
+/* =========================================================
+   TEAM MEMBERS
+========================================================= */
+
+.team-member-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.team-member {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.member-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #e6efff;
+    color: #1769ff;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.member-info {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.member-info strong {
+    color: #263852;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.member-info span {
+    margin-top: 2px;
+
+    color: #718198;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   DOCUMENTS
+========================================================= */
+
+.documents-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px 10px;
+
+    text-align: center;
+}
+
+.document-empty-icon {
+    font-size: 27px;
+
+    margin-bottom: 5px;
+
+    opacity: 0.65;
+}
+
+.documents-empty p {
+    margin: 0;
+
+    color: #7a899d;
+
+    font-size: 11px;
+}
+
+.sidebar-empty {
+    margin: 0;
+
+    text-align: center;
+
+    color: #8794a7;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1250px) {
+
+    .sdlc-main-layout {
+        grid-template-columns: minmax(0, 1fr) 245px;
+    }
+
+    .phase-card {
+        padding: 12px 10px;
+    }
+
+    .phase-card-info h3 {
+        font-size: 12px;
+    }
+
+    .phase-card-info span {
+        font-size: 10px;
+    }
+
+    .phase-status-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .project-meta {
+        gap: 14px;
+    }
+}
+
+
+@media (max-width: 1050px) {
+
+    .sdlc-main-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sdlc-sidebar {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .phase-cards {
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+
+    .phase-card {
+        min-width: 145px;
+    }
+
+    .phase-arrow {
+        flex-shrink: 0;
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .sdlc-detail-page {
+        padding: 0 14px 30px;
+    }
+
+    .project-header {
+        flex-direction: column;
+    }
+
+    .project-header-actions {
+        width: 100%;
+    }
+
+    .edit-project-btn {
+        flex: 1;
+    }
+
+    .detail-tabs {
+        gap: 18px;
+
+        overflow-x: auto;
+    }
+
+    .detail-tab {
+        white-space: nowrap;
+    }
+
+    .phase-overview-header {
+        flex-direction: column;
+    }
+
+    .phase-dates {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .sdlc-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .phase-tabs {
+        overflow-x: auto;
+    }
+
+    .phase-tab {
+        white-space: nowrap;
+    }
+
+    .add-task-btn {
+        flex-shrink: 0;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .project-title-row h1 {
+        font-size: 25px;
+    }
+
+    .project-description {
+        font-size: 13px;
+    }
+
+    .project-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .phase-cards {
+        gap: 7px;
+    }
+
+    .phase-card {
+        min-width: 160px;
+    }
+
+    .phase-overview-card {
+        padding: 15px;
+    }
+
+    .phase-title-line h2 {
+        font-size: 18px;
+    }
+
+    .phase-dates {
+        gap: 25px;
+    }
+
+    .phase-tabs {
+        padding: 0 5px;
+    }
+
+    .phase-tab {
+        padding: 0 10px;
+        font-size: 11px;
+    }
+
+    .add-task-btn {
+        padding: 0 11px;
+        font-size: 11px;
+    }
+
+    .breadcrumb {
+        font-size: 12px;
+    }
+}

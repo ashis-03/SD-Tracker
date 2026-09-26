@@ -115,11 +115,17 @@ def sdlc_detail(request, pk):
         "user"
     ).distinct()
 
+    active_phase = phases.filter(
+        status="in_progress"
+    ).first()
+
     context = {
         "project": project,
         "phases": phases,
         "project_members": project_members,
 
+        "active_phase": active_phase,
+        
         "total_phases": phases.count(),
 
         "completed_phases": phases.filter(

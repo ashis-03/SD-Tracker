@@ -1,0 +1,942 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ project.name }} | SDLC Details
+{% endblock %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/sdlc/sdlc_detail.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="sdlc-detail-page">
+
+    <!-- =====================================================
+         BREADCRUMB
+    ====================================================== -->
+
+    <div class="breadcrumb">
+        <a href="{% url 'sdlc_list' %}">SDLC</a>
+
+        <span class="breadcrumb-arrow">›</span>
+
+        <span>{{ project.name }}</span>
+
+        {% for phase in phases %}
+            {% if phase.status == "in_progress" %}
+                <span class="breadcrumb-arrow">›</span>
+                <span>{{ phase.get_phase_name_display }}</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <!-- =====================================================
+         PROJECT HEADER
+    ====================================================== -->
+
+    <div class="project-header">
+
+        <div class="project-header-left">
+
+            <div class="project-title-row">
+
+                <h1>{{ project.name }}</h1>
+
+                <span class="project-status {{ project.status }}">
+                    {% if project.status == "active" %}
+                        In Progress
+                    {% elif project.status == "planning" %}
+                        Planning
+                    {% elif project.status == "on_hold" %}
+                        On Hold
+                    {% elif project.status == "completed" %}
+                        Completed
+                    {% elif project.status == "cancelled" %}
+                        Cancelled
+                    {% endif %}
+                </span>
+
+            </div>
+
+            <p class="project-description">
+                {{ project.description|default:"Software Development Life Cycle project" }}
+            </p>
+
+
+            <div class="project-meta">
+
+                <span class="meta-item">
+                    <span class="meta-icon">👥</span>
+
+                    {% for team in project.teams.all %}
+                        {{ team.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        No Team
+                    {% endfor %}
+                </span>
+
+
+                <span class="meta-item">
+                    <span class="meta-icon">📅</span>
+                    {{ project.start_date|date:"M d, Y" }}
+                    -
+                    {{ project.deadline|date:"M d, Y" }}
+                </span>
+
+
+                <span class="meta-item">
+                    <span class="meta-icon">👤</span>
+
+                    Project Manager:
+                    {% if project.manager %}
+                        {{ project.manager.user.get_full_name|default:project.manager.user.username }}
+                    {% else %}
+                        Not Assigned
+                    {% endif %}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="project-header-actions">
+
+            {% if request.user.profile.role == "admin" or request.user.profile.role == "manager" %}
+
+                <a
+                    href="{% url 'project_edit' project.pk %}"
+                    class="edit-project-btn"
+                >
+                    ✎ Edit Project
+                </a>
+
+            {% endif %}
+
+            <button class="more-btn" type="button">
+                ⋮
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TABS
+    ====================================================== -->
+
+    <div class="detail-tabs">
+
+        <a href="#" class="detail-tab">
+            Overview
+        </a>
+
+        <a href="#" class="detail-tab active">
+            SDLC Details
+        </a>
+
+        <a href="#" class="detail-tab">
+            Tasks
+        </a>
+
+        <a href="#" class="detail-tab">
+            Team
+        </a>
+
+        <a href="#" class="detail-tab">
+            Files
+        </a>
+
+        <a href="#" class="detail-tab">
+            Activity
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         SDLC PHASE CARDS
+    ====================================================== -->
+
+    <div class="phase-cards">
+
+        {% for phase in phases %}
+
+            <div class="
+                phase-card
+                {% if phase.status == 'completed' %}
+                    completed
+                {% elif phase.status == 'in_progress' %}
+                    current
+                {% elif phase.status == 'on_hold' %}
+                    on-hold
+                {% else %}
+                    not-started
+                {% endif %}
+            ">
+
+                <div class="phase-card-top">
+
+                    <div class="phase-status-icon">
+
+                        {% if phase.status == "completed" %}
+                            ✓
+                        {% elif phase.status == "in_progress" %}
+                            ↻
+                        {% elif phase.status == "on_hold" %}
+                            ||
+                        {% else %}
+                            ›
+                        {% endif %}
+
+                    </div>
+
+                    <div class="phase-card-info">
+
+                        <h3>
+                            {{ phase.get_phase_name_display }}
+                        </h3>
+
+                        <span>
+                            {{ phase.tasks.count }} task{{ phase.tasks.count|pluralize }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="phase-progress-row">
+
+                    <div class="phase-progress-track">
+
+                        <div
+                            class="phase-progress-fill"
+                            style="width: {{ phase.progress }}%;"
+                        ></div>
+
+                    </div>
+
+                    <span class="phase-progress-value">
+                        {{ phase.progress }}%
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            {% if not forloop.last %}
+                <div class="phase-arrow">
+                    ›
+                </div>
+            {% endif %}
+
+        {% empty %}
+
+            <div class="no-phase-message">
+                No SDLC phases available.
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <div class="sdlc-main-layout">
+
+        <div class="sdlc-main-column">
+
+
+            <!-- =================================================
+                 ACTIVE PHASE INFORMATION
+            ================================================= -->
+
+            {% for phase in phases %}
+
+                {% if phase.status == "in_progress" %}
+
+                    <div class="phase-overview-card">
+
+                        <div class="phase-overview-header">
+
+                            <div class="phase-overview-title">
+
+                                <div class="large-phase-icon">
+                                    ↻
+                                </div>
+
+                                <div>
+
+                                    <div class="phase-title-line">
+
+                                        <h2>
+                                            {{ phase.get_phase_name_display }} Phase
+                                        </h2>
+
+                                        <span class="phase-status-badge in-progress">
+                                            In Progress
+                                        </span>
+
+                                    </div>
+
+                                    <p>
+                                        {{ phase.description|default:"Work for this SDLC phase is currently in progress." }}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="phase-dates">
+
+                                <div class="phase-date">
+
+                                    <span class="date-label">
+                                        Start Date
+                                    </span>
+
+                                    <strong>
+                                        {% if phase.start_date %}
+                                            {{ phase.start_date|date:"M d, Y" }}
+                                        {% else %}
+                                            Not Set
+                                        {% endif %}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="phase-date">
+
+                                    <span class="date-label">
+                                        End Date
+                                    </span>
+
+                                    <strong>
+                                        {% if phase.deadline %}
+                                            {{ phase.deadline|date:"M d, Y" }}
+                                        {% else %}
+                                            Not Set
+                                        {% endif %}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHASE PROGRESS -->
+
+                        <div class="phase-overall-progress">
+
+                            <div class="progress-heading">
+
+                                <span>
+                                    Overall Progress
+                                    ({{ phase.get_phase_name_display }})
+                                </span>
+
+                                <strong>
+                                    {{ phase.progress }}%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="large-progress-track">
+
+                                <div
+                                    class="large-progress-fill"
+                                    style="width: {{ phase.progress }}%;"
+                                ></div>
+
+                            </div>
+
+                            <div class="progress-task-count">
+
+                                {% with completed=phase.tasks.all %}
+                                    {{ phase.tasks.count }} task{{ phase.tasks.count|pluralize }}
+                                {% endwith %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         PHASE TABS
+                    ========================================== -->
+
+                    <div class="phase-tabs">
+
+                        <button class="phase-tab active">
+                            Tasks
+                            <span>
+                                {{ phase.tasks.count }}
+                            </span>
+                        </button>
+
+                        <button class="phase-tab">
+                            Team Members
+                            <span>
+                                {{ project_members.count }}
+                            </span>
+                        </button>
+
+                        <button class="phase-tab">
+                            Files
+                            <span>0</span>
+                        </button>
+
+                        <button class="phase-tab">
+                            Discussions
+                            <span>0</span>
+                        </button>
+
+                        <button class="phase-tab">
+                            History
+                        </button>
+
+
+                        {% if request.user.profile.role == "admin" or request.user.profile.role == "manager" %}
+
+                            <a
+                                href="{% url 'task_create' %}"
+                                class="add-task-btn"
+                            >
+                                + Add Task
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- =========================================
+                         TASK TABLE
+                    ========================================== -->
+
+                    <div class="task-table-card">
+
+                        <div class="task-table-wrapper">
+
+                            <table class="task-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th class="checkbox-column">
+                                            <input type="checkbox">
+                                        </th>
+
+                                        <th>Task Name</th>
+
+                                        <th>Status</th>
+
+                                        <th>Assigned To</th>
+
+                                        <th>Due Date</th>
+
+                                        <th>Priority</th>
+
+                                        <th>Progress</th>
+
+                                        <th>Actions</th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    {% for task in phase.tasks.all %}
+
+                                        <tr>
+
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+
+
+                                            <!-- TASK -->
+
+                                            <td>
+
+                                                <a
+                                                    href="{% url 'task_detail' task.pk %}"
+                                                    class="task-name"
+                                                >
+                                                    {{ task.title }}
+                                                </a>
+
+                                            </td>
+
+
+                                            <!-- STATUS -->
+
+                                            <td>
+
+                                                <span class="
+                                                    task-status
+                                                    {{ task.status }}
+                                                ">
+
+                                                    {% if task.status == "todo" %}
+                                                        To Do
+
+                                                    {% elif task.status == "in_progress" %}
+                                                        In Progress
+
+                                                    {% elif task.status == "in_review" %}
+                                                        In Review
+
+                                                    {% elif task.status == "completed" %}
+                                                        Completed
+
+                                                    {% elif task.status == "overdue" %}
+                                                        Overdue
+                                                    {% endif %}
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- ASSIGNED TO -->
+
+                                            <td>
+
+                                                {% if task.assigned_to %}
+
+                                                    <div class="assigned-user">
+
+                                                        <div class="user-avatar">
+
+                                                            {{ task.assigned_to.user.first_name|first|upper }}
+
+                                                        </div>
+
+                                                        <div>
+
+                                                            <strong>
+                                                                {{ task.assigned_to.user.get_full_name|default:task.assigned_to.user.username }}
+                                                            </strong>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                {% else %}
+
+                                                    <span class="not-assigned">
+                                                        Not Assigned
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </td>
+
+
+                                            <!-- DEADLINE -->
+
+                                            <td>
+
+                                                <span class="task-date">
+                                                    {{ task.deadline|date:"M d, Y" }}
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- PRIORITY -->
+
+                                            <td>
+
+                                                <span class="
+                                                    priority-badge
+                                                    {{ task.priority }}
+                                                ">
+
+                                                    {{ task.get_priority_display }}
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- PROGRESS -->
+
+                                            <td>
+
+                                                <div class="task-progress">
+
+                                                    <div class="task-progress-track">
+
+                                                        <div
+                                                            class="task-progress-fill"
+                                                            style="width: {{ task.progress }}%;"
+                                                        ></div>
+
+                                                    </div>
+
+                                                    <span>
+                                                        {{ task.progress }}%
+                                                    </span>
+
+                                                </div>
+
+                                            </td>
+
+
+                                            <!-- ACTIONS -->
+
+                                            <td>
+
+                                                <a
+                                                    href="{% url 'task_detail' task.pk %}"
+                                                    class="task-action-btn"
+                                                    title="View Task"
+                                                >
+                                                    ⋮
+                                                </a>
+
+                                            </td>
+
+                                        </tr>
+
+                                    {% empty %}
+
+                                        <tr>
+
+                                            <td
+                                                colspan="8"
+                                                class="empty-task-row"
+                                            >
+                                                No tasks have been created
+                                                for this phase yet.
+                                            </td>
+
+                                        </tr>
+
+                                    {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            <!-- =================================================
+                 FALLBACK WHEN NO PHASE IS IN PROGRESS
+            ================================================== -->
+
+            {% if phases %}
+
+                {% for phase in phases %}
+
+                    {% if forloop.first and phase.status != "in_progress" %}
+
+                        <div class="phase-overview-card">
+
+                            <div class="phase-overview-header">
+
+                                <div class="phase-overview-title">
+
+                                    <div class="large-phase-icon">
+                                        ›
+                                    </div>
+
+                                    <div>
+
+                                        <div class="phase-title-line">
+
+                                            <h2>
+                                                {{ phase.get_phase_name_display }} Phase
+                                            </h2>
+
+                                            <span class="
+                                                phase-status-badge
+                                                {{ phase.status }}
+                                            ">
+                                                {{ phase.get_status_display }}
+                                            </span>
+
+                                        </div>
+
+                                        <p>
+                                            {{ phase.description|default:"No description available for this phase." }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="phase-overall-progress">
+
+                                <div class="progress-heading">
+
+                                    <span>
+                                        Overall Progress
+                                    </span>
+
+                                    <strong>
+                                        {{ phase.progress }}%
+                                    </strong>
+
+                                </div>
+
+                                <div class="large-progress-track">
+
+                                    <div
+                                        class="large-progress-fill"
+                                        style="width: {{ phase.progress }}%;"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =====================================================
+             RIGHT SIDEBAR
+        ====================================================== -->
+
+        <aside class="sdlc-sidebar">
+
+
+            <!-- =================================================
+                 PHASE INFORMATION
+            ================================================== -->
+
+            <div class="sidebar-card">
+
+                <div class="sidebar-card-header">
+
+                    <div class="sidebar-icon blue">
+                        ↻
+                    </div>
+
+                    <h3>
+                        Phase Information
+                    </h3>
+
+                </div>
+
+
+                {% for phase in phases %}
+
+                    {% if phase.status == "in_progress" %}
+
+                        <div class="info-list">
+
+                            <div class="info-row">
+                                <span>Phase Name</span>
+                                <strong>
+                                    {{ phase.get_phase_name_display }}
+                                </strong>
+                            </div>
+
+                            <div class="info-row">
+                                <span>Status</span>
+
+                                <strong>
+                                    <span class="small-status in-progress">
+                                        {{ phase.get_status_display }}
+                                    </span>
+                                </strong>
+                            </div>
+
+                            <div class="info-row">
+                                <span>Start Date</span>
+
+                                <strong>
+                                    {% if phase.start_date %}
+                                        {{ phase.start_date|date:"M d, Y" }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </strong>
+                            </div>
+
+                            <div class="info-row">
+                                <span>End Date</span>
+
+                                <strong>
+                                    {% if phase.deadline %}
+                                        {{ phase.deadline|date:"M d, Y" }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </strong>
+                            </div>
+
+                            <div class="info-row">
+                                <span>Tasks</span>
+
+                                <strong>
+                                    {{ phase.tasks.count }}
+                                </strong>
+                            </div>
+
+                            <div class="info-row">
+                                <span>Progress</span>
+
+                                <strong>
+                                    {{ phase.progress }}%
+                                </strong>
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- =================================================
+                 PROJECT TEAM
+            ================================================== -->
+
+            <div class="sidebar-card">
+
+                <div class="sidebar-card-header">
+
+                    <div class="sidebar-icon purple">
+                        👥
+                    </div>
+
+                    <h3>
+                        Team Members
+                        ({{ project_members.count }})
+                    </h3>
+
+                    <a href="#">
+                        View All
+                    </a>
+
+                </div>
+
+
+                <div class="team-member-list">
+
+                    {% for employee in project_members|slice:":5" %}
+
+                        <div class="team-member">
+
+                            <div class="member-avatar">
+
+                                {{ employee.user.first_name|first|upper }}
+
+                            </div>
+
+                            <div class="member-info">
+
+                                <strong>
+                                    {{ employee.user.get_full_name|default:employee.user.username }}
+                                </strong>
+
+                                <span>
+                                    {{ employee.designation }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    {% empty %}
+
+                        <p class="sidebar-empty">
+                            No team members assigned.
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROJECT FILES
+            ================================================== -->
+
+            <div class="sidebar-card">
+
+                <div class="sidebar-card-header">
+
+                    <div class="sidebar-icon orange">
+                        📄
+                    </div>
+
+                    <h3>
+                        Related Documents
+                    </h3>
+
+                    <a href="#">
+                        View All
+                    </a>
+
+                </div>
+
+
+                <div class="documents-empty">
+
+                    <div class="document-empty-icon">
+                        📁
+                    </div>
+
+                    <p>
+                        No documents uploaded yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}
