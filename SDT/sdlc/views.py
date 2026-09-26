@@ -119,13 +119,21 @@ def sdlc_detail(request, pk):
         status="in_progress"
     ).first()
 
+    if not active_phase:
+        active_phase = phases.exclude(
+            status="completed"
+        ).first()
+
     context = {
         "project": project,
         "phases": phases,
         "project_members": project_members,
 
         "active_phase": active_phase,
-        
+
+        # Send status choices to template
+        "status_choices": SDLCPhase.STATUS_CHOICES,
+
         "total_phases": phases.count(),
 
         "completed_phases": phases.filter(
