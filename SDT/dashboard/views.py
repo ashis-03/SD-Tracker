@@ -259,14 +259,21 @@ def dashboard(request):
 
         employee = user.employee
 
-        # Manager's projects
+        # -------------------------------------------------
+        # MANAGER'S PROJECTS
+        # -------------------------------------------------
+
         projects = Project.objects.filter(
             manager=employee
         ).select_related(
             "manager__user"
         ).distinct()
 
-        # Tasks belonging to manager's projects
+
+        # -------------------------------------------------
+        # TASKS BELONGING TO MANAGER'S PROJECTS
+        # -------------------------------------------------
+
         tasks = Task.objects.filter(
             project__in=projects
         ).select_related(
@@ -275,28 +282,46 @@ def dashboard(request):
             "phase",
         )
 
-        # Phases belonging to manager's projects
+
+        # -------------------------------------------------
+        # PHASES BELONGING TO MANAGER'S PROJECTS
+        # -------------------------------------------------
+
         phases = SDLCPhase.objects.filter(
             project__in=projects
         )
 
-        # Teams connected to manager's projects
+
+        # -------------------------------------------------
+        # TEAMS CONNECTED TO MANAGER'S PROJECTS
+        # -------------------------------------------------
+
         teams = Team.objects.filter(
             projects__in=projects
         ).distinct()
 
-        # Team members
+
+        # -------------------------------------------------
+        # TEAM MEMBERS
+        # -------------------------------------------------
+
         team_members = Employee.objects.filter(
             teams__in=teams
         ).select_related(
-            "user"
+            "user",
+            "user__profile"
         ).distinct()
+
+        # Number of team members
+        total_team_members = team_members.count()
+
 
         today = timezone.now().date()
 
-        # -------------------------------------------------
+
+        # =================================================
         # PROJECT STATISTICS
-        # -------------------------------------------------
+        # =================================================
 
         total_projects = projects.count()
 
@@ -316,9 +341,10 @@ def dashboard(request):
             status="on_hold"
         ).count()
 
-        # -------------------------------------------------
+
+        # =================================================
         # TASK STATISTICS
-        # -------------------------------------------------
+        # =================================================
 
         total_tasks = tasks.count()
 
@@ -344,9 +370,10 @@ def dashboard(request):
             status="completed"
         ).count()
 
-        # -------------------------------------------------
-        # SDLC
-        # -------------------------------------------------
+
+        # =================================================
+        # SDLC STATISTICS
+        # =================================================
 
         total_phases = phases.count()
 
@@ -362,25 +389,37 @@ def dashboard(request):
             status="on_hold"
         ).count()
 
-        # -------------------------------------------------
+
+        # =================================================
         # CONTEXT
-        # -------------------------------------------------
+        # =================================================
 
         context = {
 
             "dashboard_role": "manager",
 
-            # User
+            # -------------------------------------------------
+            # USER
+            # -------------------------------------------------
+
             "current_employee": employee,
 
-            # Projects
+
+            # -------------------------------------------------
+            # PROJECTS
+            # -------------------------------------------------
+
             "total_projects": total_projects,
             "active_projects": active_projects,
             "completed_projects": completed_projects,
             "planning_projects": planning_projects,
             "on_hold_projects": on_hold_projects,
 
-            # Tasks
+
+            # -------------------------------------------------
+            # TASKS
+            # -------------------------------------------------
+
             "total_tasks": total_tasks,
             "todo_tasks": todo_tasks,
             "in_progress_tasks": in_progress_tasks,
@@ -388,33 +427,72 @@ def dashboard(request):
             "completed_tasks": completed_tasks,
             "overdue_tasks": overdue_tasks,
 
-            # Teams
-            "team_members": team_members.count(),
-            "total_team_members": team_members.count(),
+
+            # -------------------------------------------------
+            # TEAMS
+            # -------------------------------------------------
+
+            # IMPORTANT:
+            # Keep the queryset here because the template
+            # loops through team_members.
+
+            "team_members": team_members,
+
+            # Number used for the statistics card
+
+            "total_team_members": total_team_members,
+
             "teams": teams,
 
+
+            # -------------------------------------------------
             # SDLC
+            # -------------------------------------------------
+
             "total_phases": total_phases,
             "active_phases": active_phases,
             "completed_phases": completed_phases,
             "on_hold_phases": on_hold_phases,
 
-            # Lists
-            "project_progress": get_project_data(projects),
-            "recent_projects": projects.order_by("-id")[:5],
-            "recent_tasks": tasks.order_by("-created_at")[:5],
+
+            # -------------------------------------------------
+            # LISTS
+            # -------------------------------------------------
+
+            "project_progress": get_project_data(
+                projects
+            ),
+
+            "recent_projects": projects.order_by(
+                "-id"
+            )[:5],
+
+            "recent_tasks": tasks.order_by(
+                "-created_at"
+            )[:5],
+
             "upcoming_deadlines": get_upcoming_deadlines(
                 projects,
                 tasks
             ),
 
-            # Team members
+
+            # -------------------------------------------------
+            # RECENT TEAM MEMBERS
+            # -------------------------------------------------
+
             "recent_team_members": team_members[:5],
 
-            # Not implemented yet
+
+            # -------------------------------------------------
+            # NOT IMPLEMENTED YET
+            # -------------------------------------------------
+
             "recent_activities": [],
+
             "unread_notifications": 0,
         }
+
 
         return render(
             request,
