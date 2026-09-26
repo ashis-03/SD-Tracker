@@ -11,25 +11,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================================
-       ANIMATED DONUT FUNCTION
+       EASING
     ========================================================= */
 
-    function animateDonut(element, values, colors, duration = 1200) {
+    function easeOutCubic(progress) {
+        return 1 - Math.pow(1 - progress, 3);
+    }
 
-        if (!element) return;
 
-        const total = values.reduce(
-            (sum, value) => sum + value,
-            0
-        );
+    /* =========================================================
+       ANIMATED DONUT
+    ========================================================= */
 
-        if (total === 0) {
-            element.style.background = "#e2e8f0";
+    function animateDonut(element, values, colors, duration = 1400) {
+
+        if (!element) {
             return;
         }
 
+        const total = values.reduce(function (sum, value) {
+            return sum + value;
+        }, 0);
+
+
+        /* -----------------------------------------------------
+           NO DATA
+        ----------------------------------------------------- */
+
+        if (total === 0) {
+
+            element.style.background = "#e2e8f0";
+
+            return;
+        }
+
+
+        /* -----------------------------------------------------
+           TARGET ANGLES
+        ----------------------------------------------------- */
+
         const targetAngles = [];
+
         let accumulated = 0;
+
 
         values.forEach(function (value) {
 
@@ -37,41 +61,54 @@ document.addEventListener("DOMContentLoaded", function () {
                 (value / total) * 360;
 
             targetAngles.push(accumulated);
+
         });
 
 
         /* -----------------------------------------------------
-           Animation
+           ANIMATION
         ----------------------------------------------------- */
 
         const startTime = performance.now();
+
 
         function draw(currentTime) {
 
             const elapsed =
                 currentTime - startTime;
 
+
             const progress =
-                Math.min(elapsed / duration, 1);
+                Math.min(
+                    elapsed / duration,
+                    1
+                );
 
 
-            /*
-             * Ease-out animation
-             * Starts fast and slows down smoothly.
-             */
             const eased =
-                1 - Math.pow(1 - progress, 3);
+                easeOutCubic(progress);
 
+
+            /* ---------------------------------------------
+               Current angles
+            --------------------------------------------- */
 
             const currentAngles =
                 targetAngles.map(function (angle) {
+
                     return angle * eased;
+
                 });
 
 
-            let gradientParts = [];
+            /* ---------------------------------------------
+               Build conic gradient
+            --------------------------------------------- */
+
+            const gradientParts = [];
 
             let previousAngle = 0;
+
 
             currentAngles.forEach(
                 function (angle, index) {
@@ -81,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                     previousAngle = angle;
+
                 }
             );
 
@@ -92,37 +130,158 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
 
 
+            /* ---------------------------------------------
+               Continue animation
+            --------------------------------------------- */
+
             if (progress < 1) {
+
                 requestAnimationFrame(draw);
+
             }
+
         }
 
 
         requestAnimationFrame(draw);
+
+    }
+
+
+    /* =========================================================
+       ANIMATE PERCENTAGES
+    ========================================================= */
+
+    function animatePercentages(
+        elements,
+        values,
+        total,
+        duration = 1400
+    ) {
+
+        if (!elements || elements.length === 0) {
+            return;
+        }
+
+
+        /* Start from zero */
+
+        elements.forEach(function (element) {
+
+            element.textContent = "0%";
+
+        });
+
+
+        if (total === 0) {
+            return;
+        }
+
+
+        const startTime = performance.now();
+
+
+        function update(currentTime) {
+
+            const elapsed =
+                currentTime - startTime;
+
+
+            const progress =
+                Math.min(
+                    elapsed / duration,
+                    1
+                );
+
+
+            const eased =
+                easeOutCubic(progress);
+
+
+            values.forEach(
+                function (value, index) {
+
+                    if (!elements[index]) {
+                        return;
+                    }
+
+
+                    const percentage =
+                        Math.round(
+                            (value / total) *
+                            100 *
+                            eased
+                        );
+
+
+                    elements[index].textContent =
+                        percentage + "%";
+
+                }
+            );
+
+
+            if (progress < 1) {
+
+                requestAnimationFrame(update);
+
+            }
+
+        }
+
+
+        requestAnimationFrame(update);
+
     }
 
 
     /* =========================================================
        TASK STATUS DONUT
+       To Do
+       In Progress
+       In Review
+       Completed
     ========================================================= */
 
     const taskChart =
-        document.getElementById("taskStatusChart");
+        document.getElementById(
+            "taskStatusChart"
+        );
+
 
     if (taskChart) {
 
+        /* ---------------------------------------------
+           Get values from Django data attributes
+        --------------------------------------------- */
+
         const todo =
-            getNumber(taskChart.dataset.todo);
+            getNumber(
+                taskChart.dataset.todo
+            );
+
 
         const progress =
-            getNumber(taskChart.dataset.progress);
+            getNumber(
+                taskChart.dataset.progress
+            );
+
 
         const review =
-            getNumber(taskChart.dataset.review);
+            getNumber(
+                taskChart.dataset.review
+            );
+
 
         const completed =
-            getNumber(taskChart.dataset.completed);
+            getNumber(
+                taskChart.dataset.completed
+            );
 
+
+        /* ---------------------------------------------
+           Total
+        --------------------------------------------- */
 
         const total =
             todo +
@@ -131,9 +290,19 @@ document.addEventListener("DOMContentLoaded", function () {
             completed;
 
 
-        const donut =
-            taskChart.querySelector(".donut-chart");
+        /* ---------------------------------------------
+           Donut
+        --------------------------------------------- */
 
+        const donut =
+            taskChart.querySelector(
+                ".donut-chart"
+            );
+
+
+        /* ---------------------------------------------
+           Percentage elements
+        --------------------------------------------- */
 
         const percentages =
             taskChart.querySelectorAll(
@@ -141,141 +310,104 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-        /* -----------------------------------------------------
+        /* ---------------------------------------------
            Animate donut
-        ----------------------------------------------------- */
+        --------------------------------------------- */
 
         animateDonut(
+
             donut,
+
             [
                 todo,
                 progress,
                 review,
                 completed
             ],
+
             [
                 "#dce3ec",
                 "#4f8df7",
                 "#f4b83f",
                 "#42c59b"
             ],
+
             1400
+
         );
 
 
-        /* -----------------------------------------------------
+        /* ---------------------------------------------
            Animate percentages
-        ----------------------------------------------------- */
+        --------------------------------------------- */
 
-        if (percentages.length >= 4) {
+        animatePercentages(
 
-            percentages.forEach(function (item) {
-                item.textContent = "0%";
-            });
+            percentages,
 
+            [
+                todo,
+                progress,
+                review,
+                completed
+            ],
 
-            if (total > 0) {
+            total,
 
-                const finalValues = [
-                    todo,
-                    progress,
-                    review,
-                    completed
-                ];
+            1400
 
+        );
 
-                const startTime =
-                    performance.now();
-
-                const duration = 1400;
-
-
-                function animateTaskPercentages(
-                    currentTime
-                ) {
-
-                    const elapsed =
-                        currentTime - startTime;
-
-                    const progressValue =
-                        Math.min(
-                            elapsed / duration,
-                            1
-                        );
-
-
-                    const eased =
-                        1 -
-                        Math.pow(
-                            1 - progressValue,
-                            3
-                        );
-
-
-                    finalValues.forEach(
-                        function (value, index) {
-
-                            const percentage =
-                                Math.round(
-                                    (value / total) *
-                                    100 *
-                                    eased
-                                );
-
-                            percentages[index]
-                                .textContent =
-                                percentage + "%";
-                        }
-                    );
-
-
-                    if (progressValue < 1) {
-
-                        requestAnimationFrame(
-                            animateTaskPercentages
-                        );
-                    }
-                }
-
-
-                requestAnimationFrame(
-                    animateTaskPercentages
-                );
-            }
-        }
     }
 
 
     /* =========================================================
        SDLC PHASE DONUT
+       Planning
+       In Progress
+       On Hold
+       Completed
     ========================================================= */
 
     const phaseChart =
-        document.getElementById("phaseStatusChart");
+        document.getElementById(
+            "phaseStatusChart"
+        );
 
 
     if (phaseChart) {
+
+        /* ---------------------------------------------
+           Get values
+        --------------------------------------------- */
 
         const planning =
             getNumber(
                 phaseChart.dataset.planning
             );
 
+
         const progress =
             getNumber(
                 phaseChart.dataset.progress
             );
+
 
         const hold =
             getNumber(
                 phaseChart.dataset.hold
             );
 
+
         const completed =
             getNumber(
                 phaseChart.dataset.completed
             );
 
+
+        /* ---------------------------------------------
+           Total
+        --------------------------------------------- */
 
         const total =
             planning +
@@ -284,11 +416,19 @@ document.addEventListener("DOMContentLoaded", function () {
             completed;
 
 
+        /* ---------------------------------------------
+           Donut
+        --------------------------------------------- */
+
         const donut =
             phaseChart.querySelector(
                 ".phase-chart"
             );
 
+
+        /* ---------------------------------------------
+           Percentage elements
+        --------------------------------------------- */
 
         const percentages =
             phaseChart.querySelectorAll(
@@ -296,109 +436,405 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-        /* -----------------------------------------------------
+        /* ---------------------------------------------
            Animate donut
-        ----------------------------------------------------- */
+        --------------------------------------------- */
 
         animateDonut(
+
             donut,
+
             [
                 planning,
                 progress,
                 hold,
                 completed
             ],
+
             [
                 "#a9cffb",
                 "#4f8df7",
                 "#f4b83f",
                 "#42c59b"
             ],
+
             1400
+
         );
 
 
-        /* -----------------------------------------------------
+        /* ---------------------------------------------
            Animate percentages
-        ----------------------------------------------------- */
+        --------------------------------------------- */
 
-        if (percentages.length >= 4) {
+        animatePercentages(
 
-            percentages.forEach(function (item) {
-                item.textContent = "0%";
+            percentages,
+
+            [
+                planning,
+                progress,
+                hold,
+                completed
+            ],
+
+            total,
+
+            1400
+
+        );
+
+    }
+
+
+    /* =========================================================
+       PROJECT PROGRESS BAR
+    ========================================================= */
+
+    const progressBars =
+        document.querySelectorAll(
+            ".project-progress-item .progress-bar"
+        );
+
+
+    progressBars.forEach(function (bar) {
+
+        const targetWidth =
+            bar.style.width;
+
+
+        /* Start from zero */
+
+        bar.style.width = "0%";
+
+
+        requestAnimationFrame(function () {
+
+            requestAnimationFrame(function () {
+
+                bar.style.transition =
+                    "width 1200ms cubic-bezier(0.22, 1, 0.36, 1)";
+
+                bar.style.width =
+                    targetWidth;
+
             });
 
+        });
 
-            if (total > 0) {
-
-                const finalValues = [
-                    planning,
-                    progress,
-                    hold,
-                    completed
-                ];
+    });
 
 
-                const startTime =
-                    performance.now();
+    /* =========================================================
+       TABLE PROGRESS BAR
+    ========================================================= */
 
-                const duration = 1400;
-
-
-                function animatePhasePercentages(
-                    currentTime
-                ) {
-
-                    const elapsed =
-                        currentTime - startTime;
-
-                    const progressValue =
-                        Math.min(
-                            elapsed / duration,
-                            1
-                        );
+    const tableProgressBars =
+        document.querySelectorAll(
+            ".table-progress .progress-bar"
+        );
 
 
-                    const eased =
-                        1 -
-                        Math.pow(
-                            1 - progressValue,
-                            3
-                        );
+    tableProgressBars.forEach(function (bar) {
+
+        const targetWidth =
+            bar.style.width;
 
 
-                    finalValues.forEach(
-                        function (value, index) {
-
-                            const percentage =
-                                Math.round(
-                                    (value / total) *
-                                    100 *
-                                    eased
-                                );
+        bar.style.width = "0%";
 
 
-                            percentages[index]
-                                .textContent =
-                                percentage + "%";
-                        }
-                    );
+        requestAnimationFrame(function () {
+
+            requestAnimationFrame(function () {
+
+                bar.style.transition =
+                    "width 1200ms cubic-bezier(0.22, 1, 0.36, 1)";
+
+                bar.style.width =
+                    targetWidth;
+
+            });
+
+        });
+
+    });
 
 
-                    if (progressValue < 1) {
+    /* =========================================================
+       STAT CARD ENTRANCE
+    ========================================================= */
 
-                        requestAnimationFrame(
-                            animatePhasePercentages
-                        );
-                    }
-                }
+    const statCards =
+        document.querySelectorAll(
+            ".stat-card"
+        );
 
 
-                requestAnimationFrame(
-                    animatePhasePercentages
-                );
+    statCards.forEach(function (card, index) {
+
+        card.style.opacity = "0";
+
+        card.style.transform =
+            "translateY(15px)";
+
+
+        card.style.transition = `
+            opacity 500ms ease,
+            transform 500ms ease
+        `;
+
+
+        setTimeout(function () {
+
+            card.style.opacity = "1";
+
+            card.style.transform =
+                "translateY(0)";
+
+        }, 80 + (index * 80));
+
+    });
+
+
+    /* =========================================================
+       DASHBOARD CARD ENTRANCE
+    ========================================================= */
+
+    const dashboardCards =
+        document.querySelectorAll(
+            ".dashboard-card"
+        );
+
+
+    dashboardCards.forEach(function (card, index) {
+
+        card.style.opacity = "0";
+
+        card.style.transform =
+            "translateY(12px)";
+
+
+        card.style.transition = `
+            opacity 550ms ease,
+            transform 550ms ease
+        `;
+
+
+        setTimeout(function () {
+
+            card.style.opacity = "1";
+
+            card.style.transform =
+                "translateY(0)";
+
+        }, 250 + (index * 100));
+
+    });
+
+
+    /* =========================================================
+       RECENT PROJECT ROWS
+    ========================================================= */
+
+    const projectRows =
+        document.querySelectorAll(
+            ".dashboard-table tbody tr"
+        );
+
+
+    projectRows.forEach(function (row, index) {
+
+        row.style.opacity = "0";
+
+        row.style.transform =
+            "translateY(8px)";
+
+
+        row.style.transition = `
+            opacity 400ms ease,
+            transform 400ms ease,
+            background 200ms ease
+        `;
+
+
+        setTimeout(function () {
+
+            row.style.opacity = "1";
+
+            row.style.transform =
+                "translateY(0)";
+
+        }, 500 + (index * 80));
+
+    });
+
+
+    /* =========================================================
+       UPCOMING DEADLINES
+    ========================================================= */
+
+    const deadlines =
+        document.querySelectorAll(
+            ".deadline-item"
+        );
+
+
+    deadlines.forEach(function (deadline, index) {
+
+        deadline.style.opacity = "0";
+
+        deadline.style.transform =
+            "translateX(10px)";
+
+
+        deadline.style.transition = `
+            opacity 400ms ease,
+            transform 400ms ease
+        `;
+
+
+        setTimeout(function () {
+
+            deadline.style.opacity = "1";
+
+            deadline.style.transform =
+                "translateX(0)";
+
+        }, 550 + (index * 80));
+
+    });
+
+
+    /* =========================================================
+       RECENT ACTIVITY
+    ========================================================= */
+
+    const activities =
+        document.querySelectorAll(
+            ".activity-item"
+        );
+
+
+    activities.forEach(function (activity, index) {
+
+        activity.style.opacity = "0";
+
+        activity.style.transform =
+            "translateX(10px)";
+
+
+        activity.style.transition = `
+            opacity 400ms ease,
+            transform 400ms ease
+        `;
+
+
+        setTimeout(function () {
+
+            activity.style.opacity = "1";
+
+            activity.style.transform =
+                "translateX(0)";
+
+        }, 550 + (index * 80));
+
+    });
+
+
+    /* =========================================================
+       TABLE HOVER
+    ========================================================= */
+
+    const tableRows =
+        document.querySelectorAll(
+            ".dashboard-table tbody tr"
+        );
+
+
+    tableRows.forEach(function (row) {
+
+        row.addEventListener(
+            "mouseenter",
+            function () {
+
+                row.style.background =
+                    "#f8fafc";
+
             }
-        }
-    }
+        );
+
+
+        row.addEventListener(
+            "mouseleave",
+            function () {
+
+                row.style.background =
+                    "";
+
+            }
+        );
+
+    });
+
+
+    /* =========================================================
+       STAT CARD HOVER
+    ========================================================= */
+
+    statCards.forEach(function (card) {
+
+        card.addEventListener(
+            "mouseenter",
+            function () {
+
+                card.style.transform =
+                    "translateY(-3px)";
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            function () {
+
+                card.style.transform =
+                    "translateY(0)";
+
+            }
+        );
+
+    });
+
+
+    /* =========================================================
+       DASHBOARD CARD HOVER
+    ========================================================= */
+
+    dashboardCards.forEach(function (card) {
+
+        card.addEventListener(
+            "mouseenter",
+            function () {
+
+                card.style.transform =
+                    "translateY(-2px)";
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            function () {
+
+                card.style.transform =
+                    "translateY(0)";
+
+            }
+        );
+
+    });
 
 });
