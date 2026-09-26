@@ -55,5 +55,19 @@ class SDLCPhase(models.Model):
         default=0
     )
 
+    # Controls the order of phases
+    order = models.PositiveIntegerField(
+        default=1
+    )
+
+    class Meta:
+        ordering = ["order"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["project", "phase_name"],
+                name="unique_phase_per_project"
+            )
+        ]
+
     def __str__(self):
         return f"{self.project.name} - {self.get_phase_name_display()}"

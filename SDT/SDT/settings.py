@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'notifications',
     'projects',
     'reports',
-    'sdlc',
+    'sdlc.apps.SdlcConfig',
     'tasks',
     'workflows',
 ]
