@@ -1,0 +1,1232 @@
+/* =========================================================
+   SDLC LIST PAGE
+========================================================= */
+
+.sdlc-page {
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 32px 28px 50px;
+    color: #17233c;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 28px;
+}
+
+.page-header-content h1 {
+    margin: 0 0 6px;
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #14213d;
+}
+
+.page-header-content p {
+    margin: 0;
+    font-size: 15px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   ADD PROJECT BUTTON
+========================================================= */
+
+.add-project-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 42px;
+    padding: 0 18px;
+
+    border-radius: 8px;
+    border: 1px solid #2563eb;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.18);
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.add-project-btn span {
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 400;
+}
+
+.add-project-btn:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.22);
+}
+
+
+/* =========================================================
+   STATISTICS GRID
+========================================================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 26px;
+}
+
+
+/* =========================================================
+   STAT CARD
+========================================================= */
+
+.stat-card {
+    min-height: 108px;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 18px 20px;
+
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    border-color: #d6deeb;
+    box-shadow: 0 5px 16px rgba(15, 23, 42, 0.07);
+}
+
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.stat-icon.blue {
+    background: #eef4ff;
+    color: #2563eb;
+}
+
+.stat-icon.purple {
+    background: #f3efff;
+    color: #7c3aed;
+}
+
+.stat-icon.green {
+    background: #eaf8f0;
+    color: #16a34a;
+}
+
+.stat-icon.orange {
+    background: #fff5df;
+    color: #d97706;
+}
+
+
+/* =========================================================
+   STAT CONTENT
+========================================================= */
+
+.stat-content {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    margin-bottom: 3px;
+
+    font-size: 13px;
+    font-weight: 500;
+    color: #718096;
+}
+
+.stat-value {
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #17233c;
+}
+
+.stat-growth {
+    margin-top: 4px;
+
+    font-size: 11px;
+    color: #8a98ad;
+}
+
+
+/* =========================================================
+   FILTER CARD
+========================================================= */
+
+.filter-card {
+    margin-bottom: 20px;
+
+    padding: 16px;
+
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+
+/* =========================================================
+   FILTER FORM
+========================================================= */
+
+.sdlc-filter-form {
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) 220px 200px 105px;
+    gap: 10px;
+    align-items: center;
+}
+
+
+/* =========================================================
+   SEARCH BOX
+========================================================= */
+
+.search-box {
+    position: relative;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #64748b;
+    font-size: 18px;
+
+    pointer-events: none;
+}
+
+.search-box input {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 14px 0 40px;
+
+    border: 1px solid #d9e1ec;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #1e293b;
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.search-box input::placeholder {
+    color: #94a3b8;
+}
+
+.search-box input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.10);
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.filter-select {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 35px 0 13px;
+
+    border: 1px solid #d9e1ec;
+    border-radius: 7px;
+
+    background-color: #ffffff;
+    color: #334155;
+
+    font-size: 13px;
+
+    outline: none;
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.filter-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.10);
+}
+
+
+/* =========================================================
+   SEARCH BUTTON
+========================================================= */
+
+.filter-button {
+    height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 0 16px;
+
+    border: 1px solid #2563eb;
+    border-radius: 7px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.filter-button span {
+    font-size: 16px;
+}
+
+.filter-button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PROJECTS CARD
+========================================================= */
+
+.projects-card {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e0e7f0;
+    border-radius: 10px;
+
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+
+/* =========================================================
+   PROJECT TABLE HEADER
+========================================================= */
+
+.project-table-header {
+    display: grid;
+
+    grid-template-columns:
+        45px
+        minmax(270px, 2fr)
+        minmax(160px, 1.15fr)
+        minmax(130px, 1fr)
+        130px
+        155px
+        80px;
+
+    align-items: center;
+
+    min-height: 48px;
+
+    padding: 0 18px;
+
+    background: #fbfcfe;
+
+    border-bottom: 1px solid #e6ebf2;
+
+    color: #64748b;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   PROJECT ROW
+========================================================= */
+
+.project-row {
+    display: grid;
+
+    grid-template-columns:
+        45px
+        minmax(270px, 2fr)
+        minmax(160px, 1.15fr)
+        minmax(130px, 1fr)
+        130px
+        155px
+        80px;
+
+    align-items: center;
+
+    min-height: 94px;
+
+    padding: 0 18px;
+
+    border-bottom: 1px solid #edf1f5;
+
+    transition:
+        background 0.2s ease;
+}
+
+.project-row:hover {
+    background: #fbfdff;
+}
+
+
+/* =========================================================
+   PROJECT NUMBER
+========================================================= */
+
+.project-number {
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   PROJECT INFO
+========================================================= */
+
+.project-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 0;
+}
+
+.project-avatar {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef4ff;
+    color: #2563eb;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.project-details {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.project-name {
+    display: block;
+
+    max-width: 100%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #17233c;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.project-name:hover {
+    color: #2563eb;
+}
+
+.project-description {
+    margin-top: 3px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #64748b;
+
+    font-size: 11px;
+}
+
+.project-date {
+    margin-top: 5px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   MANAGER
+========================================================= */
+
+.manager-info {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    min-width: 0;
+}
+
+.manager-avatar {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef4ff;
+    color: #315fd5;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.manager-details {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.manager-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #334155;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.manager-role {
+    margin-top: 2px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+}
+
+.not-assigned {
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   TEAMS
+========================================================= */
+
+.teams-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.team-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 8px;
+
+    border-radius: 5px;
+
+    background: #f1f5f9;
+    color: #475569;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    width: fit-content;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+}
+
+.status-badge.planning {
+    background: #eef4ff;
+    color: #2563eb;
+}
+
+.status-badge.planning .status-dot {
+    background: #2563eb;
+}
+
+.status-badge.active {
+    background: #eaf8f0;
+    color: #15803d;
+}
+
+.status-badge.active .status-dot {
+    background: #16a34a;
+}
+
+.status-badge.on-hold {
+    background: #fff5df;
+    color: #b45309;
+}
+
+.status-badge.on-hold .status-dot {
+    background: #f59e0b;
+}
+
+.status-badge.completed {
+    background: #e9f8f1;
+    color: #15803d;
+}
+
+.status-badge.completed .status-dot {
+    background: #22c55e;
+}
+
+.status-badge.cancelled {
+    background: #fff0f0;
+    color: #dc2626;
+}
+
+.status-badge.cancelled .status-dot {
+    background: #ef4444;
+}
+
+
+/* =========================================================
+   PROJECT PROGRESS
+========================================================= */
+
+.progress-info {
+    width: 135px;
+}
+
+.progress-value {
+    margin-bottom: 6px;
+
+    color: #334155;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-align: right;
+}
+
+.progress-track {
+    width: 100%;
+    height: 7px;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: #e8edf3;
+}
+
+.progress-fill {
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: #3b82f6;
+
+    transition: width 0.3s ease;
+}
+
+.progress-fill.completed {
+    background: #3bb273;
+}
+
+.progress-fill.on-hold {
+    background: #f5bd26;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 62px;
+    height: 34px;
+
+    padding: 0 10px;
+
+    border: 1px solid #d9e2ef;
+    border-radius: 7px;
+
+    background: #ffffff;
+    color: #2563eb;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.action-btn:hover {
+    background: #f3f7ff;
+    border-color: #b8cdf5;
+}
+
+
+/* =========================================================
+   SDLC PHASE ROW
+========================================================= */
+
+.phase-row {
+    display: grid;
+
+    grid-template-columns: 105px 1fr;
+
+    align-items: center;
+
+    min-height: 76px;
+
+    padding: 10px 18px 12px 63px;
+
+    background: #fcfdff;
+
+    border-bottom: 1px solid #edf1f5;
+}
+
+
+/* =========================================================
+   PHASE LABEL
+========================================================= */
+
+.phase-row-label {
+    color: #94a3b8;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+
+/* =========================================================
+   PHASE FLOW
+========================================================= */
+
+.phase-flow {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   PHASE ITEM
+========================================================= */
+
+.phase-item {
+    min-width: 125px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 7px 9px;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.phase-item:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PHASE ICON
+========================================================= */
+
+.phase-icon {
+    width: 27px;
+    height: 27px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PHASE CONTENT
+========================================================= */
+
+.phase-content {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.phase-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #475569;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.phase-progress {
+    margin-top: 2px;
+
+    color: #94a3b8;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   COMPLETED PHASE
+========================================================= */
+
+.phase-item.completed {
+    background: #f0faf5;
+}
+
+.phase-item.completed .phase-icon {
+    background: #35b76f;
+    color: #ffffff;
+}
+
+.phase-item.completed .phase-name {
+    color: #218653;
+}
+
+
+/* =========================================================
+   CURRENT PHASE
+========================================================= */
+
+.phase-item.in-progress {
+    background: #eff6ff;
+}
+
+.phase-item.in-progress .phase-icon {
+    background: #3290ed;
+    color: #ffffff;
+}
+
+.phase-item.in-progress .phase-name {
+    color: #1769c2;
+}
+
+
+/* =========================================================
+   ON HOLD PHASE
+========================================================= */
+
+.phase-item.on-hold {
+    background: #fff9e8;
+}
+
+.phase-item.on-hold .phase-icon {
+    background: #f4c229;
+    color: #ffffff;
+}
+
+.phase-item.on-hold .phase-name {
+    color: #a16207;
+}
+
+
+/* =========================================================
+   NOT STARTED
+========================================================= */
+
+.phase-item.not-started .phase-icon {
+    background: #e9eef4;
+    color: #64748b;
+}
+
+.phase-item.not-started .phase-name {
+    color: #64748b;
+}
+
+
+/* =========================================================
+   PHASE CONNECTOR
+========================================================= */
+
+.phase-connector {
+    width: 28px;
+    height: 2px;
+
+    flex-shrink: 0;
+
+    background: #d5dde8;
+}
+
+.phase-connector.completed {
+    background: #5ac58b;
+}
+
+
+/* =========================================================
+   NO PHASES
+========================================================= */
+
+.no-phases {
+    color: #94a3b8;
+
+    font-size: 11px;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+    padding: 70px 30px;
+
+    text-align: center;
+}
+
+.empty-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    background: #eef4ff;
+    color: #3b82f6;
+
+    font-size: 25px;
+}
+
+.empty-state h3 {
+    margin: 0 0 7px;
+
+    color: #334155;
+
+    font-size: 17px;
+}
+
+.empty-state p {
+    margin: 0 0 20px;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLE FOOTER
+========================================================= */
+
+.table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 4px;
+
+    color: #718096;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1350px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .project-table-header,
+    .project-row {
+        grid-template-columns:
+            40px
+            minmax(240px, 2fr)
+            minmax(140px, 1fr)
+            110px
+            120px
+            130px
+            70px;
+    }
+
+    .phase-row {
+        padding-left: 58px;
+    }
+
+    .phase-item {
+        min-width: 110px;
+    }
+
+    .phase-connector {
+        width: 20px;
+    }
+}
+
+
+@media (max-width: 1100px) {
+
+    .sdlc-page {
+        padding: 25px 20px 40px;
+    }
+
+    .sdlc-filter-form {
+        grid-template-columns: 1fr 180px 160px 95px;
+    }
+
+    .project-table-header {
+        display: none;
+    }
+
+    .project-row {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 16px;
+
+        padding: 20px;
+    }
+
+    .project-number {
+        display: none;
+    }
+
+    .project-info {
+        grid-column: 1 / -1;
+    }
+
+    .manager-info,
+    .teams-info,
+    .progress-info,
+    .action-buttons {
+        min-width: 0;
+    }
+
+    .phase-row {
+        display: block;
+        padding: 14px 20px;
+    }
+
+    .phase-row-label {
+        margin-bottom: 10px;
+    }
+
+    .phase-flow {
+        overflow-x: auto;
+        padding-bottom: 4px;
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .page-header {
+        flex-direction: column;
+    }
+
+    .add-project-btn {
+        width: 100%;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sdlc-filter-form {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-button {
+        width: 100%;
+    }
+
+    .project-row {
+        grid-template-columns: 1fr;
+    }
+
+    .project-info {
+        grid-column: auto;
+    }
+
+    .progress-info {
+        width: 100%;
+    }
+
+    .action-buttons {
+        justify-content: flex-start;
+    }
+}
+
+
+@media (max-width: 520px) {
+
+    .sdlc-page {
+        padding: 20px 14px 30px;
+    }
+
+    .page-header-content h1 {
+        font-size: 25px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+        min-height: 90px;
+    }
+
+    .project-row {
+        padding: 17px;
+    }
+
+    .phase-row {
+        padding: 14px 17px;
+    }
+}

@@ -1,0 +1,646 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+SDLC | SD Tracker
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/sdlc/sdlc_list.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="sdlc-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="page-header">
+
+        <div class="page-header-content">
+            <h1>SDLC</h1>
+
+            <p>
+                View and manage the Software Development Life Cycle
+                for all projects.
+            </p>
+        </div>
+
+        <a href="{% url 'project_create' %}" class="add-project-btn">
+            <span>+</span>
+            Add Project
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
+
+    <div class="stats-grid">
+
+        <!-- Total Projects -->
+        <div class="stat-card">
+
+            <div class="stat-icon blue">
+                ◉
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Total Projects
+                </span>
+
+                <strong class="stat-value">
+                    {{ total_projects }}
+                </strong>
+
+                <span class="stat-growth">
+                    SDLC Projects
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Planning -->
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                ◷
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Planning Projects
+                </span>
+
+                <strong class="stat-value">
+                    {{ planning_projects }}
+                </strong>
+
+                <span class="stat-growth">
+                    Currently planning
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- In Progress -->
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                ◉
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    In Progress
+                </span>
+
+                <strong class="stat-value">
+                    {{ active_projects }}
+                </strong>
+
+                <span class="stat-growth">
+                    Active projects
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- On Hold -->
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+                ◉
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    On Hold
+                </span>
+
+                <strong class="stat-value">
+                    {{ on_hold_projects }}
+                </strong>
+
+                <span class="stat-growth">
+                    Projects on hold
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Completed -->
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                ✓
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Completed
+                </span>
+
+                <strong class="stat-value">
+                    {{ completed_projects }}
+                </strong>
+
+                <span class="stat-growth">
+                    Completed projects
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FILTER / SEARCH
+    ====================================================== -->
+
+    <div class="filter-card">
+
+        <form method="GET" class="sdlc-filter-form">
+
+            {% if selected_status %}
+                <input
+                    type="hidden"
+                    name="status"
+                    value="{{ selected_status }}"
+                >
+            {% endif %}
+
+
+            <!-- Search -->
+            <div class="search-box">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search by project name, client..."
+                >
+
+            </div>
+
+
+            <!-- Team -->
+            <select name="team" class="filter-select">
+
+                <option value="">
+                    All Teams
+                </option>
+
+                {% for team in teams %}
+
+                    <option
+                        value="{{ team.id }}"
+                        {% if selected_team == team.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ team.name }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <!-- Status -->
+            <select name="status" class="filter-select">
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option
+                    value="planning"
+                    {% if selected_status == "planning" %}selected{% endif %}
+                >
+                    Planning
+                </option>
+
+                <option
+                    value="active"
+                    {% if selected_status == "active" %}selected{% endif %}
+                >
+                    In Progress
+                </option>
+
+                <option
+                    value="on_hold"
+                    {% if selected_status == "on_hold" %}selected{% endif %}
+                >
+                    On Hold
+                </option>
+
+                <option
+                    value="completed"
+                    {% if selected_status == "completed" %}selected{% endif %}
+                >
+                    Completed
+                </option>
+
+            </select>
+
+
+            <button type="submit" class="filter-button">
+                <span>⌕</span>
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         PROJECT LIST
+    ====================================================== -->
+
+    <div class="projects-card">
+
+        <!-- Table Header -->
+
+        <div class="project-table-header">
+
+            <div>#</div>
+
+            <div>Project</div>
+
+            <div>Manager</div>
+
+            <div>Teams</div>
+
+            <div>Status</div>
+
+            <div>Progress</div>
+
+            <div>Actions</div>
+
+        </div>
+
+
+        <!-- =================================================
+             PROJECT ROWS
+        ================================================== -->
+
+        {% for project in projects %}
+
+        <div class="project-row">
+
+            <!-- Number -->
+
+            <div class="project-number">
+                {{ forloop.counter }}
+            </div>
+
+
+            <!-- Project -->
+
+            <div class="project-info">
+
+                <div class="project-avatar">
+                    {{ project.name|first|upper }}
+                </div>
+
+                <div class="project-details">
+
+                    <a
+                        href="{% url 'sdlc_detail' project.pk %}"
+                        class="project-name"
+                    >
+                        {{ project.name }}
+                    </a>
+
+                    <span class="project-description">
+
+                        {% if project.description %}
+                            {{ project.description|truncatechars:55 }}
+                        {% else %}
+                            No description
+                        {% endif %}
+
+                    </span>
+
+                    <span class="project-date">
+
+                        {{ project.start_date|date:"M d, Y" }}
+                        -
+                        {{ project.deadline|date:"M d, Y" }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Manager -->
+
+            <div class="manager-info">
+
+                {% if project.manager %}
+
+                    <div class="manager-avatar">
+
+                        {% if project.manager.user.first_name %}
+                            {{ project.manager.user.first_name|first|upper }}
+                        {% else %}
+                            {{ project.manager.user.username|first|upper }}
+                        {% endif %}
+
+                    </div>
+
+                    <div class="manager-details">
+
+                        <span class="manager-name">
+                            {{ project.manager.user.get_full_name }}
+                        </span>
+
+                        <span class="manager-role">
+                            Project Manager
+                        </span>
+
+                    </div>
+
+                {% else %}
+
+                    <span class="not-assigned">
+                        Not Assigned
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Teams -->
+
+            <div class="teams-info">
+
+                {% for team in project.teams.all %}
+
+                    <span class="team-badge">
+                        {{ team.name }}
+                    </span>
+
+                {% empty %}
+
+                    <span class="not-assigned">
+                        No Team
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- Status -->
+
+            <div>
+
+                {% if project.status == "planning" %}
+
+                    <span class="status-badge planning">
+                        <span class="status-dot"></span>
+                        Planning
+                    </span>
+
+                {% elif project.status == "active" %}
+
+                    <span class="status-badge active">
+                        <span class="status-dot"></span>
+                        In Progress
+                    </span>
+
+                {% elif project.status == "on_hold" %}
+
+                    <span class="status-badge on-hold">
+                        <span class="status-dot"></span>
+                        On Hold
+                    </span>
+
+                {% elif project.status == "completed" %}
+
+                    <span class="status-badge completed">
+                        <span class="status-dot"></span>
+                        Completed
+                    </span>
+
+                {% elif project.status == "cancelled" %}
+
+                    <span class="status-badge cancelled">
+                        <span class="status-dot"></span>
+                        Cancelled
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Progress -->
+
+            <div class="progress-info">
+
+                <div class="progress-value">
+                    {{ project.progress }}%
+                </div>
+
+                <div class="progress-track">
+
+                    <div
+                        class="progress-fill
+                        {% if project.status == 'completed' %}
+                            completed
+                        {% elif project.status == 'on_hold' %}
+                            on-hold
+                        {% endif %}"
+                        style="width: {{ project.progress }}%;"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Actions -->
+
+            <div class="action-buttons">
+
+                <a
+                    href="{% url 'sdlc_detail' project.pk %}"
+                    class="action-btn view-btn"
+                    title="View SDLC"
+                >
+                    View
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SDLC PHASES
+        ================================================== -->
+
+        <div class="phase-row">
+
+            <div class="phase-row-label">
+                SDLC Phases
+            </div>
+
+            <div class="phase-flow">
+
+                {% for phase in project.phases.all %}
+
+                    <a
+                        href="{% url 'sdlc_detail' project.pk %}"
+                        class="phase-item
+                        {% if phase.status == 'completed' %}
+                            completed
+                        {% elif phase.status == 'in_progress' %}
+                            in-progress
+                        {% elif phase.status == 'on_hold' %}
+                            on-hold
+                        {% else %}
+                            not-started
+                        {% endif %}"
+                    >
+
+                        <div class="phase-icon">
+
+                            {% if phase.status == "completed" %}
+                                ✓
+                            {% elif phase.status == "in_progress" %}
+                                ↻
+                            {% elif phase.status == "on_hold" %}
+                                ||
+                            {% else %}
+                                ›
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="phase-content">
+
+                            <span class="phase-name">
+                                {{ phase.get_phase_name_display }}
+                            </span>
+
+                            <span class="phase-progress">
+                                {{ phase.progress }}%
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                    {% if not forloop.last %}
+
+                        <div
+                            class="phase-connector
+                            {% if phase.status == 'completed' %}
+                                completed
+                            {% endif %}"
+                        ></div>
+
+                    {% endif %}
+
+                {% empty %}
+
+                    <span class="no-phases">
+                        No SDLC phases available.
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        {% empty %}
+
+        <!-- =================================================
+             EMPTY STATE
+        ================================================== -->
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                ◫
+            </div>
+
+            <h3>
+                No projects found
+            </h3>
+
+            <p>
+                There are no projects matching your search or filter.
+            </p>
+
+            <a
+                href="{% url 'project_create' %}"
+                class="add-project-btn"
+            >
+                <span>+</span>
+                Create Project
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    {% if projects %}
+
+    <div class="table-footer">
+
+        <span>
+            Showing {{ projects|length }} projects
+        </span>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

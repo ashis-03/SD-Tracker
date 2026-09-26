@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # path('phase_detail/', views.phase_detail, name='phase_detail'),
-    # path('phase_list/', views.phase_list, name='phase_list'),
-    # path('phase_progress/', views.phase_progress, name='phase_progress'),
+    path('sdlc_list/', views.sdlc_list, name='sdlc_list'),
+    path('sdlc_detail/<int:pk>/', views.sdlc_detail, name='sdlc_detail'),
+    path("phase/<int:pk>/status/", views.phase_status_update, name="phase_status_update"),
 ]
