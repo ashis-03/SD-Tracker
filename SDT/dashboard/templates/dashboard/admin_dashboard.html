@@ -1,21 +1,1181 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block title %}
+Admin Dashboard | SD Tracker
+{% endblock %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard/admin_dashboard.css' %}">
+{% endblock %}
+
+
 {% block content %}
 
-<h2>Welcome to the Admin Dashboard, {{ request.user.username }}</h2>
+<div class="admin-dashboard">
 
-<p>Email: {{ request.user.email }}</p>
-<p>Role: {{ request.user.profile.role }}</p>
+    <!-- =====================================================
+         DASHBOARD HEADER
+    ====================================================== -->
 
-<h3>Admin Panel</h3>
+    <div class="dashboard-header">
 
-<ul>
-    <li>Manage Users</li>
-    <li>Manage Projects</li>
-    <li>Manage Tasks</li>
-    <li>View Reports</li>
-</ul>
+        <div class="dashboard-title">
+
+            <h1>
+                Dashboard
+            </h1>
+
+            <p>
+                Overview of your software development activity.
+            </p>
+
+        </div>
+
+
+        <!-- Date Filter -->
+
+        <div class="dashboard-date-filter">
+
+            <i class="fa-regular fa-calendar"></i>
+
+            <span>
+                Jan 01, 2026 - Jan 31, 2026
+            </span>
+
+            <i class="fa-solid fa-chevron-down"></i>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         STATISTICS CARDS
+    ====================================================== -->
+
+    <div class="stats-grid">
+
+
+        <!-- Total Projects -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon blue">
+                <i class="fa-regular fa-folder"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Total Projects
+                </span>
+
+                <strong class="stat-value">
+                    {{ total_projects }}
+                </strong>
+
+                <span class="stat-change positive">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    +25%
+                </span>
+
+                <span class="stat-period">
+                    from last month
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Active Projects -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                <i class="fa-solid fa-play"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Active Projects
+                </span>
+
+                <strong class="stat-value">
+                    {{ active_projects }}
+                </strong>
+
+                <span class="stat-change positive">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    +50%
+                </span>
+
+                <span class="stat-period">
+                    from last month
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Completed Projects -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Completed Projects
+                </span>
+
+                <strong class="stat-value">
+                    {{ completed_projects }}
+                </strong>
+
+                <span class="stat-change positive">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    +0%
+                </span>
+
+                <span class="stat-period">
+                    from last month
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Total Tasks -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+                <i class="fa-solid fa-list-check"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Total Tasks
+                </span>
+
+                <strong class="stat-value">
+                    {{ total_tasks }}
+                </strong>
+
+                <span class="stat-change positive">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    +20%
+                </span>
+
+                <span class="stat-period">
+                    from last month
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Overdue Tasks -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon red">
+                <i class="fa-regular fa-clock"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Overdue Tasks
+                </span>
+
+                <strong class="stat-value">
+                    {{ overdue_tasks }}
+                </strong>
+
+                <span class="stat-change negative">
+                    <i class="fa-solid fa-arrow-down"></i>
+                    +50%
+                </span>
+
+                <span class="stat-period">
+                    from last month
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Team Members -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon light-blue">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Team Members
+                </span>
+
+                <strong class="stat-value">
+                    {{ team_members }}
+                </strong>
+
+                <span class="stat-change positive">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    +9%
+                </span>
+
+                <span class="stat-period">
+                    from last month
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MIDDLE DASHBOARD ROW
+    ====================================================== -->
+
+    <div class="dashboard-grid three-columns">
+
+
+        <!-- =================================================
+             PROJECT PROGRESS
+        ================================================== -->
+
+        <section class="dashboard-card project-progress-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Project Progress
+                </h2>
+
+                <a href="{% url 'project_list' %}">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="project-progress-list">
+
+                {% for item in project_progress %}
+
+                    <div class="project-progress-item">
+
+                        <div class="project-progress-name">
+                            {{ item.project.name }}
+                        </div>
+
+                        <div class="progress-container">
+
+                            <div
+                                class="progress-bar"
+                                style="width: {{ item.progress }}%;"
+                            ></div>
+
+                        </div>
+
+                        <span class="progress-value">
+                            {{ item.progress }}%
+                        </span>
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="empty-state">
+                        No projects available.
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TASK STATUS DISTRIBUTION
+        ================================================== -->
+
+        <section class="dashboard-card chart-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Task Status Distribution
+                </h2>
+
+                <a href="{% url 'task_list' %}">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div
+                class="donut-chart-wrapper"
+                id="taskStatusChart"
+
+                data-total="{{ total_tasks }}"
+                data-todo="{{ todo_tasks }}"
+                data-progress="{{ in_progress_tasks }}"
+                data-review="{{ review_tasks }}"
+                data-completed="{{ completed_tasks }}"
+            >
+
+                <div class="donut-chart">
+
+                    <div class="donut-center">
+
+                        <strong>
+                            {{ total_tasks }}
+                        </strong>
+
+                        <span>
+                            Total Tasks
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-legend">
+
+
+                    <!-- To Do -->
+
+                    <div class="legend-item">
+
+                        <span class="legend-color todo"></span>
+
+                        <span class="legend-name">
+                            To Do
+                        </span>
+
+                        <strong>
+                            {{ todo_tasks }}
+                        </strong>
+
+                        <span class="legend-percent">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <!-- In Progress -->
+
+                    <div class="legend-item">
+
+                        <span class="legend-color progress"></span>
+
+                        <span class="legend-name">
+                            In Progress
+                        </span>
+
+                        <strong>
+                            {{ in_progress_tasks }}
+                        </strong>
+
+                        <span class="legend-percent">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <!-- In Review -->
+
+                    <div class="legend-item">
+
+                        <span class="legend-color review"></span>
+
+                        <span class="legend-name">
+                            In Review
+                        </span>
+
+                        <strong>
+                            {{ review_tasks }}
+                        </strong>
+
+                        <span class="legend-percent">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <!-- Completed -->
+
+                    <div class="legend-item">
+
+                        <span class="legend-color completed"></span>
+
+                        <span class="legend-name">
+                            Completed
+                        </span>
+
+                        <strong>
+                            {{ completed_tasks }}
+                        </strong>
+
+                        <span class="legend-percent">
+                            —
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SDLC PHASE STATUS
+        ================================================== -->
+
+        <section class="dashboard-card chart-card">
+
+            <div class="card-header">
+
+                <h2>
+                    SDLC Phase Status
+                </h2>
+
+                <a href="{% url 'sdlc_list' %}">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div
+                class="donut-chart-wrapper"
+                id="phaseStatusChart"
+
+                data-total="{{ total_phases }}"
+                data-planning="{{ planning_phases }}"
+                data-progress="{{ active_phases }}"
+                data-hold="{{ on_hold_phases }}"
+                data-completed="{{ completed_phases }}"
+            >
+
+                <div class="donut-chart phase-chart">
+
+                    <div class="donut-center">
+
+                        <strong>
+                            {{ total_phases }}
+                        </strong>
+
+                        <span>
+                            Total Phases
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-legend">
+
+
+                    <!-- Planning -->
+
+                    <div class="legend-item">
+
+                        <span class="legend-color planning"></span>
+
+                        <span class="legend-name">
+                            Planning
+                        </span>
+
+                        <strong>
+                            {{ planning_phases }}
+                        </strong>
+
+                        <span class="legend-percent">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <!-- In Progress -->
+
+                    <div class="legend-item">
+
+                        <span class="legend-color progress"></span>
+
+                        <span class="legend-name">
+                            In Progress
+                        </span>
+
+                        <strong>
+                            {{ active_phases }}
+                        </strong>
+
+                        <span class="legend-percent">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <!-- On Hold -->
+
+                    <div class="legend-item">
+
+                        <span class="legend-color hold"></span>
+
+                        <span class="legend-name">
+                            On Hold
+                        </span>
+
+                        <strong>
+                            {{ on_hold_phases }}
+                        </strong>
+
+                        <span class="legend-percent">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <!-- Completed -->
+
+                    <div class="legend-item">
+
+                        <span class="legend-color completed"></span>
+
+                        <span class="legend-name">
+                            Completed
+                        </span>
+
+                        <strong>
+                            {{ completed_phases }}
+                        </strong>
+
+                        <span class="legend-percent">
+                            —
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         LOWER DASHBOARD ROW
+    ====================================================== -->
+
+    <div class="dashboard-grid two-columns">
+
+
+        <!-- =================================================
+             RECENT PROJECTS
+        ================================================== -->
+
+        <section class="dashboard-card table-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Recent Projects
+                </h2>
+
+                <a href="{% url 'project_list' %}">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                #
+                            </th>
+
+                            <th>
+                                Project
+                            </th>
+
+                            <th>
+                                Client
+                            </th>
+
+                            <th>
+                                Manager
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Progress
+                            </th>
+
+                            <th>
+                                Deadline
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for project in recent_projects %}
+
+                        <tr>
+
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+
+                            <!-- Project -->
+
+                            <td>
+
+                                <div class="table-project">
+
+                                    <div class="project-avatar">
+
+                                        {{ project.name|first|upper }}
+
+                                    </div>
+
+                                    <strong>
+                                        {{ project.name }}
+                                    </strong>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- Client -->
+
+                            <td>
+
+                                {{ project.client_name|default:"—" }}
+
+                            </td>
+
+
+                            <!-- Manager -->
+
+                            <td>
+
+                                {% if project.manager %}
+
+                                    <div class="manager-info">
+
+                                        <div class="manager-avatar">
+
+                                            {{ project.manager.user.first_name|first|upper }}
+
+                                        </div>
+
+                                        <span>
+                                            {{ project.manager.user.get_full_name|default:project.manager.user.username }}
+                                        </span>
+
+                                    </div>
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Status -->
+
+                            <td>
+
+                                <span class="status-badge status-{{ project.status }}">
+
+                                    {% if project.status == "planning" %}
+
+                                        Planning
+
+                                    {% elif project.status == "active" %}
+
+                                        Active
+
+                                    {% elif project.status == "on_hold" %}
+
+                                        On Hold
+
+                                    {% elif project.status == "completed" %}
+
+                                        Completed
+
+                                    {% else %}
+
+                                        {{ project.get_status_display }}
+
+                                    {% endif %}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- Progress -->
+
+                            <td>
+
+                                <div class="table-progress">
+
+                                    <div class="mini-progress">
+
+                                        <div
+                                            class="mini-progress-fill"
+                                            style="width: {{ project.progress }}%;"
+                                        ></div>
+
+                                    </div>
+
+                                    <span>
+                                        {{ project.progress }}%
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- Deadline -->
+
+                            <td>
+
+                                {% if project.deadline %}
+
+                                    {{ project.deadline|date:"M d, Y" }}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="empty-table"
+                            >
+                                No projects available.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             UPCOMING DEADLINES
+        ================================================== -->
+
+        <section class="dashboard-card deadlines-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Upcoming Deadlines
+                </h2>
+
+                <a href="{% url 'task_list' %}">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="deadline-list">
+
+                {% for deadline in upcoming_deadlines %}
+
+                <div class="deadline-item">
+
+
+                    <div class="deadline-date">
+
+                        <strong>
+                            {{ deadline.date|date:"M" }}
+                        </strong>
+
+                        <span>
+                            {{ deadline.date|date:"d" }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="deadline-info">
+
+                        <strong>
+                            {{ deadline.name }}
+                        </strong>
+
+                        <span>
+                            {{ deadline.type }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="deadline-remaining">
+
+                        <span class="deadline-days">
+                            {{ deadline.date|date:"M d" }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="empty-state">
+                    No upcoming deadlines.
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         BOTTOM DASHBOARD ROW
+    ====================================================== -->
+
+    <div class="dashboard-grid two-columns">
+
+
+        <!-- =================================================
+             RECENT TASKS
+        ================================================== -->
+
+        <section class="dashboard-card table-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Recent Tasks
+                </h2>
+
+                <a href="{% url 'task_list' %}">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                #
+                            </th>
+
+                            <th>
+                                Task
+                            </th>
+
+                            <th>
+                                Project
+                            </th>
+
+                            <th>
+                                Assigned To
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Due Date
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for task in recent_tasks %}
+
+                        <tr>
+
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+
+                            <td>
+
+                                <strong class="task-name">
+                                    {{ task.title }}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+
+                                {% if task.project %}
+
+                                    {{ task.project.name }}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if task.assigned_to %}
+
+                                    {{ task.assigned_to.user.get_full_name|default:task.assigned_to.user.username }}
+
+                                {% else %}
+
+                                    Unassigned
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="status-badge status-{{ task.status }}">
+
+                                    {% if task.status == "todo" %}
+
+                                        To Do
+
+                                    {% elif task.status == "in_progress" %}
+
+                                        In Progress
+
+                                    {% elif task.status == "in_review" %}
+
+                                        In Review
+
+                                    {% elif task.status == "completed" %}
+
+                                        Completed
+
+                                    {% else %}
+
+                                        {{ task.get_status_display }}
+
+                                    {% endif %}
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                {% if task.deadline %}
+
+                                    {{ task.deadline|date:"M d, Y" }}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="empty-table"
+                            >
+                                No recent tasks available.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RECENT ACTIVITY
+        ================================================== -->
+
+        <section class="dashboard-card activity-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Recent Activity
+                </h2>
+
+                <a href="#">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="activity-list">
+
+                {% for activity in recent_activities %}
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </div>
+
+                        <div class="activity-content">
+
+                            <strong>
+                                {{ activity.title }}
+                            </strong>
+
+                            <span>
+                                {{ activity.description }}
+                            </span>
+
+                        </div>
+
+                        <span class="activity-time">
+                            {{ activity.created_at|timesince }} ago
+                        </span>
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="empty-state activity-empty">
+
+                        <i class="fa-regular fa-clock"></i>
+
+                        <span>
+                            No recent activity.
+                        </span>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
 
 {% endblock %}
 
+
+{% block extra_js %}
+
+<script src="{% static 'js/dashboard/admin_dashboard.js' %}"></script>
+
+{% endblock %}
  
