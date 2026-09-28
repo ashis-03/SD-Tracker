@@ -88,7 +88,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// =========================================================
 // SIDEBAR TOGGLE
+// Only the ☰ button can expand/collapse the sidebar
+// =========================================================
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -98,9 +101,34 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    sidebarToggle.addEventListener("click", function () {
+    // Restore previous sidebar state
+
+    const sidebarState = localStorage.getItem("sidebarCollapsed");
+
+    if (sidebarState === "true") {
+        document.body.classList.add("sidebar-collapsed");
+    }
+
+
+    // -----------------------------------------------------
+    // Toggle ONLY when ☰ button is clicked
+    // -----------------------------------------------------
+
+    sidebarToggle.addEventListener("click", function (event) {
+
+        event.preventDefault();
+        event.stopPropagation();
 
         document.body.classList.toggle("sidebar-collapsed");
+
+        // Save current state
+        const isCollapsed =
+            document.body.classList.contains("sidebar-collapsed");
+
+        localStorage.setItem(
+            "sidebarCollapsed",
+            isCollapsed
+        );
 
     });
 

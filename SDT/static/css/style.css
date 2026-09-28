@@ -116,7 +116,7 @@ img {
 
     padding: 0 26px;
 
-    border-right: 1px solid #e7e9f0;
+    border-right: none;
 }
 
 .sidebar-toggle {
@@ -894,9 +894,7 @@ img {
 }
 
 
-/* =========================================================
-   COLLAPSED SIDEBAR
-========================================================= */
+/* COLLAPSED SIDEBAR */
 
 body.sidebar-collapsed .sidebar {
     width: 78px;
@@ -912,7 +910,7 @@ body.sidebar-collapsed .footer {
 }
 
 
-/* Hide sidebar text */
+/* HIDE SIDEBAR TEXT */
 
 body.sidebar-collapsed .sidebar-link span,
 body.sidebar-collapsed .sidebar-heading {
@@ -920,7 +918,7 @@ body.sidebar-collapsed .sidebar-heading {
 }
 
 
-/* Center sidebar icons */
+/* CENTER SIDEBAR ICONS */
 
 body.sidebar-collapsed .sidebar-link {
     justify-content: center;
@@ -933,46 +931,19 @@ body.sidebar-collapsed .sidebar-link i {
 }
 
 
-/* Center logout */
+/* LOGOUT */
 
 body.sidebar-collapsed .sidebar-bottom .sidebar-link {
     justify-content: center;
 }
 
 
-/* Keep scrollbar */
+/* SIDEBAR SCROLL */
 
 body.sidebar-collapsed .sidebar {
     overflow-x: hidden;
 }
 
-
-/* Logo area */
-
-body.sidebar-collapsed .logo-text {
-    display: none;
-}
-
-body.sidebar-collapsed .logo-section {
-    justify-content: center;
-}
-
-body.sidebar-collapsed .navbar-left {
-    width: 78px;
-    padding: 0;
-    justify-content: center;
-}
-
-body.sidebar-collapsed .sidebar-toggle {
-    margin-right: 0;
-}
-
-
-/* Search moves naturally */
-
-body.sidebar-collapsed .navbar-search {
-    margin-left: 30px;
-}
 
 /* =========================================================
    DASHBOARD HEADER
