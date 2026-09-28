@@ -86,3 +86,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+
+// SIDEBAR TOGGLE
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const sidebarToggle = document.getElementById("sidebarToggle");
+
+    if (!sidebarToggle) {
+        return;
+    }
+
+    sidebarToggle.addEventListener("click", function () {
+
+        document.body.classList.toggle("sidebar-collapsed");
+
+    });
+
+});

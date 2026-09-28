@@ -875,6 +875,104 @@ img {
     background: #f8f9fc;
 }
 
+/* =========================================================
+   SIDEBAR COLLAPSED STATE
+========================================================= */
+
+.sidebar {
+    transition: width 0.3s ease;
+}
+
+.main-content {
+    transition:
+        margin-left 0.3s ease,
+        width 0.3s ease;
+}
+
+.footer {
+    transition: margin-left 0.3s ease;
+}
+
+
+/* =========================================================
+   COLLAPSED SIDEBAR
+========================================================= */
+
+body.sidebar-collapsed .sidebar {
+    width: 78px;
+}
+
+body.sidebar-collapsed .main-content {
+    margin-left: 78px;
+    width: calc(100% - 78px);
+}
+
+body.sidebar-collapsed .footer {
+    margin-left: 78px;
+}
+
+
+/* Hide sidebar text */
+
+body.sidebar-collapsed .sidebar-link span,
+body.sidebar-collapsed .sidebar-heading {
+    display: none;
+}
+
+
+/* Center sidebar icons */
+
+body.sidebar-collapsed .sidebar-link {
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+body.sidebar-collapsed .sidebar-link i {
+    margin: 0;
+}
+
+
+/* Center logout */
+
+body.sidebar-collapsed .sidebar-bottom .sidebar-link {
+    justify-content: center;
+}
+
+
+/* Keep scrollbar */
+
+body.sidebar-collapsed .sidebar {
+    overflow-x: hidden;
+}
+
+
+/* Logo area */
+
+body.sidebar-collapsed .logo-text {
+    display: none;
+}
+
+body.sidebar-collapsed .logo-section {
+    justify-content: center;
+}
+
+body.sidebar-collapsed .navbar-left {
+    width: 78px;
+    padding: 0;
+    justify-content: center;
+}
+
+body.sidebar-collapsed .sidebar-toggle {
+    margin-right: 0;
+}
+
+
+/* Search moves naturally */
+
+body.sidebar-collapsed .navbar-search {
+    margin-left: 30px;
+}
 
 /* =========================================================
    DASHBOARD HEADER
